@@ -1,7 +1,7 @@
 class CreateUserConnectedAccounts < ActiveRecord::Migration[5.2]
   def change
-    create_table :user_connected_accounts do |t|
-      t.references :user, foreign_key: true
+    create_table :user_connected_accounts, id: :uuid do |t|
+      t.references :user, foreign_key: true, type: :uuid
       t.string :provider
       t.string :uid
       t.string :encrypted_access_token

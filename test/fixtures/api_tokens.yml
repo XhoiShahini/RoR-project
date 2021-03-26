@@ -2,7 +2,7 @@
 #
 # Table name: api_tokens
 #
-#  id           :bigint           not null, primary key
+#  id           :uuid             not null, primary key
 #  expires_at   :datetime
 #  last_used_at :datetime
 #  metadata     :jsonb
@@ -11,7 +11,7 @@
 #  transient    :boolean          default(FALSE)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  user_id      :bigint           not null
+#  user_id      :uuid             not null
 #
 # Indexes
 #

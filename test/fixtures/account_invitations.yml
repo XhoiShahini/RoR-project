@@ -2,15 +2,15 @@
 #
 # Table name: account_invitations
 #
-#  id            :bigint           not null, primary key
-#  email         :string           not null
-#  name          :string           not null
+#  id            :uuid             not null, primary key
+#  email         :string
+#  name          :string
 #  roles         :jsonb            not null
-#  token         :string           not null
+#  token         :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  account_id    :bigint           not null
-#  invited_by_id :bigint
+#  account_id    :uuid             not null
+#  invited_by_id :uuid
 #
 # Indexes
 #

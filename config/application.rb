@@ -30,5 +30,18 @@ module JumpstartApp
 
     # Use default language as fallback if translation is missing
     config.i18n.fallbacks = true
+
+    config.generators do |g|
+      g.orm :active_record, primary_key_type: :uuid
+      g.stylesheets false
+      g.helper false
+      g.assets false
+      g.view_specs false
+
+      g.test_framework :rspec,
+        view_specs: false,
+        request_specs: false,
+        routing_specs: false
+    end
   end
 end

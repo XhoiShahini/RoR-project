@@ -2,7 +2,7 @@
 #
 # Table name: user_connected_accounts
 #
-#  id                               :bigint           not null, primary key
+#  id                               :uuid             not null, primary key
 #  auth                             :text
 #  encrypted_access_token           :string
 #  encrypted_access_token_iv        :string
@@ -14,7 +14,7 @@
 #  uid                              :string
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
-#  user_id                          :bigint
+#  user_id                          :uuid
 #
 # Indexes
 #

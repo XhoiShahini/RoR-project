@@ -2,7 +2,7 @@
 #
 # Table name: plans
 #
-#  id                :bigint           not null, primary key
+#  id                :uuid             not null, primary key
 #  amount            :integer          default(0), not null
 #  details           :jsonb            not null
 #  interval          :string           not null

@@ -2,7 +2,7 @@
 #
 # Table name: users
 #
-#  id                     :bigint           not null, primary key
+#  id                     :uuid             not null, primary key
 #  accepted_privacy_at    :datetime
 #  accepted_terms_at      :datetime
 #  admin                  :boolean
@@ -29,7 +29,7 @@
 #  unconfirmed_email      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  invited_by_id          :bigint
+#  invited_by_id          :uuid
 #
 # Indexes
 #

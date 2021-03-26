@@ -2,12 +2,12 @@
 #
 # Table name: account_users
 #
-#  id         :bigint           not null, primary key
+#  id         :uuid             not null, primary key
 #  roles      :jsonb            not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  account_id :bigint
-#  user_id    :bigint
+#  account_id :uuid
+#  user_id    :uuid
 #
 # Indexes
 #

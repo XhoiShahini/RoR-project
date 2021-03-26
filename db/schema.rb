@@ -13,14 +13,16 @@
 ActiveRecord::Schema.define(version: 2021_01_15_211740) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
-  create_table "account_invitations", force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.bigint "invited_by_id"
-    t.string "token", null: false
-    t.string "name", null: false
-    t.string "email", null: false
+  create_table "account_invitations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "account_id", null: false
+    t.uuid "invited_by_id"
+    t.string "token"
+    t.string "name"
+    t.string "email"
     t.jsonb "roles", default: {}, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -29,9 +31,9 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.index ["token"], name: "index_account_invitations_on_token", unique: true
   end
 
-  create_table "account_users", force: :cascade do |t|
-    t.bigint "account_id"
-    t.bigint "user_id"
+  create_table "account_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "account_id"
+    t.uuid "user_id"
     t.jsonb "roles", default: {}, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -39,9 +41,9 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.index ["user_id"], name: "index_account_users_on_user_id"
   end
 
-  create_table "accounts", force: :cascade do |t|
+  create_table "accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "owner_id"
+    t.uuid "owner_id"
     t.boolean "personal", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -58,34 +60,34 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
   end
 
-  create_table "action_text_embeds", force: :cascade do |t|
+  create_table "action_text_embeds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "url"
     t.jsonb "fields"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "action_text_rich_texts", force: :cascade do |t|
+  create_table "action_text_rich_texts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
+    t.uuid "record_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
-  create_table "active_storage_attachments", force: :cascade do |t|
+  create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
+    t.uuid "record_id", null: false
+    t.uuid "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", force: :cascade do |t|
+  create_table "active_storage_blobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -97,13 +99,13 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+  create_table "active_storage_variant_records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "announcements", force: :cascade do |t|
+  create_table "announcements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "kind"
     t.string "title"
     t.datetime "published_at"
@@ -111,8 +113,8 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "api_tokens", force: :cascade do |t|
-    t.bigint "user_id", null: false
+  create_table "api_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
     t.string "token"
     t.string "name"
     t.jsonb "metadata", default: {}
@@ -125,10 +127,10 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
   end
 
-  create_table "notifications", force: :cascade do |t|
-    t.bigint "account_id", null: false
+  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "account_id", null: false
     t.string "recipient_type", null: false
-    t.bigint "recipient_id", null: false
+    t.uuid "recipient_id", null: false
     t.string "type"
     t.jsonb "params"
     t.datetime "read_at"
@@ -139,8 +141,8 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient_type_and_recipient_id"
   end
 
-  create_table "pay_charges", force: :cascade do |t|
-    t.bigint "owner_id"
+  create_table "pay_charges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "owner_id"
     t.string "processor", null: false
     t.string "processor_id", null: false
     t.integer "amount", null: false
@@ -156,8 +158,8 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.index ["owner_id"], name: "index_pay_charges_on_owner_id"
   end
 
-  create_table "pay_subscriptions", id: :serial, force: :cascade do |t|
-    t.integer "owner_id"
+  create_table "pay_subscriptions", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.uuid "owner_id"
     t.string "name", null: false
     t.string "processor", null: false
     t.string "processor_id", null: false
@@ -172,7 +174,7 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.jsonb "data"
   end
 
-  create_table "plans", force: :cascade do |t|
+  create_table "plans", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.integer "amount", default: 0, null: false
     t.string "interval", null: false
@@ -182,8 +184,8 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.integer "trial_period_days", default: 0
   end
 
-  create_table "user_connected_accounts", force: :cascade do |t|
-    t.bigint "user_id"
+  create_table "user_connected_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
     t.string "provider"
     t.string "uid"
     t.string "encrypted_access_token"
@@ -200,7 +202,7 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.index ["user_id"], name: "index_user_connected_accounts_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -225,7 +227,7 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.datetime "invitation_accepted_at"
     t.integer "invitation_limit"
     t.string "invited_by_type"
-    t.bigint "invited_by_id"
+    t.uuid "invited_by_id"
     t.integer "invitations_count", default: 0
     t.string "preferred_language"
     t.index ["email"], name: "index_users_on_email", unique: true

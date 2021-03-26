@@ -1,7 +1,7 @@
 class CreateApiTokens < ActiveRecord::Migration[6.0]
   def change
-    create_table :api_tokens do |t|
-      t.references :user, null: false, foreign_key: true
+    create_table :api_tokens, id: :uuid do |t|
+      t.references :user, null: false, foreign_key: true, type: :uuid
       t.string :token
       t.string :name
       t.jsonb :metadata, default: {}

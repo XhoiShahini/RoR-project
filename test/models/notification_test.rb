@@ -2,7 +2,7 @@
 #
 # Table name: notifications
 #
-#  id             :bigint           not null, primary key
+#  id             :uuid             not null, primary key
 #  interacted_at  :datetime
 #  params         :jsonb
 #  read_at        :datetime
@@ -10,8 +10,8 @@
 #  type           :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  account_id     :bigint           not null
-#  recipient_id   :bigint           not null
+#  account_id     :uuid             not null
+#  recipient_id   :uuid             not null
 #
 # Indexes
 #

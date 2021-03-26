@@ -1,6 +1,6 @@
 class CreateActionTextEmbeds < ActiveRecord::Migration[6.0]
   def change
-    create_table :action_text_embeds do |t|
+    create_table :action_text_embeds, id: :uuid do |t|
       t.string :url
       t.jsonb :fields
 
