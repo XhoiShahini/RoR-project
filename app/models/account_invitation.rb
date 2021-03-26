@@ -3,8 +3,13 @@
 # Table name: account_invitations
 #
 #  id            :uuid             not null, primary key
+<<<<<<< HEAD
 #  email         :string
 #  name          :string
+=======
+#  email         :string           not null
+#  name          :string           not null
+>>>>>>> UUIDs
 #  roles         :jsonb            not null
 #  token         :string
 #  created_at    :datetime         not null
