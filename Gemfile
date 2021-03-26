@@ -66,6 +66,9 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "jumpstart", path: "lib/jumpstart"
 
 gem "acts_as_tenant"
+gem "administrate", github: "excid3/administrate", branch: "jumpstart" # '~> 0.10.0'
+gem "administrate-field-active_storage", "~> 0.3.0"
+gem "attr_encrypted", "~> 3.1"
 gem "devise", ">= 4.7.1"
 gem "devise-i18n", "~> 1.9"
 gem "devise_masquerade", github: "excid3/devise_masquerade"
