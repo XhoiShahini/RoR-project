@@ -33,6 +33,13 @@ group :development, :test do
   gem "bundler-audit", github: "rubysec/bundler-audit"
   gem "letter_opener_web", "~> 1.3", ">= 1.3.4"
   gem "standard"
+  # added by us
+  gem "dotenv-rails"
+  gem 'rspec-rails'
+  gem 'database_cleaner'
+  gem 'factory_bot_rails'
+  gem 'guard-rails', require: false
+  gem "guard-rspec", require: false
 end
 
 group :development do
@@ -59,9 +66,6 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "jumpstart", path: "lib/jumpstart"
 
 gem "acts_as_tenant"
-gem "administrate", github: "excid3/administrate", branch: "jumpstart" # '~> 0.10.0'
-gem "administrate-field-active_storage", "~> 0.3.0"
-gem "attr_encrypted", "~> 3.1"
 gem "devise", ">= 4.7.1"
 gem "devise-i18n", "~> 1.9"
 gem "devise_masquerade", github: "excid3/devise_masquerade"
