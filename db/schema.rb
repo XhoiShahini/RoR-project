@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_210824) do
 
   create_table "meetings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "account_id", null: false
+    t.uuid "host_id", null: false
     t.string "title"
     t.string "state"
     t.datetime "starts_at"
@@ -181,6 +182,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_210824) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_meetings_on_account_id"
+    t.index ["host_id"], name: "index_meetings_on_host_id"
   end
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -198,7 +200,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_210824) do
   end
 
   create_table "participants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "meeting_id", null: false
+    t.uuid "account_id", null: false
     t.string "first_name"
     t.string "last_name"
     t.string "email"
@@ -208,7 +210,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_210824) do
     t.datetime "accepted_privacy_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["meeting_id"], name: "index_participants_on_meeting_id"
+    t.index ["account_id"], name: "index_participants_on_account_id"
   end
 
   create_table "pay_charges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -335,7 +337,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_210824) do
   add_foreign_key "meeting_accesses", "meeting_members"
   add_foreign_key "meeting_members", "meetings"
   add_foreign_key "meetings", "accounts"
-  add_foreign_key "participants", "meetings"
+  add_foreign_key "participants", "accounts"
   add_foreign_key "signatures", "documents"
   add_foreign_key "signatures", "meeting_members"
   add_foreign_key "user_connected_accounts", "users"

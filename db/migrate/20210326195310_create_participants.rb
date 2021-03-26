@@ -1,7 +1,7 @@
 class CreateParticipants < ActiveRecord::Migration[6.1]
   def change
     create_table :participants, id: :uuid do |t|
-      t.references :meeting, null: false, foreign_key: true, type: :uuid
+      t.references :account, null: false, foreign_key: true, type: :uuid
       t.string :first_name
       t.string :last_name
       t.string :email

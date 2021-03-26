@@ -24,6 +24,7 @@
 #
 class MeetingMember < ApplicationRecord
   belongs_to :meeting
+  belongs_to :verifier, class_name: "User", optional: true
   belongs_to :memberable, polymorphic: true
 
   has_many :signatures

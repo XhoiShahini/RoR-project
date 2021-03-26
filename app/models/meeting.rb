@@ -10,10 +10,12 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  account_id   :uuid             not null
+#  host_id      :uuid             not null
 #
 # Indexes
 #
 #  index_meetings_on_account_id  (account_id)
+#  index_meetings_on_host_id     (host_id)
 #
 # Foreign Keys
 #
@@ -21,8 +23,9 @@
 #
 class Meeting < ApplicationRecord
   acts_as_tenant :account
-  belongs_to :account
+  belongs_to :host, class: "User"
 
   has_many :meeting_members
   has_many :documents
+  has_many :signatures, through: :documents
 end

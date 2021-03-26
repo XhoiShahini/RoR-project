@@ -12,21 +12,23 @@
 #  state               :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  meeting_id          :uuid             not null
+#  account_id          :uuid             not null
 #
 # Indexes
 #
-#  index_participants_on_meeting_id  (meeting_id)
+#  index_participants_on_account_id  (account_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (meeting_id => meetings.id)
+#  fk_rails_...  (account_id => accounts.id)
 #
 class Participant < ApplicationRecord
   include UserAgreements
   has_person_name
 
-  belongs_to :meeting
+  acts_as_tenant :account
   has_one :meeting_member, as: :memberable
+  has_one :meeting, through: :meeting_member
+  has_many :signatures, through: :meeting_member
   has_one_attached :identification
 end

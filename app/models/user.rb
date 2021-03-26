@@ -67,6 +67,10 @@ class User < ApplicationRecord
   has_many :connected_accounts, dependent: :destroy
   has_many :notifications, as: :recipient, dependent: :destroy
   has_many :meeting_members, as: :memberable
+  has_many :signatures, through: :meeting_members
+  has_many :verified_meeting_members, class_name: "MeetingMember", foreign_key: "verifier_id"
+  has_many :meetings, through: :meeting_members
+  has_many :documents, foreign_key: "created_by"
 
   # We don't need users to confirm their email address on create,
   # just when they change it

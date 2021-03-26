@@ -10,10 +10,12 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  account_id   :uuid             not null
+#  host_id      :uuid             not null
 #
 # Indexes
 #
 #  index_meetings_on_account_id  (account_id)
+#  index_meetings_on_host_id     (host_id)
 #
 # Foreign Keys
 #

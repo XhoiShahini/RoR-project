@@ -26,6 +26,7 @@ class Document < ApplicationRecord
   belongs_to :created_by, class_name: "User"
 
   has_many :signatures
+  has_many :meeting_members, through: :signatures
   has_many :document_accesses
 
   has_one_attached :file
