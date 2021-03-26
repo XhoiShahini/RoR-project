@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_15_211740) do
+ActiveRecord::Schema.define(version: 2021_03_26_210824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -127,6 +127,62 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
   end
 
+  create_table "document_accesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "document_id", null: false
+    t.uuid "meeting_member_id", null: false
+    t.string "ip"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["document_id"], name: "index_document_accesses_on_document_id"
+    t.index ["meeting_member_id"], name: "index_document_accesses_on_meeting_member_id"
+  end
+
+  create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "meeting_id", null: false
+    t.uuid "created_by_id", null: false
+    t.string "title"
+    t.string "state"
+    t.boolean "require_read"
+    t.boolean "read_only"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_by_id"], name: "index_documents_on_created_by_id"
+    t.index ["meeting_id"], name: "index_documents_on_meeting_id"
+  end
+
+  create_table "meeting_accesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "meeting_member_id", null: false
+    t.string "ip"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["meeting_member_id"], name: "index_meeting_accesses_on_meeting_member_id"
+  end
+
+  create_table "meeting_members", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "meeting_id", null: false
+    t.string "memberable_type", null: false
+    t.uuid "memberable_id", null: false
+    t.string "company"
+    t.boolean "must_sign"
+    t.datetime "verified_at"
+    t.uuid "verifier_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["meeting_id"], name: "index_meeting_members_on_meeting_id"
+    t.index ["memberable_type", "memberable_id"], name: "index_meeting_members_on_memberable"
+  end
+
+  create_table "meetings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "account_id", null: false
+    t.string "title"
+    t.string "state"
+    t.datetime "starts_at"
+    t.datetime "completed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_meetings_on_account_id"
+  end
+
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "account_id", null: false
     t.string "recipient_type", null: false
@@ -139,6 +195,20 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.datetime "interacted_at"
     t.index ["account_id"], name: "index_notifications_on_account_id"
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient_type_and_recipient_id"
+  end
+
+  create_table "participants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "meeting_id", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "phone_number"
+    t.string "state"
+    t.datetime "accepted_terms_at"
+    t.datetime "accepted_privacy_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["meeting_id"], name: "index_participants_on_meeting_id"
   end
 
   create_table "pay_charges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -182,6 +252,19 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "trial_period_days", default: 0
+  end
+
+  create_table "signatures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "document_id", null: false
+    t.uuid "meeting_member_id", null: false
+    t.datetime "signed_at"
+    t.string "ip"
+    t.string "otp"
+    t.boolean "document_read"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["document_id"], name: "index_signatures_on_document_id"
+    t.index ["meeting_member_id"], name: "index_signatures_on_meeting_member_id"
   end
 
   create_table "user_connected_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -230,6 +313,7 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
     t.uuid "invited_by_id"
     t.integer "invitations_count", default: 0
     t.string "preferred_language"
+    t.string "phone_number"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
@@ -245,5 +329,14 @@ ActiveRecord::Schema.define(version: 2021_01_15_211740) do
   add_foreign_key "accounts", "users", column: "owner_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "api_tokens", "users"
+  add_foreign_key "document_accesses", "documents"
+  add_foreign_key "document_accesses", "meeting_members"
+  add_foreign_key "documents", "meetings"
+  add_foreign_key "meeting_accesses", "meeting_members"
+  add_foreign_key "meeting_members", "meetings"
+  add_foreign_key "meetings", "accounts"
+  add_foreign_key "participants", "meetings"
+  add_foreign_key "signatures", "documents"
+  add_foreign_key "signatures", "meeting_members"
   add_foreign_key "user_connected_accounts", "users"
 end

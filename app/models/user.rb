@@ -21,6 +21,7 @@
 #  invitations_count      :integer          default(0)
 #  invited_by_type        :string
 #  last_name              :string
+#  phone_number           :string
 #  preferred_language     :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
@@ -59,11 +60,13 @@ class User < ApplicationRecord
 
   # ActiveStorage Associations
   has_one_attached :avatar
+  has_one_attached :identification
 
   # Associations
   has_many :api_tokens, dependent: :destroy
   has_many :connected_accounts, dependent: :destroy
   has_many :notifications, as: :recipient, dependent: :destroy
+  has_many :meeting_members, as: :memberable
 
   # We don't need users to confirm their email address on create,
   # just when they change it
