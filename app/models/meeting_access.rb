@@ -18,4 +18,5 @@
 #
 class MeetingAccess < ApplicationRecord
   belongs_to :meeting_member
+  has_one :meeting, through: :meeting_member
 end
