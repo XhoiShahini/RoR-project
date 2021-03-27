@@ -10,7 +10,7 @@ class AccountUserDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     account: Field::BelongsTo,
     user: Field::BelongsTo,
-    id: Field::Number,
+    id: Field::String,
     admin: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime

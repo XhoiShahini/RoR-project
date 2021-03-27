@@ -9,7 +9,7 @@ class Pay::SubscriptionDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     owner: Field::Polymorphic,
-    id: Field::Number,
+    id: Field::String,
     name: Field::String,
     processor: Field::String,
     processor_id: Field::String,

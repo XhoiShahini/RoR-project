@@ -8,7 +8,7 @@ class User::ConnectedAccountDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    id: Field::Number,
+    id: Field::String,
     user: Field::BelongsTo,
     provider: Field::String,
     uid: Field::String,

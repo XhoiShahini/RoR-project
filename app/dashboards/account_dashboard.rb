@@ -14,7 +14,7 @@ class AccountDashboard < Administrate::BaseDashboard
     account_users: Field::HasMany,
     users: Field::HasMany,
     avatar: Field::ActiveStorage,
-    id: Field::Number,
+    id: Field::String,
     name: Field::String,
     personal: Field::Boolean,
     created_at: Field::DateTime,

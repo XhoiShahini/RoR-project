@@ -10,8 +10,8 @@ class AccountInvitationDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     account: Field::BelongsTo,
     invited_by: Field::BelongsTo.with_options(class_name: "User"),
-    id: Field::Number,
-    invited_by_id: Field::Number,
+    id: Field::String,
+    invited_by_id: Field::String,
     token: Field::String,
     name: Field::String,
     email: Field::String,

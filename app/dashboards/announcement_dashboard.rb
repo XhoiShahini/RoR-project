@@ -8,7 +8,7 @@ class AnnouncementDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    id: Field::Number,
+    id: Field::String,
     kind: Field::Select.with_options(collection: Announcement::TYPES),
     title: Field::String,
     description: Field::Text,

@@ -9,8 +9,8 @@ class Pay::ChargeDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     owner: Field::BelongsTo.with_options(class_name: "User"),
-    id: Field::Number,
-    owner_id: Field::Number,
+    id: Field::String,
+    owner_id: Field::String,
     processor: Field::String,
     processor_id: Field::String,
     amount: Field::Number,

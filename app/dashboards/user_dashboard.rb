@@ -8,7 +8,7 @@ class UserDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    id: Field::Number,
+    id: Field::String,
     first_name: Field::String,
     last_name: Field::String,
     name: Field::String.with_options(searchable: false),
