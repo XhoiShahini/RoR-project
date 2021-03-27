@@ -21,11 +21,36 @@
 #
 #  fk_rails_...  (account_id => accounts.id)
 #
+require 'aasm'
 class Meeting < ApplicationRecord
+  include AASM
   acts_as_tenant :account
   belongs_to :host, class: "User"
 
   has_many :meeting_members
   has_many :documents
   has_many :signatures, through: :documents
+
+  aasm(column: :state, logger: Rails.logger) do
+    state :created, initial: true, display: I18n.t("meetings.state.created")
+    state :incomplete, display: I18n.t("meetings.state.incomplete")
+    state :completed, display: I18n.t("meetings.state.completed")
+
+    event :start do
+      transitions from: :created, to: :incomplete
+    end
+
+    event :pause do
+      transitions from: :incomplete, to: :created
+    end
+
+    event :complete do
+      transitions from: :incomplete, to: :completed, after: :complete_meeting
+    end
+  end
+
+  private
+
+  def complete_meeting
+  end
 end

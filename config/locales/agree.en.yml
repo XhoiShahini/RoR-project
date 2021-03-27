@@ -11,3 +11,15 @@ documents:
     incomplete: "1+ Signatures"
     finalized: "Finalized"
   
+meetings:
+  state:
+    created: "Not Started"
+    incomplete: "Started"
+    completed: "Completed"
+
+participants:
+  state:
+    invited: "Invited"
+    accepted: "Accepted Invitation"
+    joined: "No Signatures"
+    finalized: "1+ Signatures"
