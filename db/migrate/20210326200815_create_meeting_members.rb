@@ -5,8 +5,6 @@ class CreateMeetingMembers < ActiveRecord::Migration[6.1]
       t.references :memberable, null: false, polymorphic: true, type: :uuid
       t.string :company
       t.boolean :must_sign
-      t.datetime :verified_at
-      t.uuid :verifier_id
 
       t.timestamps
     end

@@ -6,12 +6,10 @@
 #  company         :string
 #  memberable_type :string           not null
 #  must_sign       :boolean
-#  verified_at     :datetime
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  meeting_id      :uuid             not null
 #  memberable_id   :uuid             not null
-#  verifier_id     :uuid
 #
 # Indexes
 #

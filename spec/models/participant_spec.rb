@@ -10,13 +10,16 @@
 #  last_name           :string
 #  phone_number        :string
 #  state               :string
+#  verified_at         :datetime
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  account_id          :uuid             not null
+#  verifier_id         :uuid
 #
 # Indexes
 #
-#  index_participants_on_account_id  (account_id)
+#  index_participants_on_account_id   (account_id)
+#  index_participants_on_verifier_id  (verifier_id)
 #
 # Foreign Keys
 #

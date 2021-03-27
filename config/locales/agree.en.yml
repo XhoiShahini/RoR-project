@@ -21,5 +21,5 @@ participants:
   state:
     invited: "Invited"
     accepted: "Accepted Invitation"
-    joined: "No Signatures"
-    finalized: "1+ Signatures"
+    verified: "Verified"
+    finalized: "Signed"

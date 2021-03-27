@@ -164,8 +164,6 @@ ActiveRecord::Schema.define(version: 2021_03_26_210824) do
     t.uuid "memberable_id", null: false
     t.string "company"
     t.boolean "must_sign"
-    t.datetime "verified_at"
-    t.uuid "verifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["meeting_id"], name: "index_meeting_members_on_meeting_id"
@@ -201,6 +199,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_210824) do
 
   create_table "participants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "account_id", null: false
+    t.uuid "verifier_id"
     t.string "first_name"
     t.string "last_name"
     t.string "email"
@@ -208,9 +207,11 @@ ActiveRecord::Schema.define(version: 2021_03_26_210824) do
     t.string "state"
     t.datetime "accepted_terms_at"
     t.datetime "accepted_privacy_at"
+    t.datetime "verified_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_id"], name: "index_participants_on_account_id"
+    t.index ["verifier_id"], name: "index_participants_on_verifier_id"
   end
 
   create_table "pay_charges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
