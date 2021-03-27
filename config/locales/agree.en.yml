@@ -1,0 +1,13 @@
+---
+pdf_gen:
+  signatures: "Signatures"
+  signed_at: "Signed At"
+  ip: "IP Address"
+  otp: "One-Time Password"
+
+documents:
+  state:
+    created: "No Signatures"
+    incomplete: "1+ Signatures"
+    finalized: "Finalized"
+  

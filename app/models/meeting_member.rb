@@ -30,4 +30,14 @@ class MeetingMember < ApplicationRecord
   has_many :signatures
   has_many :document_accesses
   has_many :meeting_accesses
+
+  after_create :initialize_signatures
+
+  private
+
+  def initialize_signatures
+    meeting.documents.each do |document|
+      document.signatures.create(meeting_member: self)
+    end
+  end
 end

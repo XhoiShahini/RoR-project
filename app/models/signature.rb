@@ -25,4 +25,19 @@
 class Signature < ApplicationRecord
   belongs_to :document
   belongs_to :meeting_member
+
+  def render(pdf)
+    return unless signed?
+    data = [
+      [{ content: meeting_member.memberable.name, colspan: 2, align: :center }],
+      [{ content: I18n.t("pdf_gen.signed_at"), size: 10, font_style: :bold }, { content: signed_at.to_s, size: 10 }],
+      [{ content: I18n.t("pdf_gen.ip"), size: 10, font_style: :bold }, { content: ip, size: 10 }],
+      [{ content: I18n.t("pdf_gen.otp"), size: 10, font_style: :bold }, { content: otp, size: 10 }]
+    ]
+    pdf.make_table(data, cell_style: { borders: [] })
+  end
+
+  def signed?
+    signed_at.present?
+  end
 end

@@ -95,3 +95,7 @@ gem "whenever", require: false
 if File.exist?("config/jumpstart/Gemfile")
   eval_gemfile "config/jumpstart/Gemfile"
 end
+
+gem "aasm", "~> 5.1"
+
+gem "combine_pdf", "~> 1.0"
