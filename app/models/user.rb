@@ -51,6 +51,7 @@ class User < ApplicationRecord
 
   include UserAccounts
   include UserAgreements
+  include IdentificationAttached
 
   has_noticed_notifications
   has_person_name
@@ -60,7 +61,6 @@ class User < ApplicationRecord
 
   # ActiveStorage Associations
   has_one_attached :avatar
-  has_one_attached :identification
 
   # Associations
   has_many :api_tokens, dependent: :destroy

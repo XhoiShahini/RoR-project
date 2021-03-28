@@ -31,7 +31,7 @@ class Meeting < ApplicationRecord
   has_many :documents
   has_many :signatures, through: :documents
 
-  aasm(column: :state, logger: Rails.logger) do
+  aasm(column: :state, logger: Rails.logger, timestamps: true) do
     state :created, initial: true, display: I18n.t("meetings.state.created")
     state :incomplete, display: I18n.t("meetings.state.incomplete")
     state :completed, display: I18n.t("meetings.state.completed")

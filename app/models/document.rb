@@ -34,7 +34,7 @@ class Document < ApplicationRecord
 
   has_one_attached :file
 
-  validate :pdf_files_only
+  validates :file, attached: true, content_type: 'application/pdf'
   after_create :initialize_signatures
 
   aasm(column: :state, logger: Rails.logger) do
@@ -42,8 +42,8 @@ class Document < ApplicationRecord
     state :incomplete, display: I18n.t("documents.state.incomplete")
     state :finalized, display: I18n.t("documents.state.finalized")
 
-    event :sign do
-      transitions from: :created, to: :incomplete, after: :finalize_if_signing_complete
+    event :sign, after: :finalize_if_signing_complete do
+      transitions from: :created, to: :incomplete
     end
 
     event :finalize do
@@ -63,10 +63,6 @@ class Document < ApplicationRecord
     unless signatures.find_by(signed_at: nil).present?
       finalize!
     end
-  end
-
-  def pdf_files_only
-    errors.add(:file, I18n.t("documents.pdf_files_only")) unless ["pdf", "pdfa"].include? file.filename.extension.downcase
   end
 
   def generate_signatures

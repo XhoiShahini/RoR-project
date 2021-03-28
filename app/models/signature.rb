@@ -28,6 +28,12 @@ class Signature < ApplicationRecord
 
   has_one :sms_verification, as: :sms_verifiable
 
+  def sign!(ip:)
+    if signable?
+      update(signed_at: Time.now, otp: sms_verification.code, ip: ip)
+    end
+  end
+
   def render(pdf)
     return unless signed?
     data = [
@@ -41,5 +47,13 @@ class Signature < ApplicationRecord
 
   def signed?
     signed_at.present?
+  end
+
+  def signable?
+    sms_verification&.verified? && !require_read? && meeting_member.must_sign
+  end
+
+  def require_read?
+    document.require_read && !document_read
   end
 end

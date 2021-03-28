@@ -29,6 +29,7 @@ require 'aasm'
 class Participant < ApplicationRecord
   include AASM
   include UserAgreements
+  include IdentificationAttached
   has_person_name
 
   acts_as_tenant :account

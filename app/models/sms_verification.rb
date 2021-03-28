@@ -69,7 +69,7 @@ class SmsVerification < ApplicationRecord
 
   def verify_code!(attempt = "")
     self.code = attempt
-    client = MessageBird::Client.new(ENV["MESSAGEBIRD_KEY"])
+    client = MessageBird::Client.new(ENV.fetch("MESSAGEBIRD_KEY", ""))
     
     begin
       messagebird = client.verify_token(messagebird_id, code)
@@ -79,10 +79,9 @@ class SmsVerification < ApplicationRecord
 
     if messagebird&.status == "verified"
       self.verified_at = Time.now
-      save
       verify!
     else
-      save
+      self.error ||= I18n.t("sms_verifications.invalid_code")
       reject_code!
     end
   end

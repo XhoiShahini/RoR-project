@@ -1,33 +1,43 @@
 ---
-pdf_gen:
-  signatures: "Signatures"
-  signed_at: "Signed At"
-  ip: "IP Address"
-  otp: "One-Time Password"
+en:
+  pdf_gen:
+    signatures: "Signatures"
+    signed_at: "Signed At"
+    ip: "IP Address"
+    otp: "One-Time Password"
 
-documents:
-  state:
-    created: "No Signatures"
-    incomplete: "1+ Signatures"
-    finalized: "Finalized"
+  documents:
+    state:
+      created: "No Signatures"
+      incomplete: "1+ Signatures"
+      finalized: "Finalized"
+    
+  meetings:
+    errors:
+      maximum_users: "can only have %{maximum} users"
+    state:
+      created: "Not Started"
+      incomplete: "Started"
+      completed: "Completed"
+
+  participants:
+    state:
+      invited: "Invited"
+      accepted: "Accepted Invitation"
+      verified: "Verified"
+      finalized: "Signed"
+
+  sms_verifications:
+    template: "Agree.Live: Your token is %token"
+    invalid_code: "The code you have provided is invalid, please try again."
+    state:
+      created: "Created"
+      sent: "Sent"
+      failed: "Failed"
+      verified: "Verified"
+
+  #ActiveStorage Validations
+  errors:
+    messages:
+      content_type_invalid: "has an invalid content type: %{content_type}. Valid types are: %{authorized_types}"
   
-meetings:
-  state:
-    created: "Not Started"
-    incomplete: "Started"
-    completed: "Completed"
-
-participants:
-  state:
-    invited: "Invited"
-    accepted: "Accepted Invitation"
-    verified: "Verified"
-    finalized: "Signed"
-
-sms_verifications:
-  template: "Agree.Live: Your token is %token"
-  state:
-    created: "Created"
-    sent: "Sent"
-    failed: "Failed"
-    verified: "Verified"
