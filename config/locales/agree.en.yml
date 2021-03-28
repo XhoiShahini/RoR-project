@@ -23,3 +23,11 @@ participants:
     accepted: "Accepted Invitation"
     verified: "Verified"
     finalized: "Signed"
+
+sms_verifications:
+  template: "Agree.Live: Your token is %token"
+  state:
+    created: "Created"
+    sent: "Sent"
+    failed: "Failed"
+    verified: "Verified"
