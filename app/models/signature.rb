@@ -31,6 +31,7 @@ class Signature < ApplicationRecord
   def sign!(ip:)
     if signable?
       update(signed_at: Time.now, otp: sms_verification.code, ip: ip)
+      document.sign!
     end
   end
 

@@ -42,12 +42,12 @@ class Document < ApplicationRecord
     state :incomplete, display: I18n.t("documents.state.incomplete")
     state :finalized, display: I18n.t("documents.state.finalized")
 
-    event :sign, after: :finalize_if_signing_complete do
-      transitions from: :created, to: :incomplete
+    event :sign do
+      transitions from: [:created, :incomplete], to: :incomplete, after: :finalize_if_signing_complete
     end
 
     event :finalize do
-      transitions from: :incomplete, to: :finalized, before: :finalize_file
+      transitions from: :incomplete, to: :finalized, before: :add_signature_page
     end
   end
 
