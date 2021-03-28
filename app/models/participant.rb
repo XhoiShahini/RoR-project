@@ -38,6 +38,8 @@ class Participant < ApplicationRecord
   has_many :signatures, through: :meeting_member
   has_one_attached :identification
 
+  has_many :sms_verifications, as: :sms_verifiable
+
   aasm(column: :state, logger: Rails.logger) do
     state :invited, initial: true, display: I18n.t("participants.state.invited")
     state :accepted, display: I18n.t("participants.state.accepted")
@@ -63,9 +65,10 @@ class Verification
   def initialize(participant, args = {})
     @participant = participant
     @verifier = args[:verifier]
+    @verified_at = Time.now
   end
 
   def call
-    @participant.update(verified_at: Time.now, verifier: @verifier)
+    @participant.update(verified_at: @verified_at, verifier: @verifier)
   end
 end

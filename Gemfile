@@ -97,5 +97,5 @@ if File.exist?("config/jumpstart/Gemfile")
 end
 
 gem "aasm", "~> 5.1"
-
+gem "messagebird-rest", require: "messagebird"
 gem "combine_pdf", "~> 1.0"

@@ -26,6 +26,8 @@ class Signature < ApplicationRecord
   belongs_to :document
   belongs_to :meeting_member
 
+  has_one :sms_verification, as: :sms_verifiable
+
   def render(pdf)
     return unless signed?
     data = [

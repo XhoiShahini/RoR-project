@@ -66,7 +66,7 @@ class Document < ApplicationRecord
   end
 
   def pdf_files_only
-    errors.add(:file, I18n.t("documents.pdf_files_only")) unless ["pdf", "pdfa"].include? file.filename.extension.downcase 
+    errors.add(:file, I18n.t("documents.pdf_files_only")) unless ["pdf", "pdfa"].include? file.filename.extension.downcase
   end
 
   def generate_signatures

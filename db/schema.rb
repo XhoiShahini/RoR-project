@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_26_210824) do
+ActiveRecord::Schema.define(version: 2021_03_28_170431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -268,6 +268,21 @@ ActiveRecord::Schema.define(version: 2021_03_26_210824) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["document_id"], name: "index_signatures_on_document_id"
     t.index ["meeting_member_id"], name: "index_signatures_on_meeting_member_id"
+  end
+
+  create_table "sms_verifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "sms_verifiable_type", null: false
+    t.uuid "sms_verifiable_id", null: false
+    t.string "code"
+    t.string "error"
+    t.string "phone_number"
+    t.string "state"
+    t.datetime "sent_at"
+    t.datetime "verified_at"
+    t.string "messagebird_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sms_verifiable_type", "sms_verifiable_id"], name: "index_sms_verifications_on_sms_verifiable"
   end
 
   create_table "user_connected_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
