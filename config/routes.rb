@@ -1,5 +1,16 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
+  resources :sms_verifications, only: [:new, :create]
+  resources :meetings do
+    resources :participants do
+      resource :sign_in, controller: "participants/sign_in", only: [:create, :show]
+    end
+
+    resource :room, controller: "meetings/room", only: [:show] do
+      get :pre_meeting
+    end
+  end
+    
   # Jumpstart views
   if Rails.env.development? || Rails.env.test?
     mount Jumpstart::Engine, at: "/jumpstart"

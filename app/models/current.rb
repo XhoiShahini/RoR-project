@@ -4,7 +4,7 @@
 # If you start sticking controller-specific attributes in there, you're going to create a mess.
 
 class Current < ActiveSupport::CurrentAttributes
-  attribute :user, :account, :request_id, :user_agent, :ip_address
+  attribute :user, :account, :request_id, :user_agent, :ip_address, :participant
 
   resets do
     Time.zone = nil
