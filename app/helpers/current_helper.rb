@@ -14,4 +14,8 @@ module CurrentHelper
   def current_account_admin?
     !!current_account_user&.admin?
   end
+
+  def current_participant
+    Current.participant
+  end
 end

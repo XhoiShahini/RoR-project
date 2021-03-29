@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   resources :sms_verifications, only: [:new, :create]
   resources :meetings do
     resources :participants do
-      resource :sign_in, controller: "participants/sign_in", only: [:create, :show]
+      resource :sign_in, controller: "participants/sign_in", only: [:create, :show] do
+        get :otp
+      end
     end
 
     resource :room, controller: "meetings/room", only: [:show] do
