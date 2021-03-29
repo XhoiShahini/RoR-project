@@ -25,7 +25,7 @@ require 'aasm'
 class Meeting < ApplicationRecord
   include AASM
   acts_as_tenant :account
-  belongs_to :host, class: "User"
+  belongs_to :host, class_name: "User"
 
   has_many :meeting_members
   has_many :documents

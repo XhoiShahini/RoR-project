@@ -29,12 +29,23 @@ en:
 
   sms_verifications:
     template: "Agree.Live: Your token is %token"
+    verify: "Verify"
     invalid_code: "The code you have provided is invalid, please try again."
+    sms_disclaimer: "This will send an SMS to the phone number: %{phone_number}. Messaging and Data rates may apply."
     state:
       created: "Created"
       sent: "Sent"
       failed: "Failed"
       verified: "Verified"
+
+  participants:
+    sign_in:
+      success: "Signed in successfully."
+      title: "Please Sign In"
+      show:
+        send_code: "Send Code"
+      otp:
+        instructions: "Please enter the code sent to you via SMS."
 
   #ActiveStorage Validations
   errors:

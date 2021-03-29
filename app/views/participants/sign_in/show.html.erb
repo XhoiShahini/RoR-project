@@ -1,0 +1,15 @@
+<%= turbo_frame_tag "sms_verification" do %>
+  <div class="card">
+    <p class="text-xl font-semibold text-primary-500"><%= t("participants.sign_in.title") %></p>
+    <div class="flex justify-between">
+      <div>
+        <p class="text-xs text-gray-600 w-64">
+          <%= t("sms_verifications.sms_disclaimer", phone_number: @participant.phone_number) %>
+        </p>
+      </div>
+      <div>
+        <%= link_to t(".send_code"), otp_meeting_participant_sign_in_path(@meeting, @participant), class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -25,7 +25,7 @@ class SmsVerification < ApplicationRecord
   include AASM
   belongs_to :sms_verifiable, polymorphic: true
 
-  after_create_commit { send! }
+  after_create_commit { send_code! }
 
   aasm(column: :state, logger: Rails.logger) do
     state :created, initial: true, display: I18n.t("sms_verifications.state.created")
@@ -33,13 +33,10 @@ class SmsVerification < ApplicationRecord
     state :failed, display: I18n.t("sms_verifications.state.failed")
     state :verified, display: I18n.t("sms_verifications.state.verified")
 
-    event :send do
+    event :send_code do
       transitions from: :created, to: :sent do
-        before do
-          send_sms
-        end
-
         guard do
+          send_sms
           sms_sent?
         end
       end

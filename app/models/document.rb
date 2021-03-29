@@ -47,7 +47,7 @@ class Document < ApplicationRecord
     end
 
     event :finalize do
-      transitions from: :incomplete, to: :finalized, before: :add_signature_page
+      transitions from: :incomplete, to: :finalized, after: :add_signature_page
     end
   end
 

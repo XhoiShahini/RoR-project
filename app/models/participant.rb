@@ -27,8 +27,19 @@
 #
 require 'aasm'
 class Participant < ApplicationRecord
+  class Verification
+    def initialize(participant, args = {})
+      @participant = participant
+      @verifier = args[:verifier]
+      @verified_at = Time.now
+    end
+  
+    def call
+      @participant.update(verified_at: @verified_at, verifier: @verifier)
+    end
+  end
   include AASM
-  include UserAgreements
+  #include UserAgreements
   include IdentificationAttached
   has_person_name
 
@@ -37,7 +48,6 @@ class Participant < ApplicationRecord
   has_one :meeting_member, as: :memberable
   has_one :meeting, through: :meeting_member
   has_many :signatures, through: :meeting_member
-  has_one_attached :identification
 
   has_many :sms_verifications, as: :sms_verifiable
 
@@ -59,17 +69,5 @@ class Participant < ApplicationRecord
     event :finalize do
       transitions from: :joined, to: :finalized
     end
-  end
-end
-
-class Verification
-  def initialize(participant, args = {})
-    @participant = participant
-    @verifier = args[:verifier]
-    @verified_at = Time.now
-  end
-
-  def call
-    @participant.update(verified_at: @verified_at, verifier: @verifier)
   end
 end
