@@ -8,6 +8,7 @@
 #  phone_number        :string
 #  sent_at             :datetime
 #  sms_verifiable_type :string           not null
+#  state               :string
 #  verified_at         :datetime
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
