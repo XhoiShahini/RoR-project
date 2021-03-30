@@ -39,17 +39,17 @@ class Participant < ApplicationRecord
     end
   end
   include AASM
-  #include UserAgreements
   include IdentificationAttached
   has_person_name
 
   acts_as_tenant :account
   belongs_to :verifier, class_name: "User", optional: true
-  has_one :meeting_member, as: :memberable
+
+  has_one :meeting_member, as: :memberable, dependent: :destroy
   has_one :meeting, through: :meeting_member
   has_many :signatures, through: :meeting_member
-
   has_many :sms_verifications, as: :sms_verifiable
+  include ValidatesMaximumMembers
 
   accepts_nested_attributes_for :meeting_member
 

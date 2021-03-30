@@ -9,7 +9,7 @@
 
         <%= form.hidden_field :sms_verification_id, value: @sms_verification.id, autocomplete: "off" %>
         <div class="flex">
-          <%= form.text_field :code, class: "btn mr-0 rounded-r-none" %>
+          <%= form.text_field :code, class: "btn mr-0 rounded-r-none", autocomplete: "off" %>
           <%= form.button class: "btn btn-secondary rounded-l-none", data: { sms_animation_target: "button" } do %>
             <%= t("sms_verifications.verify") %>
           <% end %>

@@ -28,7 +28,7 @@ class MeetingMember < ApplicationRecord
   has_many :document_accesses
   has_many :meeting_accesses
 
-  validate :maximum_members, on: :create
+  include ValidatesMaximumMembers
   after_create :initialize_signatures
 
   private
@@ -36,14 +36,6 @@ class MeetingMember < ApplicationRecord
   def initialize_signatures
     meeting.documents.each do |document|
       document.signatures.create(meeting_member: self)
-    end
-  end
-
-  def maximum_members
-    # STRIPE FOR LUCA
-    max_members = 4
-    if meeting.meeting_members.count >= max_members
-      errors.add(:meeting, I18n.t("meetings.maximum_users", maximum: max_members))
     end
   end
 end

@@ -35,6 +35,7 @@ class Document < ApplicationRecord
   has_one_attached :file
 
   validates :file, attached: true, content_type: 'application/pdf'
+  validate :enforce_maximum_documents, on: :create
   after_create :initialize_signatures
 
   aasm(column: :state, logger: Rails.logger) do
@@ -86,5 +87,13 @@ class Document < ApplicationRecord
     pdf << CombinePDF.parse(file.download)
     pdf << CombinePDF.parse(generate_signatures)
     file.attach(io: pdf.to_pdf, filename: "#{id}.pdf")
+  end
+
+  def enforce_maximum_documents
+    # STRIPE FOR LUCA
+    max_documents = 2
+    if meeting.documents.count >= max_documents
+      errors.add(:meeting, I18n.t("meetings.errors.maximum_documents", maximum: max_documents))
+    end
   end
 end
