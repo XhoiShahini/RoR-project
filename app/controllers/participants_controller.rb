@@ -66,7 +66,16 @@ class ParticipantsController < ApplicationController
   end
 
   def participant_params
-    params[:participant][:meeting_member_attributes][:meeting_id] = @meeting.id if params[:participant][:meeting_member_attributes].present?
-    params.require(:participant).permit(:first_name, :last_name, :email, :phone_number, meeting_member_attributes: [:must_sign, :meeting_id])
+    params[:participant][:meeting_member_attributes][:meeting_id] = @meeting.id if params[:participant].present?
+    params.require(:participant).permit(
+      :first_name,
+      :last_name,
+      :email,
+      :phone_number,
+      meeting_member_attributes: [
+        :must_sign,
+        :meeting_id
+      ]
+    )
   end
 end
