@@ -58,6 +58,12 @@ en:
       otp:
         instructions: "Please enter the code sent to you via SMS."
 
+  meeting_members:
+    notice:
+      create: "Member added successfully"
+      update: "Member updated successfully"
+      destroy: "Member removed successfully"
+
   #ActiveStorage Validations
   errors:
     messages:
