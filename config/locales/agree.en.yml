@@ -33,6 +33,10 @@ en:
       accepted: "Accepted Invitation"
       verified: "Verified"
       finalized: "Signed"
+    notice:
+      create: "Participant created successfully"
+      update: "Participant updated successfully"
+      destroy: "Participant destroyed successfully"
 
   sms_verifications:
     template: "Agree.Live: Your code is %token"

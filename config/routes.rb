@@ -8,6 +8,9 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :meeting_members, path: :members do
+    end
+
     resource :room, controller: "meetings/room", only: [:show] do
       get :pre_meeting
     end
