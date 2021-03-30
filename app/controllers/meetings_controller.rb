@@ -59,4 +59,8 @@ class MeetingsController < ApplicationController
   def set_meeting
     @meeting = Meeting.find(params[:id])
   end
+
+  def meeting_params
+    params.require(:meeting).permit(:title, :starts_at, :host_id)
+  end
 end

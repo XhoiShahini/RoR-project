@@ -4,6 +4,7 @@ class ParticipantsController < ApplicationController
   before_action :set_participant, except: [:index, :new, :create]
   before_action :require_meeting_member!, only: [:index, :show]
   before_action :require_current_account_admin, except: [:index, :show]
+  before_action :cannot_modify_completed!, except: [:index, :show]
 
   # GET /meetings/:meeting_id/participants
   def index
@@ -17,12 +18,12 @@ class ParticipantsController < ApplicationController
 
   # GET /meetings/:meeting_id/participants/new
   def new
-    @participant = Participant.new
+    @participant = @meeting.participants.new
   end
 
   # POST /meetings/:meeting_id/participants
   def create
-    @participant = Participant.new(participant_params)
+    @participant = @meeting.participants.new(participant_params)
 
     if @participant.save
       redirect_to @meeting, notice: t("participants.notice.create")
@@ -62,5 +63,10 @@ class ParticipantsController < ApplicationController
 
   def set_participant
     @participant = Participant.find(params[:id])
+  end
+
+  def participant_params
+    params[:participant][:meeting_member_attributes][:meeting_id] = @meeting.id if params[:participant][:meeting_member_attributes].present?
+    params.require(:participant).permit(:first_name, :last_name, :email, :phone_number, meeting_member_attributes: [:must_sign, :meeting_id])
   end
 end
