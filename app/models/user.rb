@@ -21,6 +21,7 @@
 #  invitations_count      :integer          default(0)
 #  invited_by_type        :string
 #  last_name              :string
+#  phone_number           :string
 #  preferred_language     :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
@@ -50,6 +51,7 @@ class User < ApplicationRecord
 
   include UserAccounts
   include UserAgreements
+  include IdentificationAttached
 
   has_noticed_notifications
   has_person_name
@@ -64,6 +66,11 @@ class User < ApplicationRecord
   has_many :api_tokens, dependent: :destroy
   has_many :connected_accounts, dependent: :destroy
   has_many :notifications, as: :recipient, dependent: :destroy
+  has_many :meeting_members, as: :memberable
+  has_many :signatures, through: :meeting_members
+  has_many :verified_meeting_members, class_name: "MeetingMember", foreign_key: "verifier_id"
+  has_many :meetings, through: :meeting_members
+  has_many :documents, foreign_key: "created_by"
 
   # We don't need users to confirm their email address on create,
   # just when they change it

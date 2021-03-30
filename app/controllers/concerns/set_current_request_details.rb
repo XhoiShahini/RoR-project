@@ -14,10 +14,18 @@ module SetCurrentRequestDetails
     Current.ip_address = request.ip
     Current.user = current_user
 
+    set_current_participant
     # Account may already be set by the AccountMiddleware
     Current.account ||= account_from_domain || account_from_subdomain || account_from_session || fallback_account
 
     set_current_tenant(Current.account)
+  end
+
+  def set_current_participant
+    if session[:participant_id].present?
+      Current.participant = Participant.find(session[:participant_id])
+      Current.account = Current.participant.account
+    end
   end
 
   def account_from_domain

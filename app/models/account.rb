@@ -39,6 +39,8 @@ class Account < ApplicationRecord
   has_many :account_users, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :users, through: :account_users
+  has_many :participants
+  has_many :meetings
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }

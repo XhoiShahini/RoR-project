@@ -1,0 +1,20 @@
+<%= turbo_frame_tag "sms_verification" do %>
+  <div class="card">
+    <p class="text-xl text-primary-500 font-semibold"><%= t("participants.sign_in.title") %></p>
+    <div class="flex justify-between">
+      <p class="text-xs text-gray-600"><%= t(".instructions") %></p>
+      <%= form_with(
+            url: meeting_participant_sign_in_path(@meeting, @participant),
+            data: { controller: "sms-animation", action: "turbo:submit-start->sms-animation#animate", turbo_frame: "_top" }) do |form| %>
+
+        <%= form.hidden_field :sms_verification_id, value: @sms_verification.id, autocomplete: "off" %>
+        <div class="flex">
+          <%= form.text_field :code, class: "btn mr-0 rounded-r-none" %>
+          <%= form.button class: "btn btn-secondary rounded-l-none", data: { sms_animation_target: "button" } do %>
+            <%= t("sms_verifications.verify") %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
