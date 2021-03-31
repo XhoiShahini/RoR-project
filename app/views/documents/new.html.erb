@@ -1,0 +1,6 @@
+<%= turbo_frame_tag "new_document" do %>
+  <div class="card">
+    <p class="card-header"><%= t(".new_document") %></p>
+    <%= render "form", document: @document %>
+  </div>
+<% end %>
