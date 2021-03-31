@@ -17,7 +17,7 @@
 
   <%= form.fields_for :meeting_member do |f| %>
     <div class="form-group">
-      <%= f.check_box :must_sign, class: "form-checkbox mr-2" %>
+      <%= f.check_box :must_sign, checked: true, class: "form-checkbox mr-2" %>
       <%= f.label :must_sign, class: "inline-block" %>
     </div>
   <% end %>
