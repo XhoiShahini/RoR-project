@@ -8,6 +8,13 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :documents do
+      member do
+        get :pdf
+        get :download
+      end
+    end
+
     resources :meeting_members, path: :members do
     end
 

@@ -31,6 +31,16 @@ class DocumentsController < ApplicationController
   def show
   end
 
+  # GET /meetings/:meeting_id/documents/:id/pdf
+  def pdf
+    stream_document_file disposition: "inline"
+  end
+
+  # GET /meetings/:meeting_id/documents/:id/download
+  def download
+    stream_document_file disposition: "attachment"
+  end
+
   # GET /meetings/:meeting_id/documents/:id/edit
   def edit
   end
@@ -51,6 +61,17 @@ class DocumentsController < ApplicationController
   end
 
   private
+
+  def stream_document_file(disposition:)
+    response.headers["Content-Type"] = @document.file.content_type
+    response.headers["Content-Disposition"] = "#{disposition};"
+
+    @document.file.download do |chunk|
+      response.stream.write(chunk)
+    end
+  ensure
+    response.stream.close
+  end
 
   def set_meeting
     @meeting = Meeting.find(params[:meeting_id])
