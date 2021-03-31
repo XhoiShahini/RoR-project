@@ -9,6 +9,7 @@ class MeetingMembersController < ApplicationController
 
   # GET /meetings/:meeting_id/members
   def index
+    @host = current_account_admin?
     @meeting_members = @meeting.meeting_members
   end
 
@@ -47,7 +48,11 @@ class MeetingMembersController < ApplicationController
 
   # DELETE /meetings/:meeting_id/members/:id
   def destroy
-    @meeting_member.destroy
+    if @meeting_member.memberable_type == "Participant"
+      @meeting_member.memberable.destroy
+    else
+      @meeting_member.destroy
+    end
     redirect_to @meeting, notice: t("meeting_members.notice.destroy")
   end
 

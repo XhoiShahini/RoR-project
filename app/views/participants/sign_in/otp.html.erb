@@ -1,8 +1,8 @@
 <%= turbo_frame_tag "sms_verification" do %>
   <div class="card">
-    <p class="text-xl text-primary-500 font-semibold"><%= t("participants.sign_in.title") %></p>
+    <p class="card-header"><%= t("participants.sign_in.title") %></p>
     <div class="flex justify-between">
-      <p class="text-xs text-gray-600"><%= t(".instructions") %></p>
+      <p class="card-paragraph"><%= t(".instructions") %></p>
       <%= form_with(
             url: meeting_participant_sign_in_path(@meeting, @participant),
             data: { controller: "sms-animation", action: "turbo:submit-start->sms-animation#animate", turbo_frame: "_top" }) do |form| %>

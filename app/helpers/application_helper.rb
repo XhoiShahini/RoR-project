@@ -64,4 +64,32 @@ module ApplicationHelper
   def title(page_title)
     content_for(:title) { page_title }
   end
+
+  def phone_number_field(form, phone_number)
+    content_tag(:div, class: "form-group", data: { controller: "phone-number" }) do
+      form.label(:phone_number) + \
+      form.hidden_field(:phone_number, autocomplete: "off", data: { phone_number_target: "hidden" }) + \
+      telephone_field_tag(
+        "phone-input", 
+        phone_number, 
+        class: "phone-input form-control",
+        data: {
+          phone_number_target: "input",
+          action: "blur->phone-number#update keyup->phone-number#reset change->phone-number#reset"
+        }
+      ) + \
+      content_tag(
+        :span,
+        class: "hidden text-secondary-500",
+        data: {
+          phone_number_target: "valid"
+        }) { fa_icon "check", weight: "fas" } + \
+      content_tag(
+        :div,
+        class: "alert alert-error hidden",
+        data: {
+          phone_number_target: "error"
+        }) { t("phone_number.invalid_number") }
+    end
+  end
 end

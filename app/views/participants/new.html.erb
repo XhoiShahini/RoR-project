@@ -1,0 +1,6 @@
+<%= turbo_frame_tag "new_participant" do %>
+  <div class="card">
+    <p class="card-header"><%= t(".new_participant") %>
+    <%= render "form", participant: @participant, meeting: @meeting %>
+  </div>
+<% end %>

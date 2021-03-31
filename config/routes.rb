@@ -117,6 +117,7 @@ Rails.application.routes.draw do
     get :terms
     get :privacy
     get :pricing
+    get :phone_input_utils
   end
 
   post :sudo, to: "users/sudo#create"

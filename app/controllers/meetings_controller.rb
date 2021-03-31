@@ -1,4 +1,5 @@
 class MeetingsController < ApplicationController
+  include MeetingsHelper
   before_action :set_meeting, except: [:index, :new, :create]
   before_action :cannot_modify_completed!, only: [:edit, :update, :destroy]
   before_action :require_current_account_admin, except: [:index, :show]

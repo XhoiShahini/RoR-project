@@ -13,15 +13,16 @@ class ParticipantsController < ApplicationController
 
   # GET /meetings/:meeting_id/participants/new
   def new
-    @participant = @meeting.participants.new
+    @participant = @meeting.account.participants.new
+    @participant.meeting_member = @meeting.meeting_members.new(memberable: @participant)
   end
 
   # POST /meetings/:meeting_id/participants
   def create
-    @participant = @meeting.participants.new(participant_params)
+    @participant = @meeting.account.participants.new(participant_params)
 
     if @participant.save
-      redirect_to @meeting, notice: t("participants.notice.create")
+      redirect_to new_meeting_participant_path(@meeting), notice: t("participants.notice.create")
     else
       render :new, status: :unprocessable_entity
     end

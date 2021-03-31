@@ -1,5 +1,8 @@
 ---
 en:
+  phone_number:
+    invalid_number: "Invalid Phone Number"
+
   pdf_gen:
     signatures: "Signatures"
     signed_at: "Signed At"
@@ -31,8 +34,13 @@ en:
       create: "Meeting created successfully"
       update: "Meeting updated successfully"
       destroy: "Meeting destroyed successfully"
+    show:
+      starts_at: "Start Time"
+      completed: "Completed"
+      state: "Status"
 
   participants:
+    submit: "Invite Participant"
     state:
       invited: "Invited"
       accepted: "Accepted Invitation"
@@ -42,6 +50,8 @@ en:
       create: "Participant created successfully"
       update: "Participant updated successfully"
       destroy: "Participant destroyed successfully"
+    new:
+      new_participant: "Add A Participant"
 
   sms_verifications:
     template: "Agree.Live: Your code is %token"

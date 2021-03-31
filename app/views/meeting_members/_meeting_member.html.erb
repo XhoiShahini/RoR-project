@@ -1,0 +1,20 @@
+<%= turbo_frame_tag dom_id(meeting_member) do %>
+  <div class="card">
+    <div class="flex justify-between items-center">
+      <div>
+        <p class="font-semibold text-primary-500"><%= meeting_member.memberable.name %></p>
+        <p class="card-paragraph">
+          <%= meeting_member.memberable == meeting_member.meeting.host ? t(".host") : meeting_member.memberable_type %>
+          <%= meeting_member.must_sign ? "" : "(Spectator)" %>
+        </p>
+      </div>
+      <div>
+        <% if @host %>
+          <%= button_to meeting_meeting_member_path(meeting_member.meeting, meeting_member), method: :delete, class: "btn btn-small text-lg btn-danger outline" do %>
+            <%= fa_icon "trash", weight: "fas" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

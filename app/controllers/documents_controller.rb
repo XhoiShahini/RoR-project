@@ -4,7 +4,7 @@ class DocumentsController < ApplicationController
   before_aciton :set_document, except: [:index, :new, :create]
   before_action :require_meeting_member!
   before_action :cannot_modify_signed!, only: [:edit, :update, :destroy]
-  before_action :require_current_account_admin, except: [:index, :show]
+  before_action :require_current_account_admin, except: [:index, :show, :pdf, :download]
 
   # GET /meetings/:meeting_id/documents
   def index

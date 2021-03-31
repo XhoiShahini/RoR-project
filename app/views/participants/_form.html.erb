@@ -1,0 +1,26 @@
+<%= form_with(model: participant, url: meeting_participants_path(meeting)) do |form| %>
+  <%= render "shared/error_messages", resource: participant %>
+  <div class="form-group">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label :email %>
+    <%= form.text_field :email, class: "form-control" %>
+  </div>
+
+  <%= phone_number_field(form, participant.phone_number) %>
+
+  <%= form.fields_for :meeting_member do |f| %>
+    <div class="form-group">
+      <%= f.check_box :must_sign, class: "form-checkbox mr-2" %>
+      <%= f.label :must_sign, class: "inline-block" %>
+    </div>
+  <% end %>
+
+  <%= form.button t('participants.submit'), class: "btn btn-primary" %>
+<% end %>

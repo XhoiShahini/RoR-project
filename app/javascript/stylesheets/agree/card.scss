@@ -1,0 +1,23 @@
+.card {
+  @apply bg-white p-4 my-2 mx-1 border rounded-lg max-w-3xl shadow-md;
+
+  &:hover {
+    @apply bg-gray-50;
+  }
+}
+
+.card-header {
+  @apply text-xl font-semibold text-primary-500 mb-2;
+}
+
+.card-title {
+  @apply text-lg font-semibold mb-1;
+}
+
+.card-paragraph {
+  @apply text-xs text-gray-600 max-w-sm;
+}
+
+.pointer-events-active:hover {
+  @apply cursor-pointer;
+}

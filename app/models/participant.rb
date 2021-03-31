@@ -49,7 +49,6 @@ class Participant < ApplicationRecord
   has_one :meeting, through: :meeting_member
   has_many :signatures, through: :meeting_member
   has_many :sms_verifications, as: :sms_verifiable
-  include ValidatesMaximumMembers
 
   accepts_nested_attributes_for :meeting_member
 
