@@ -23,8 +23,8 @@ module SetCurrentRequestDetails
 
   def set_current_participant
     if session[:participant_id].present?
-      Current.participant = Participant.find(session[:participant_id])
-      Current.account = Current.participant.account
+      Current.participant = Participant.find(session[:participant_id]) rescue nil
+      Current.account = Current.participant.account if Current.participant
     end
   end
 

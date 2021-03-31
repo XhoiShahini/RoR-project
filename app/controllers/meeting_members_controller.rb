@@ -63,7 +63,7 @@ class MeetingMembersController < ApplicationController
   end
 
   def set_member
-    @meeting_member = Participant.find(params[:id])
+    @meeting_member = MeetingMember.find(params[:id])
   end
 
   def meeting_member_params

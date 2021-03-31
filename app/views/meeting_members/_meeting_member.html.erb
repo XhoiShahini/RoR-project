@@ -9,7 +9,7 @@
         </p>
       </div>
       <div>
-        <% if @host %>
+        <% if @host && meeting_member.memberable != current_user %>
           <%= button_to meeting_meeting_member_path(meeting_member.meeting, meeting_member), method: :delete, class: "btn btn-small text-lg btn-danger outline" do %>
             <%= fa_icon "trash", weight: "fas" %>
           <% end %>
