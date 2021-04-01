@@ -43,6 +43,9 @@ en:
       starts_at: "Start Time"
       completed: "Completed"
       state: "Status"
+    partials:
+      member_heads:
+        host: "Host"
 
   participants:
     submit: "Invite Participant"
