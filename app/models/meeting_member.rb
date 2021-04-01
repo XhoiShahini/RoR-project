@@ -24,14 +24,21 @@ class MeetingMember < ApplicationRecord
   belongs_to :meeting
   belongs_to :memberable, polymorphic: true
 
-  has_many :signatures
+  has_many :signatures, dependent: :destroy
   has_many :document_accesses
   has_many :meeting_accesses
 
   include ValidatesMaximumMembers
   after_create :initialize_signatures
+  after_create_commit { broadcast_to_meeting("create") }
+  after_update_commit { broadcast_to_meeting("update") }
+  after_destroy_commit { broadcast_to_meeting("destroy") }
 
   private
+
+  def broadcast_to_meeting(type)
+    MeetingMembersChannel.broadcast_to meeting, type: type, document_id: id
+  end
 
   def initialize_signatures
     meeting.documents.each do |document|

@@ -52,6 +52,13 @@ en:
       destroy: "Participant destroyed successfully"
     new:
       new_participant: "Add A Participant"
+    sign_in:
+      success: "Signed in successfully."
+      title: "Please Sign In"
+      show:
+        send_code: "Send Code"
+      otp:
+        instructions: "Please enter the code sent to you via SMS."
 
   sms_verifications:
     template: "Agree.Live: Your code is %token"
@@ -63,15 +70,6 @@ en:
       sent: "Sent"
       failed: "Failed"
       verified: "Verified"
-
-  participants:
-    sign_in:
-      success: "Signed in successfully."
-      title: "Please Sign In"
-      show:
-        send_code: "Send Code"
-      otp:
-        instructions: "Please enter the code sent to you via SMS."
 
   meeting_members:
     notice:
