@@ -16,15 +16,15 @@ export default class extends Controller {
   }
 
   _loadMembers() {
-    return fetch("/meetings/" + this.idValue + "/members")
-            .then(response => response.text())
-            .then(data => {
-              let parser = new DOMParser()
-              return parser.parseFromString(data, "text/html")  
-            })
-            .then(response => {
-              this.element.innerHTML = response.querySelector("#meeting_members").innerHTML
-            })
+    fetch("/meetings/" + this.idValue + "/members")
+      .then(response => response.text())
+      .then(data => {
+        let parser = new DOMParser()
+        return parser.parseFromString(data, "text/html")  
+      })
+      .then(response => {
+        this.element.innerHTML = response.querySelector("#meeting_members").innerHTML
+      })
   }
 
   _connected() {}
