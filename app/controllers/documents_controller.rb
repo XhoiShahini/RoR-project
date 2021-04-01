@@ -23,7 +23,7 @@ class DocumentsController < ApplicationController
     @document.created_by = current_user
 
     if @document.save
-      redirect_to new_meeting_documents_path(@meeting), notice: t("documents.notice.create")
+      redirect_to new_meeting_document_path(@meeting), notice: t("documents.notice.create")
     else
       render :new, status: :unprocessable_entity
     end
@@ -58,8 +58,8 @@ class DocumentsController < ApplicationController
 
   # DELETE /meetings/meeting_:id/documents/:id
   def destroy
-    @meeting.destroy
-    redirect_to meetings_url, notice: t("documents.notice.destroy")
+    @document.destroy
+    redirect_to meeting_documents_path(@meeting), notice: t("documents.notice.destroy")
   end
 
   private

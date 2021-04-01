@@ -16,9 +16,9 @@ en:
       finalized: "Finalized"
     notice:
       cannot_be_modified: "This document has been signed at least once and cannot be modified"
-      create: "Meeting created successfully"
-      update: "Meeting updated successfully"
-      destroy: "Meeting destroyed successfully"
+      create: "Document created successfully"
+      update: "Document updated successfully"
+      destroy: "Document destroyed successfully"
     
   meetings:
     errors:

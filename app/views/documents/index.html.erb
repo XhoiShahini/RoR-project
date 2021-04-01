@@ -1,3 +1,4 @@
-<%= turbo_frame_tag "documents" do %>
+<%= turbo_frame_tag "documents", data: { controller: "documents--list", documents__list_id_value: @meeting.id } do %>
+  <%= render partial: "shared/flash" %>
   <%= render @documents %>
 <% end %>

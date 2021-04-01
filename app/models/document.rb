@@ -28,7 +28,7 @@ class Document < ApplicationRecord
   belongs_to :meeting
   belongs_to :created_by, class_name: "User"
 
-  has_many :signatures
+  has_many :signatures, dependent: :destroy
   has_many :meeting_members, through: :signatures
   has_many :document_accesses
 
@@ -36,7 +36,11 @@ class Document < ApplicationRecord
 
   validates :file, attached: true, content_type: 'application/pdf'
   validate :enforce_maximum_documents, on: :create
+
   after_create :initialize_signatures
+  after_create_commit { broadcast_to_meeting("create") }
+  after_update_commit { broadcast_to_meeting("update") }
+  after_destroy_commit { broadcast_to_meeting("destroy") }
 
   aasm(column: :state, logger: Rails.logger) do
     state :created, initial: true, display: I18n.t("documents.state.created")
@@ -53,6 +57,10 @@ class Document < ApplicationRecord
   end
 
   private
+
+  def broadcast_to_meeting(type)
+    DocumentsChannel.broadcast_to meeting, type: type, document_id: id
+  end
 
   def initialize_signatures
     meeting.meeting_members.each do |member|
