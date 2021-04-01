@@ -1,8 +1,10 @@
 <%= turbo_frame_tag dom_id(meeting_member) do %>
-  <div class="card">
+  <div class="card" data-controller="meeting-members--member">
     <div class="flex justify-between items-center">
       <div>
-        <p class="font-semibold text-primary-500"><%= meeting_member.memberable.name %></p>
+        <p class="card-title pointer-events-active" data-action="click->meeting-members--member#toggle">
+          <%= meeting_member.memberable.name %>
+        </p>
         <p class="card-paragraph">
           <%= meeting_member.memberable == meeting_member.meeting.host ? t(".host") : meeting_member.memberable_type %>
           <%= meeting_member.must_sign ? "" : "(Spectator)" %>
@@ -13,6 +15,32 @@
           <%= button_to meeting_meeting_member_path(meeting_member.meeting, meeting_member), method: :delete, class: "btn btn-small text-lg btn-danger outline" do %>
             <%= fa_icon "trash", weight: "fas" %>
           <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="hidden mt-2 pt-2 border border-l-0 border-r-0 border-b-0" data-meeting-members--member-target="details">
+      <div class="grid grid-cols-2">
+        <p class="card-paragraph">
+          <%= t(".email") %>:
+        </p>
+        <p class="card-paragraph">
+          <%= meeting_member.memberable.email %>
+        </p>
+
+        <p class="card-paragraph">
+          <%= t(".phone_number") %>:
+        </p>
+        <p class="card-paragraph">
+          <%= meeting_member.memberable.phone_number %>
+        </p>
+
+        <% if meeting_member.memberable_type == "Participant" %>
+          <p class="card-paragraph">
+            <%= t(".status") %>:
+          </p>
+          <p class="card-paragraph">
+            <%= meeting_member.memberable.aasm.human_state %>
+          </p>
         <% end %>
       </div>
     </div>
