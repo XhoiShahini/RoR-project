@@ -41,6 +41,11 @@
           <p class="card-paragraph">
             <%= meeting_member.memberable.aasm.human_state %>
           </p>
+          <% if @host %>
+            <p class="col-span-2">
+              <%= link_to t(".edit"), edit_meeting_participant_path(meeting_member.meeting, meeting_member.memberable), class: "btn btn-link pl-0" %>
+            </p>
+          <% end %>
         <% end %>
       </div>
     </div>

@@ -12,6 +12,9 @@
           <%= fa_icon "download", weight: "fas" %>
         <% end %>
         <% if @host %>
+          <%= link_to edit_meeting_document_path(document.meeting, document), class: "btn btn-small text-lg btn-primary ml-2" do %>
+            <%= fa_icon "edit", weight: "fas" %>
+          <% end %>
           <%= button_to meeting_document_path(document.meeting, document), method: :delete, class: "btn btn-small text-lg btn-danger outline ml-2" do %>
             <%= fa_icon "trash", weight: "fas" %>
           <% end %>

@@ -1,0 +1,33 @@
+<%= turbo_frame_tag dom_id(@document) do %>
+  <div class="card">
+    <%= form_with(model: @document, url: meeting_document_path(@document.meeting, @document), html: { method: :put }) do |form| %>
+      <%= render "shared/error_messages", resource: @document %>
+
+      <div class="form-group">
+        <%= form.label :title %>
+        <%= form.text_field :title, class: "form-control", value: @document.title %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :file %>
+        <%= form.file_field :file, accept: "application/pdf", class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <div>
+          <%= form.check_box :require_read, class: "form-checkbox mr-2" %>
+          <%= form.label :require_read, class: "inline-block", checked: @document.require_read %>
+        </div>
+        <div>
+          <%= form.check_box :read_only, class: "form-checkbox mr-2" %>
+          <%= form.label :read_only, class: "inline-block", checked: @document.read_only %>
+        </div>
+      </div>
+
+      <div class="flex">
+        <%= form.button t(".submit"), class: "btn btn-primary" %>
+        <%= link_to t(".cancel"), meeting_documents_path(@document.meeting), class: "btn btn-link" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
