@@ -22,7 +22,7 @@ class Participants::IdUploadsController < ApplicationController
   private
 
   def id_upload_params
-    params.permit(:participant).permit(:participant_id)
+    params.require(:participant).permit(:identification)
   end
 
   def set_meeting

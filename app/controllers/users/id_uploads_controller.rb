@@ -21,6 +21,6 @@ class Users::IdUploadsController < ApplicationController
   private
 
   def id_upload_params
-    params.permit(:user).permit(:identification)
+    params.require(:user).permit(:identification)
   end
 end
