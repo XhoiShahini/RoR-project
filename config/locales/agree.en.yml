@@ -43,6 +43,14 @@ en:
       starts_at: "Start Time"
       completed: "Completed"
       state: "Status"
+    index:
+      title: "Title"
+      account: "Account"
+      host: "Host"
+      state: "Status"
+      members: "Members"
+      starts_or_completed_at: "Starts/Completed At"
+      actions: "Actions"
     partials:
       member_heads:
         host: "Host"
