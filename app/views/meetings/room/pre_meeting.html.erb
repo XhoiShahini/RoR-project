@@ -1,0 +1,57 @@
+<div class="container mx-auto my-2 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex">
+        <h1 class="h3">
+          <%= t('.title', meeting: @meeting.title) %> 
+        </h1>
+      </div>
+    </div>
+
+    <div class="bg-white rounded shadow p-8" id="controller" data-controller="pre-meeting">
+      <div class="alert alert-info mb-6">
+        <div class="flex items-start justify-start">
+          <div class="text-lg mr-2">
+            <%= fa_icon "info-circle", weight: "fas" %>
+          </div>
+
+          <div>
+            <h4 class="font-black text-sm uppercase"><%= t('.info_title') %></h4>
+            <p class="leading-normal"><%= t('.info_body') %></p>
+          </div>
+        </div>
+      </div>
+
+      <h3>
+        <%= fa_icon "calendar-day", weight: "fas", class: "mr-2" %>
+        <%= @meeting.title %>
+      </h3>
+      <div class="mt-4 flex">
+        <div class="mb-2 mr-8">
+          <h4><%= t(".starts_at") %></h4>
+          <%= @meeting.starts_at %>
+        </div>
+        <div class="mb-2 mr-8">
+          <h4><%= t(".host") %></h4>
+          <%= @meeting.host.name %>
+        </div>
+        <% if (company = @meeting.meeting_members.find_by(memberable_id: @meeting.host_id).company) && company.present? %>
+          <div class="mb-2 mr-8">
+            <h4><%= t(".company") %></h4>
+            <%= company %>
+          </div>
+        <% end %>
+      </div>
+      <% unless @id_attached %>
+        <% if current_user %>
+          <%= turbo_frame_tag "id_upload", src: new_user_id_upload_path %>
+        <% elsif current_participant %>
+          <%= turbo_frame_tag "id_upload", src: new_meeting_participant_id_upload_path(@meeting, @meeting_member.memberable) %>
+        <% end %>
+      <% end %>
+      <div class="<%= "hidden" unless @id_attached %> flex justify-center mt-4" data-pre-meeting-target="join">
+        <%= link_to t('.join_meeting'), meeting_room_path(@meeting), class: "btn btn-secondary" %>
+      </div>
+    </div>
+  </div>
+</div>

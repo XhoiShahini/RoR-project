@@ -1,0 +1,9 @@
+<%= form_with(model: user, url: user_id_upload_path, html: { method: :post }) do |form| %>
+  <div class="flex justify-between">
+    <%= form.file_field :identification, accept: "image/jpg,image/jpeg,image/png,application/pdf", class: "form-control" %>
+    <%= form.button class: "btn btn-primary" do %>
+      <%= fa_icon "upload", weight: "fas", class: "mr-2" %>
+      <%= t('.submit') %>
+    <% end %>
+  </div>
+<% end %>

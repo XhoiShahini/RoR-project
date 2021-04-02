@@ -54,6 +54,19 @@ en:
     partials:
       member_heads:
         host: "Host"
+    room:
+      pre_meeting: 
+        title: "%{meeting} is ready to join!"
+        info_title: "Ready to join?"
+        info_body: "Please review the meeting information and provide any additional information required below."
+        starts_at: "Start Time"
+        host: "Host"
+        company: "Company"
+        upload_id:
+          title: "Upload your ID"
+          description: "Upload an image or PDF of your government-issued ID"
+          require_same_participant: "You can only upload your own ID"
+
 
   participants:
     submit: "Invite Participant"
@@ -78,6 +91,8 @@ en:
     edit:
       submit: "Update Participant"
       cancel: "Cancel"
+    id_form:
+      submit: "Upload"
 
   sms_verifications:
     template: "Agree.Live: Your code is %token"
@@ -97,7 +112,7 @@ en:
       destroy: "Member removed successfully"
     meeting_member:
       email: "Email"
-      phone_number: "Phone Number"
+      phone_number: "Phone"
       status: "Status"
 
   #ActiveStorage Validations

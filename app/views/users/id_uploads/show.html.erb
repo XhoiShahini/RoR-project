@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "id_upload" do %>
+  <div class="card">
+    <p class="card-header"><%= t('meetings.room.pre_meeting.upload_id.title') %></p>
+    <div class="flex justify-center text-5xl text-secondary-600">
+      <%= fa_icon "check", weight: "fas" %>
+    </div>
+    <div class="hidden" data-controller="id-upload"></div>
+  </div>
+<% end %>

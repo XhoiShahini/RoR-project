@@ -19,18 +19,18 @@
       </div>
     </div>
     <div class="hidden mt-2 pt-2 border border-l-0 border-r-0 border-b-0" data-meeting-members--member-target="details">
-      <div class="grid grid-cols-2">
+      <div class="grid grid-cols-4">
         <p class="card-paragraph">
           <%= t(".email") %>:
         </p>
-        <p class="card-paragraph">
+        <p class="card-paragraph col-span-3">
           <%= meeting_member.memberable.email %>
         </p>
 
         <p class="card-paragraph">
           <%= t(".phone_number") %>:
         </p>
-        <p class="card-paragraph">
+        <p class="card-paragraph col-span-3">
           <%= meeting_member.memberable.phone_number %>
         </p>
 
@@ -38,11 +38,11 @@
           <p class="card-paragraph">
             <%= t(".status") %>:
           </p>
-          <p class="card-paragraph">
+          <p class="card-paragraph col-span-3">
             <%= meeting_member.memberable.aasm.human_state %>
           </p>
           <% if @host %>
-            <p class="col-span-2">
+            <p class="col-span-4">
               <%= link_to t(".edit"), edit_meeting_participant_path(meeting_member.meeting, meeting_member.memberable), class: "btn btn-link pl-0" %>
             </p>
           <% end %>

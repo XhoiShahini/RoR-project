@@ -326,6 +326,8 @@ en:
       submit: "Confirm password"
       forgot_password: "Forgot password?"
       invalid_password: "Invalid password"
+    id_form:
+      submit: "Upload"
 
   layouts:
     mailer:

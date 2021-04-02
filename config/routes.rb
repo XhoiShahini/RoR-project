@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :sms_verifications, only: [:new, :create]
   resources :meetings do
     resources :participants do
+      resource :id_upload, controller: "participants/id_uploads", only: [:new, :create, :show]
       resource :sign_in, controller: "participants/sign_in", only: [:create, :show] do
         get :otp
       end
@@ -102,6 +103,7 @@ Rails.application.routes.draw do
   end
   namespace :user, module: :users do
     resources :connected_accounts
+    resource :id_upload, only: [:new, :create, :show]
   end
 
   namespace :action_text do
