@@ -93,6 +93,8 @@ en:
       cancel: "Cancel"
     id_form:
       submit: "Upload"
+      skip: "Skip"
+      confirm_skip: "Are you sure? Uploading your ID makes it easier for others to confirm your identity."
 
   sms_verifications:
     template: "Agree.Live: Your code is %token"

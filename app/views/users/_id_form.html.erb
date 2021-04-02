@@ -5,5 +5,6 @@
       <%= fa_icon "upload", weight: "fas", class: "mr-2" %>
       <%= t('.submit') %>
     <% end %>
+    <%= link_to t('.skip'), user_id_upload_path, class: "btn btn-link", data: { confirm: t('.confirm_skip') } %>
   </div>
 <% end %>

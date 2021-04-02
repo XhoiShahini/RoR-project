@@ -328,6 +328,8 @@ en:
       invalid_password: "Invalid password"
     id_form:
       submit: "Upload"
+      skip: "Skip"
+      confirm_skip: "Are you sure? Uploading your ID makes it easier for others to confirm your identity."
 
   layouts:
     mailer:
