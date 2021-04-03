@@ -28,6 +28,7 @@ class Meeting < ApplicationRecord
   belongs_to :host, class_name: "User"
 
   has_many :meeting_members
+  has_many :participants, through: :meeting_members, source: :memberable, source_type: "Participant"
   has_many :documents
   has_many :signatures, through: :documents
 

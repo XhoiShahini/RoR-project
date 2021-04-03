@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :exception, except: :phone_input_utils
 
   include SetCurrentRequestDetails
   include SetLocale

@@ -1,0 +1,52 @@
+<div class="border rounded p-4 m-2">
+  <h4>Search</h4>
+  <%= search_form_for @q, data: { turbo_frame: "_top" } do |f| %>
+    <div class="grid grid-cols-4">
+      <div class="form-group">
+        <%= f.label :title_cont %>
+        <%= f.search_field :title_cont, class: "rounded" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :participants_first_name_cont %>
+        <%= f.search_field :participants_first_name_cont, class: "rounded" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :participants_last_name_cont %>
+        <%= f.search_field :participants_last_name_cont, class: "rounded" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :account_name_cont %>
+        <%= f.search_field :account_name_cont, class: "rounded" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :meeting_members_company_cont, "Guest's Company" %>
+        <%= f.search_field :meeting_members_company_cont, class: "rounded" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :state_eq %>
+        <%= f.select :state_eq, Meeting.aasm.states_for_select.unshift(["Any", ""]), class: "select" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :starts_at_gt, "Starts At From" %>
+        <%= f.text_field :starts_at_gt, class: "rounded", data: { controller: :flatpickr, flatpickr_enable_time: true, flatpickr_alt_input: true, flatpickr_alt_format: t("time.formats.long") } %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :starts_at_lt, "Starts At To" %>
+        <%= f.text_field :starts_at_lt, class: "rounded", data: { controller: :flatpickr, flatpickr_enable_time: true, flatpickr_alt_input: true, flatpickr_alt_format: t("time.formats.long") } %>
+      </div>
+
+      <div class="form-group spacer">
+      </div>
+    </div>
+    <div class="flex justify-center">
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

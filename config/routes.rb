@@ -3,9 +3,20 @@ Rails.application.routes.draw do
   resources :sms_verifications, only: [:new, :create]
   resources :meetings do
     resources :participants do
+      resource :id_upload, controller: "participants/id_uploads", only: [:new, :create, :show]
       resource :sign_in, controller: "participants/sign_in", only: [:create, :show] do
         get :otp
       end
+    end
+
+    resources :documents do
+      member do
+        get :pdf
+        get :download
+      end
+    end
+
+    resources :meeting_members, path: :members do
     end
 
     resource :room, controller: "meetings/room", only: [:show] do
@@ -92,6 +103,7 @@ Rails.application.routes.draw do
   end
   namespace :user, module: :users do
     resources :connected_accounts
+    resource :id_upload, only: [:new, :create, :show]
   end
 
   namespace :action_text do
@@ -107,6 +119,7 @@ Rails.application.routes.draw do
     get :terms
     get :privacy
     get :pricing
+    get :phone_input_utils
   end
 
   post :sudo, to: "users/sudo#create"

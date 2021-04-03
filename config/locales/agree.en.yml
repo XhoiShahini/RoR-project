@@ -1,5 +1,8 @@
 ---
 en:
+  phone_number:
+    invalid_number: "Invalid Phone Number"
+
   pdf_gen:
     signatures: "Signatures"
     signed_at: "Signed At"
@@ -11,24 +14,92 @@ en:
       created: "No Signatures"
       incomplete: "1+ Signatures"
       finalized: "Finalized"
+    notice:
+      cannot_be_modified: "This document has been signed at least once and cannot be modified"
+      create: "Document created successfully"
+      update: "Document updated successfully"
+      destroy: "Document destroyed successfully"
+    edit:
+      submit: "Update Document"
+      cancel: "Cancel"
+    form:
+      submit: "Create Document"
     
   meetings:
     errors:
-      maximum_users: "can only have %{maximum} users"
+      maximum_members: "can only have %{maximum} members"
+      maximum_documents: "can only have %{maximum} documents"
     state:
       created: "Not Started"
       incomplete: "Started"
       completed: "Completed"
+    notice:
+      not_authorized: "You are not authorized to view that meeting"
+      cannot_be_modified: "This meeting has been completed and cannot be modified"
+      create: "Meeting created successfully"
+      update: "Meeting updated successfully"
+      destroy: "Meeting destroyed successfully"
+    show:
+      starts_at: "Start Time"
+      completed: "Completed"
+      state: "Status"
+    index:
+      title: "Title"
+      account: "Account"
+      host: "Host"
+      state: "Status"
+      members: "Members"
+      starts_or_completed_at: "Starts/Completed At"
+      actions: "Actions"
+    partials:
+      member_heads:
+        host: "Host"
+    room:
+      pre_meeting: 
+        title: "%{meeting} is ready to join!"
+        info_title: "Ready to join?"
+        info_body: "Please review the meeting information and provide any additional information required below."
+        starts_at: "Start Time"
+        host: "Host"
+        company: "Company"
+        upload_id:
+          title: "Upload your ID"
+          description: "Upload an image or PDF of your government-issued ID"
+          require_same_participant: "You can only upload your own ID"
+      show:
+        meetings: "Meetings"
+
 
   participants:
+    submit: "Invite Participant"
     state:
       invited: "Invited"
       accepted: "Accepted Invitation"
       verified: "Verified"
       finalized: "Signed"
+    notice:
+      create: "Participant created successfully"
+      update: "Participant updated successfully"
+      destroy: "Participant destroyed successfully"
+    new:
+      new_participant: "Add A Participant"
+    sign_in:
+      success: "Signed in successfully."
+      title: "Please Sign In"
+      show:
+        send_code: "Send Code"
+      otp:
+        instructions: "Please enter the code sent to you via SMS."
+    edit:
+      submit: "Update Participant"
+      cancel: "Cancel"
+    id_form:
+      submit: "Upload"
+      skip: "Skip"
+      confirm_skip: "Are you sure? Uploading your ID makes it easier for others to confirm your identity."
 
   sms_verifications:
-    template: "Agree.Live: Your token is %token"
+    template: "Agree.Live: Your code is %token"
     verify: "Verify"
     invalid_code: "The code you have provided is invalid, please try again."
     sms_disclaimer: "This will send an SMS to the phone number: %{phone_number}. Messaging and Data rates may apply."
@@ -38,14 +109,15 @@ en:
       failed: "Failed"
       verified: "Verified"
 
-  participants:
-    sign_in:
-      success: "Signed in successfully."
-      title: "Please Sign In"
-      show:
-        send_code: "Send Code"
-      otp:
-        instructions: "Please enter the code sent to you via SMS."
+  meeting_members:
+    notice:
+      create: "Member added successfully"
+      update: "Member updated successfully"
+      destroy: "Member removed successfully"
+    meeting_member:
+      email: "Email"
+      phone_number: "Phone"
+      status: "Status"
 
   #ActiveStorage Validations
   errors:

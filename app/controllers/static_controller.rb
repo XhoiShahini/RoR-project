@@ -14,4 +14,8 @@ class StaticController < ApplicationController
 
   def privacy
   end
+
+  def phone_input_utils
+    send_file "#{Rails.root}/node_modules/intl-tel-input/build/js/utils.js", type: "application/javascript", disposition: "inline"
+  end
 end

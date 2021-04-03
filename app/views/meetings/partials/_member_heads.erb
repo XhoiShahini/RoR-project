@@ -1,0 +1,7 @@
+<% members.each do |member| %>
+  <span class="mr-1/2">
+    <% company = member.company ? " (#{member.company})" : "" %>
+    <% host = member.meeting.host == member.memberable ? " (#{t(".host")})" : "" %>
+    <%= image_tag avatar_url_for(member.memberable), class: "h-7 w-7 rounded-full inline-block", data: { controller: "tooltip", tippy_content: "#{member.memberable.name}#{company}#{host}" } %>
+  </span>
+<% end %>

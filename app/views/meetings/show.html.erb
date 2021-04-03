@@ -1,0 +1,79 @@
+<div class="container mx-auto my-2 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex">
+        <h1 class="h3">
+          <%= link_to 'Meetings', meetings_path %> > <%= @meeting.title %> 
+        </h1>
+      </div>
+      <%= link_to 'Edit', edit_meeting_path(@meeting), class: "btn btn-link" %>
+    </div>
+
+    <div class="bg-white rounded shadow p-8">
+      <h3><%= t('.details') %></h3>
+      <div class="flex justify-center">
+        <div class="card flex justify-between">
+          <div class="mb-2 mr-8">
+            <h4><%= t(".account") %></h4>
+            <%= @meeting.account.name %>
+          </div>
+          <div class="mb-2 mr-8">
+            <h4><%= t(".state") %></h4>
+            <%= @meeting.aasm.human_state %>
+          </div>
+          <% if @meeting.completed? %>
+            <div class="mb-2">
+              <h4><%= t(".completed") %></h4>
+              <%= @meeting.completed_at %>
+            </div>
+          <% elsif @meeting.incomplete? %>
+            <div class="mb-2">
+              <h4><%= t(".starts_at") %></h4>
+              <%= @meeting.starts_at %>
+              <%= render "meetings/partials/postpone" %>
+            </div>
+          <% else %>
+            <div class="mb-2">
+              <h4><%= t(".starts_at") %></h4>
+              <%= @meeting.starts_at %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="lg:grid lg:grid-cols-2">
+        <div class="my-2 mr-2">
+          <h3><%= t(".documents") %></h3>
+          <%= turbo_frame_tag(
+            "documents",
+            src: meeting_documents_path(@meeting),
+            data: {
+              controller: "documents--list",
+              documents__list_id_value: @meeting.id
+            }
+          ) %>
+          <% if current_user %>
+            <%= turbo_frame_tag "new_document", src: new_meeting_document_path(@meeting) %>
+          <% end %>
+        </div>
+        <div class="my-2 ml-2">
+          <h3><%= t(".members") %></h3>
+          <%= turbo_frame_tag(
+            "meeting_members",
+            src: meeting_meeting_members_path(@meeting),
+            data: {
+              controller: "meeting-members--list",
+              meeting_members__list_id_value: @meeting.id,
+            }
+          ) %>
+          <% if @meeting.host == current_user %>
+            <%= turbo_frame_tag "new_participant", src: new_meeting_participant_path(@meeting) %>
+          <% end %>
+        </div>
+      </div>
+      <div class="flex justify-center">
+        <%= link_to t('.join_meeting'), pre_meeting_meeting_room_path(@meeting), class: "btn btn-secondary" %>
+      </div>
+    </div>
+  </div>
+</div>

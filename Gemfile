@@ -101,3 +101,5 @@ gem "messagebird-rest", require: "messagebird"
 gem "combine_pdf", "~> 1.0"
 
 gem "active_storage_validations", "~> 0.9.2"
+
+gem "ransack", "~> 2.4"

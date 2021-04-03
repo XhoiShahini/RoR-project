@@ -1,0 +1,15 @@
+<%= turbo_frame_tag "id_upload" do %>
+  <div class="card">
+    <div class="w-1/2">
+      <div>
+        <p class="card-header"><%= t('meetings.room.pre_meeting.upload_id.title') %></p>
+        <p class='card-paragraph'>
+          <%= t('meetings.room.pre_meeting.upload_id.description') %>
+        </p>
+      </div>
+    </div>
+    <div>
+      <%= render "users/id_form", user: current_user %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,33 @@
+<%= turbo_frame_tag dom_id(@participant.meeting_member) do %>
+  <div class="card">
+    <%= form_with(model: @participant, url: meeting_participant_path(@participant.meeting, @participant), html: { method: :put }) do |form| %>
+      <%= render "shared/error_messages", resource: @participant %>
+      <div class="form-group">
+        <%= form.label :first_name %>
+        <%= form.text_field :first_name, class: "form-control", value: @participant.first_name %>
+      </div>
+      <div class="form-group">
+        <%= form.label :last_name %>
+        <%= form.text_field :last_name, class: "form-control", value: @participant.last_name %>
+      </div>
+      <div class="form-group">
+        <%= form.label :email %>
+        <%= form.text_field :email, class: "form-control", value: @participant.email %>
+      </div>
+
+      <%= phone_number_field(form, @participant.phone_number) %>
+
+      <%= form.fields_for :meeting_member do |f| %>
+        <div class="form-group">
+          <%= f.check_box :must_sign, class: "form-checkbox mr-2", checked: @participant.meeting_member.must_sign %>
+          <%= f.label :must_sign, class: "inline-block" %>
+        </div>
+      <% end %>
+
+      <div class="flex">
+        <%= form.button t(".submit"), class: "btn btn-primary" %>
+        <%= link_to t(".cancel"), meeting_meeting_members_path(@participant.meeting), class: "btn btn-link" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -24,26 +24,25 @@ class MeetingMember < ApplicationRecord
   belongs_to :meeting
   belongs_to :memberable, polymorphic: true
 
-  has_many :signatures
+  has_many :signatures, dependent: :destroy
   has_many :document_accesses
   has_many :meeting_accesses
 
-  validate :maximum_members, on: :create
+  include ValidatesMaximumMembers
   after_create :initialize_signatures
+  after_create_commit { broadcast_to_meeting("create") }
+  after_update_commit { broadcast_to_meeting("update") }
+  after_destroy_commit { broadcast_to_meeting("destroy") }
 
   private
+
+  def broadcast_to_meeting(type)
+    MeetingMembersChannel.broadcast_to meeting, type: type, document_id: id
+  end
 
   def initialize_signatures
     meeting.documents.each do |document|
       document.signatures.create(meeting_member: self)
-    end
-  end
-
-  def maximum_members
-    # STRIPE FOR LUCA
-    max_members = 4
-    if meeting.meeting_members.count >= max_members
-      errors.add(:meeting, I18n.t("meetings.maximum_users", maximum: max_members))
     end
   end
 end

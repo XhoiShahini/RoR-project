@@ -1,0 +1,10 @@
+<%= form_with(model: participant, url: meeting_participant_id_upload_path(@meeting, participant), html: { method: :post }) do |form| %>
+  <div class="flex justify-between">
+    <%= form.file_field :identification, accept: "image/jpg,image/jpeg,image/png,application/pdf", class: "form-control" %>
+    <%= form.button class: "btn btn-primary" do %>
+      <%= fa_icon "upload", weight: "fas", class: "mr-2" %>
+      <%= t('.submit') %>
+    <% end %>
+    <%= link_to t('.skip'), meeting_participant_id_upload_path(@meeting, participant), class: "btn btn-link", data: { confirm: t('.confirm_skip') } %>
+  </div>
+<% end %>
