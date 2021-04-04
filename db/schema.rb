@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_29_171952) do
+ActiveRecord::Schema.define(version: 2021_04_04_075956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_171952) do
     t.boolean "must_sign"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "janus_token"
     t.index ["meeting_id"], name: "index_meeting_members_on_meeting_id"
     t.index ["memberable_type", "memberable_id"], name: "index_meeting_members_on_memberable"
   end
@@ -179,8 +180,11 @@ ActiveRecord::Schema.define(version: 2021_03_29_171952) do
     t.datetime "completed_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "janus_secret"
+    t.uuid "server_id", null: false
     t.index ["account_id"], name: "index_meetings_on_account_id"
     t.index ["host_id"], name: "index_meetings_on_host_id"
+    t.index ["server_id"], name: "index_meetings_on_server_id"
   end
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -255,6 +259,14 @@ ActiveRecord::Schema.define(version: 2021_03_29_171952) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "trial_period_days", default: 0
+  end
+
+  create_table "servers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "domain"
+    t.string "admin_secret"
+    t.string "admin_key"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "signatures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -354,6 +366,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_171952) do
   add_foreign_key "meeting_accesses", "meeting_members"
   add_foreign_key "meeting_members", "meetings"
   add_foreign_key "meetings", "accounts"
+  add_foreign_key "meetings", "servers"
   add_foreign_key "participants", "accounts"
   add_foreign_key "signatures", "documents"
   add_foreign_key "signatures", "meeting_members"

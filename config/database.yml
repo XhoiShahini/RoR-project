@@ -28,10 +28,10 @@ development:
 
 test:
   <<: *default
-  database: <%= "#{ENV["DATABASE_PREFIX"] || 'agreev2'}_development" %>
+  database: <%= "#{ENV["DATABASE_PREFIX"] || 'agreev2'}_test" %>
   template: template0
 
 production:
   <<: *default
-  database: <%= "#{ENV["DATABASE_PREFIX"] || 'agreev2'}_development" %>
+  database: <%= "#{ENV["DATABASE_PREFIX"] || 'agreev2'}_production" %>
 

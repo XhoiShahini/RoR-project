@@ -4,6 +4,7 @@
 #
 #  id              :uuid             not null, primary key
 #  company         :string
+#  janus_token     :string
 #  memberable_type :string           not null
 #  must_sign       :boolean
 #  created_at      :datetime         not null

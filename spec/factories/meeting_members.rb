@@ -4,6 +4,7 @@
 #
 #  id              :uuid             not null, primary key
 #  company         :string
+#  janus_token     :string
 #  memberable_type :string           not null
 #  must_sign       :boolean
 #  created_at      :datetime         not null
@@ -26,7 +27,5 @@ FactoryBot.define do
     memberable { nil }
     company { "MyString" }
     must_sign { false }
-    verified_at { "2021-03-26 15:08:15" }
-    verifier_id { "" }
   end
 end

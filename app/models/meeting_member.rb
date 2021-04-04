@@ -4,6 +4,7 @@
 #
 #  id              :uuid             not null, primary key
 #  company         :string
+#  janus_token     :string
 #  memberable_type :string           not null
 #  must_sign       :boolean
 #  created_at      :datetime         not null
@@ -28,11 +29,17 @@ class MeetingMember < ApplicationRecord
   has_many :document_accesses
   has_many :meeting_accesses
 
+  before_create do |meeting|
+    self.janus_token = SecureRandom.hex(16)
+  end
+
   include ValidatesMaximumMembers
   after_create :initialize_signatures
   after_create_commit { broadcast_to_meeting("create") }
   after_update_commit { broadcast_to_meeting("update") }
   after_destroy_commit { broadcast_to_meeting("destroy") }
+
+  delegate :server, to: :meeting
 
   private
 
