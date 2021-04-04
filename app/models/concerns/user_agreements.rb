@@ -6,6 +6,9 @@ module UserAgreements
     attribute :terms_of_service
     validates :terms_of_service, presence: true, acceptance: true, on: [:create, :invitation_accepted]
 
+    attribute :privacy_policy
+    validates :privacy_policy, presence: true, acceptance: true, on: [:create, :invitation_accepted]
+
     after_validation :accept_terms, on: [:create, :invitation_accepted]
     after_validation :accept_privacy, on: [:create, :invitation_accepted]
   end
