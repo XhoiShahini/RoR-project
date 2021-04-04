@@ -45,6 +45,33 @@ class JanusService
       send_room_request(meeting.server, payload)
     end
 
+    # This does NOT prevent the user from entering again
+    # Remove token first, then kick them
+    def kick_member(meeting_member)
+      payload = {
+        request:"kick",
+        room: meeting_member.meeting.signed_room_id,
+        secret: meeting_member.meeting.janus_secret,
+        id: meeting_member.signed_member_id
+      }
+
+      send_room_request(meeting_member.server, payload)
+    end
+
+    def moderate_member(meeting_member, change_audio: false, audio_state: true, change_video: false, video_state: true)
+      payload = {
+        request:"moderate",
+        room: meeting_member.meeting.signed_room_id,
+        secret: meeting_member.meeting.janus_secret,
+        id: meeting_member.signed_member_id
+      }
+
+      payload[:audio] = audio_state if change_audio
+      payload[:video] = video_state if change_video
+
+      send_room_request(meeting_member.server, payload)
+    end
+
     def list_rooms(server)
       payload = {
         request: "list"

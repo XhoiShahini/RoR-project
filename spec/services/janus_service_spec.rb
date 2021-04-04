@@ -84,6 +84,51 @@ RSpec.describe JanusService do
     subject.destroy_room(meeting)
   end
 
+  it "kicks the user" do
+    expected_json = {
+      janus: "message_plugin",
+      transaction: static_transaction_id,
+      admin_secret: server.admin_secret,
+      plugin: "janus.plugin.videoroom",
+      request: {
+        request:"kick",
+        room: meeting.signed_room_id,
+        secret: meeting.janus_secret,
+        id: meeting_member.signed_member_id
+      }
+    }
+
+    stub_request(:post, "https://#{server.domain}/httpjanus").
+      with({
+        body: expected_json.to_json
+      }).to_return(status: 200, body: "", headers: {})
+
+    subject.kick_member(meeting_member)
+  end
+
+  it "moderates the user" do
+    expected_json = {
+      janus: "message_plugin",
+      transaction: static_transaction_id,
+      admin_secret: server.admin_secret,
+      plugin: "janus.plugin.videoroom",
+      request: {
+        request:"moderate",
+        room: meeting.signed_room_id,
+        secret: meeting.janus_secret,
+        id: meeting_member.signed_member_id,
+        audio: false
+      }
+    }
+
+    stub_request(:post, "https://#{server.domain}/httpjanus").
+      with({
+        body: expected_json.to_json
+      }).to_return(status: 200, body: "", headers: {})
+
+    subject.moderate_member(meeting_member, change_audio: true, audio_state: false)
+  end
+
   it "lists rooms" do
     stub_request(:post, "https://#{server.domain}/httpjanus").
       with({

@@ -41,6 +41,10 @@ class MeetingMember < ApplicationRecord
 
   delegate :server, to: :meeting
 
+  def signed_member_id
+    Digest::SHA1.hexdigest "#{self.id}#{ENV.fetch('SIGNATURE_SALT', 'salt is bad for you')}"
+  end
+
   private
 
   def broadcast_to_meeting(type)
