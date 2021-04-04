@@ -38,6 +38,52 @@ RSpec.describe JanusService do
     subject.create_room(meeting)
   end
 
+  it "adds a token to an existing room" do
+    expected_json = {
+      janus: "message_plugin",
+      transaction: static_transaction_id,
+      admin_secret: server.admin_secret,
+      plugin: "janus.plugin.videoroom",
+      request: {
+        request:"allowed",
+        room: meeting.signed_room_id,
+        secret: meeting.janus_secret,
+        action: 'add',
+        "allowed": [
+          meeting_member.janus_token
+        ]
+      }
+    }
+
+    stub_request(:post, "https://#{server.domain}/httpjanus").
+      with({
+        body: expected_json.to_json
+      }).to_return(status: 200, body: "", headers: {})
+
+    subject.add_token_to_room(meeting_member)
+  end
+
+  it "destroys a room" do
+    expected_json = {
+      janus: "message_plugin",
+      transaction: static_transaction_id,
+      admin_secret: server.admin_secret,
+      plugin: "janus.plugin.videoroom",
+      request: {
+        request:"destroy",
+        room: meeting.signed_room_id,
+        secret: meeting.janus_secret,
+      }
+    }
+
+    stub_request(:post, "https://#{server.domain}/httpjanus").
+      with({
+        body: expected_json.to_json
+      }).to_return(status: 200, body: "", headers: {})
+
+    subject.destroy_room(meeting)
+  end
+
   it "lists rooms" do
     stub_request(:post, "https://#{server.domain}/httpjanus").
       with({

@@ -21,6 +21,30 @@ class JanusService
      send_room_request(meeting.server, payload)
     end
 
+    def add_token_to_room(meeting_member)
+      payload = {
+        request:"allowed",
+        room: meeting_member.meeting.signed_room_id,
+        secret: meeting_member.meeting.janus_secret,
+        action: 'add',
+        "allowed": [
+          meeting_member.janus_token
+        ]
+      }
+
+      send_room_request(meeting_member.server, payload)
+    end
+
+    def destroy_room(meeting)
+      payload = {
+        request:"destroy",
+        room: meeting.signed_room_id,
+        secret: meeting.janus_secret
+      }
+
+      send_room_request(meeting.server, payload)
+    end
+
     def list_rooms(server)
       payload = {
         request: "list"
