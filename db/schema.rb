@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_075956) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "janus_secret"
-    t.uuid "server_id", null: false
+    t.uuid "server_id"
     t.index ["account_id"], name: "index_meetings_on_account_id"
     t.index ["host_id"], name: "index_meetings_on_host_id"
     t.index ["server_id"], name: "index_meetings_on_server_id"

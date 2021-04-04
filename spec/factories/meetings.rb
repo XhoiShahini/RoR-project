@@ -12,7 +12,7 @@
 #  updated_at   :datetime         not null
 #  account_id   :uuid             not null
 #  host_id      :uuid             not null
-#  server_id    :uuid             not null
+#  server_id    :uuid
 #
 # Indexes
 #
