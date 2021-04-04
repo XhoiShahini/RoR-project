@@ -51,6 +51,10 @@ en:
       members: "Members"
       starts_or_completed_at: "Starts/Completed At"
       actions: "Actions"
+    new:
+      title: "New Meeting"
+    edit:
+      title: "Edit Meeting"
     partials:
       member_heads:
         host: "Host"
