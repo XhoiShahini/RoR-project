@@ -20,7 +20,7 @@ Rails.application.config.content_security_policy do |policy|
   end
 
   # For subdomains, add your domain:
-  # policy.connect_src :self, :https, "*.domain.com"
+  policy.connect_src :self, :https, "wss://*.agreelivevideo.com"
 
   #   # Specify URI for violation reports
   #   # policy.report_uri "/csp-violation-report-endpoint"
