@@ -123,6 +123,12 @@ en:
       phone_number: "Phone"
       status: "Status"
 
+  participants_mailer:
+    invite:
+      subject: "Agree.Live: Invitation to %{meeting}"
+      header_html: "You have been invited to <strong>%{meeting}</strong> on Agree.Live!"
+      description_html: "<strong>%{host}</strong> has invited you to <strong>%{meeting}</strong> with <strong>%{account}</strong>. This meeting is scheduled to start %{time}. Sign In below to view details."
+
   #ActiveStorage Validations
   errors:
     messages:

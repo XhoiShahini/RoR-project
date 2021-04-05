@@ -50,6 +50,9 @@ class Participant < ApplicationRecord
   has_many :signatures, through: :meeting_member
   has_many :sms_verifications, as: :sms_verifiable
 
+  after_create { send_invite }
+  validate :send_invite, on: :update, if: -> { email_changed? }
+
   accepts_nested_attributes_for :meeting_member
 
   aasm(column: :state, logger: Rails.logger) do
@@ -70,5 +73,9 @@ class Participant < ApplicationRecord
     event :finalize do
       transitions from: :joined, to: :finalized
     end
+  end
+
+  def send_invite
+    ParticipantsMailer.with(participant: self).invite.deliver_later
   end
 end
