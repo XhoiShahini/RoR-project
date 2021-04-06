@@ -12,6 +12,7 @@ class Participants::SignInController < ApplicationController
 
     if @sms_verification.verified?
       session[:participant_id] = @participant.id
+      @participant.accept! unless @participant.accepted?
       redirect_to meeting_path(@meeting), notice: I18n.t("participants.sign_in.success")
     else
       redirect_to :show, notice: @sms_verification.error
