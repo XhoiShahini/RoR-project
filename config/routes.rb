@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :meetings do
     resources :participants do
       resource :id_upload, controller: "participants/id_uploads", only: [:new, :create, :show]
-      resource :sign_in, controller: "participants/sign_in", only: [:create, :show] do
+      resource :sign_in, controller: "participants/sign_in", only: [:create, :show, :destroy] do
         get :otp
       end
     end

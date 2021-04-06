@@ -24,6 +24,12 @@ class Participants::SignInController < ApplicationController
     @sms_verification = @participant.sms_verifications.create(phone_number: @participant.phone_number)
   end
 
+  # DELETE /meetings/:meeting_id/participants/:id/sign_in
+  def destroy
+    session.delete(:participant_id)
+    redirect_to root_path, notice: t("participants.sign_in.signed_out")
+  end
+  
   private
 
   def set_meeting

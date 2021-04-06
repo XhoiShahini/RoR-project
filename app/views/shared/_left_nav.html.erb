@@ -5,5 +5,5 @@
     <%= link_to t(".new_meeting"), new_meeting_path, class: "btn btn-primary" %>
   <% end %>
 <% elsif current_participant %>
-  <%= link_to t(".meeting"), meeting_path(current_participant.meeting) %>
+  <%= link_to t(".meeting"), meeting_path(current_participant.meeting), class: "nav-link" %>
 <% end %>

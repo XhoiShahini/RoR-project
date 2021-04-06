@@ -90,6 +90,7 @@ en:
     sign_in:
       success: "Signed in successfully."
       title: "Please Sign In"
+      signed_out: "Signed Out."
       show:
         send_code: "Send Code"
       otp:
