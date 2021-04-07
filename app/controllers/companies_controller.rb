@@ -3,7 +3,7 @@ class CompaniesController < ApplicationController
 
   # GET /companies
   def index
-    @pagy, @companies = pagy(Company.sort_by_params(params[:sort], sort_direction))
+    @pagy, @companies = pagy(current_account.companies.sort_by_params(params[:sort], sort_direction))
 
     # We explicitly load the records to avoid triggering multiple DB calls in the views when checking if records exist and iterating over them.
     # Calling @companies.any? in the view will use the loaded records to check existence instead of making an extra DB call.
@@ -16,7 +16,7 @@ class CompaniesController < ApplicationController
 
   # GET /companies/new
   def new
-    @company = Company.new
+    @company = current_account.companies.new
   end
 
   # GET /companies/1/edit
@@ -25,7 +25,7 @@ class CompaniesController < ApplicationController
 
   # POST /companies
   def create
-    @company = Company.new(company_params)
+    @company = current_account.companies.new(company_params)
 
     if @company.save
       redirect_to @company, notice: "Company was successfully created."
@@ -53,11 +53,11 @@ class CompaniesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_company
-    @company = Company.find(params[:id])
+    @company = current_account.companies.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
   def company_params
-    params.require(:company).permit(:account_id, :name)
+    params.require(:company).permit(:name)
   end
 end
