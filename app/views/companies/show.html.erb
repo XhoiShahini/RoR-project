@@ -1,0 +1,19 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="h3"><%= link_to "Companies", companies_path %> > Company #<%= @company.id %></h1>
+      <%= link_to t("edit"), edit_company_path(@company), class: "btn btn-link" %>
+    </div>
+
+    <div class="bg-white rounded shadow p-8">
+            <div class="mb-4">
+        <h5>Account</h5>
+        <%= @company.account %>
+      </div>
+            <div class="mb-4">
+        <h5>Name</h5>
+        <%= @company.name %>
+      </div>
+          </div>
+  </div>
+</div>

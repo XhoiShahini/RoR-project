@@ -1,0 +1,51 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="h3">Companies</h1>
+
+    <% if @companies.any? %>
+      <%= link_to t("shared.scaffold.new.title", model: "Company"), new_company_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <% if @companies.any? %>
+    <div class="bg-white rounded shadow table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @companies, :account_id, "Account", class: "text-gray-700" %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @companies, :name, "Name", class: "text-gray-700" %></th>
+            <th class="p-3 uppercase text-left text-xs text-gray-700 w-20"><%= t("shared.scaffold.actions") %></th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <% @companies.each do |company| %>
+          <tr class="group border-t border-gray-400 hover:bg-gray-100">
+                      <td class="p-3"><%= company.account_id %></td>
+                      <td class="p-3"><%= company.name %></td>
+          
+            <td>
+              <%= link_to t("shared.scaffold.view"), company, class: "btn btn-link no-underline" %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @pagy.pages > 1 %>
+      <div class="text-center my-6">
+        <%== pagy_nav(@pagy) %>
+      </div>
+    <% end %>
+
+  <% else %>
+    <div class="bg-white rounded shadow flex flex-col items-center justify-between p-8 lg:flex-row">
+      <%= image_tag "empty.svg", class: "mb-4 lg:w-1/2" %>
+      <div class="flex-1 text-center">
+        <p class="h3 mb-4">Create your first Company</p>
+        <%= link_to t("shared.scaffold.new.title", model: "Company"), new_company_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>
