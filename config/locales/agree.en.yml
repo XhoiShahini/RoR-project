@@ -124,6 +124,9 @@ en:
       phone_number: "Phone"
       status: "Status"
 
+  companies:
+    members: "Members"
+
   participants_mailer:
     invite:
       subject: "Agree.Live: Invitation to %{meeting}"

@@ -19,4 +19,8 @@
 class Company < ApplicationRecord
   acts_as_tenant :account
   has_many :meeting_members
+
+  def members
+    meeting_members.map { |mm| mm.memberable }.uniq
+  end
 end
