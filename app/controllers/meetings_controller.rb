@@ -22,10 +22,11 @@ class MeetingsController < ApplicationController
 
   # POST /meetings
   def create
+    meeting_member_params = params[:meeting].extract!(:meeting_member).permit(:company_id) || {}
+    logger.info meeting_member_params
     @meeting = Meeting.new(meeting_params)
 
-    if @meeting.save
-      @meeting.meeting_members.create(params[:meeting][:meeting_member_attributes].merge({ memberable: current_user, must_sign: true }))
+    if @meeting.save && @meeting.meeting_members.create(meeting_member_params.merge({ memberable: current_user, must_sign: true }))
       redirect_to @meeting, notice: t("meetings.notice.create")
     else
       render :new, status: :unprocessable_entity
@@ -44,9 +45,10 @@ class MeetingsController < ApplicationController
 
   # PATCH/PUT /meetings/:id
   def update
-    if params[:meeting][:meeting_member_attributes].present?
+    meeting_member_params = params[:meeting].extract!(:meeting_member).permit(:company_id)
+    if meeting_member_params.present?
       host = @meeting.meeting_members.find_by(memberable: @meeting.host)
-      host.update(params[:meeting][:meeting_member_attributes])
+      host.update(meeting_member_params)
     end
     if @meeting.update(meeting_params)
       redirect_to @meeting, notice: t("meetings.notice.update")
