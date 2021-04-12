@@ -14,17 +14,15 @@
     <%= form.text_field :starts_at, class: "form-control", data: { controller: :flatpickr, flatpickr_enable_time: true, flatpickr_alt_input: true, flatpickr_alt_format: t("time.formats.long") } %>
   </div>
 
-  <%= form.fields_for :meeting_member do |f| %>
-    <div class="form-group">
-      <%= f.label :company_id %>
-      <%= f.select(
-        :company_id,
-        options_from_collection_for_select(@companies, "id", "name"),
-        include_blank: true,
-        class: "select"
-      ) %>
-    </div>
-  <% end %>
+  <div class="form-group">
+    <%= label_tag :company_id %>
+    <%= select_tag(
+      :company_id,
+      options_from_collection_for_select(@companies, "id", "name"),
+      include_blank: true,
+      class: "select"
+    ) %>
+  </div>
 
   <div class="form-group flex justify-between">
     <%= form.button class: "btn btn-primary" %>

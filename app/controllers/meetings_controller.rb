@@ -22,7 +22,7 @@ class MeetingsController < ApplicationController
 
   # POST /meetings
   def create
-    meeting_member_params = params[:meeting].extract!(:meeting_member).permit(:company_id) || {}
+    meeting_member_params = params[:company_id].present? ? { company_id: params[:company_id] } : {}
     logger.info meeting_member_params
     @meeting = Meeting.new(meeting_params)
 
@@ -45,7 +45,7 @@ class MeetingsController < ApplicationController
 
   # PATCH/PUT /meetings/:id
   def update
-    meeting_member_params = params[:meeting].extract!(:meeting_member).permit(:company_id)
+    meeting_member_params = params[:company_id].present? ? { company_id: params[:company_id] } : {}
     if meeting_member_params.present?
       host = @meeting.meeting_members.find_by(memberable: @meeting.host)
       host.update(meeting_member_params)

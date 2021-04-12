@@ -18,6 +18,10 @@
             <%= @meeting.account.name %>
           </div>
           <div class="mb-2 mr-8">
+            <h4><%= t(".company") %></h1>
+            <%= @meeting.meeting_members.find_by(memberable: @meeting.host)&.company&.name || @meeting.account.name %>
+          </div>
+          <div class="mb-2 mr-8">
             <h4><%= t(".state") %></h4>
             <%= @meeting.aasm.human_state %>
           </div>
