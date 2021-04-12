@@ -1,0 +1,31 @@
+<div class="container mx-auto my-8 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="h3"><%= link_to "Companies", companies_path %> > <%= @company.name %></h1>
+      <%= link_to t("edit"), edit_company_path(@company), class: "btn btn-link" %>
+    </div>
+
+    <div class="bg-white rounded shadow p-8">
+      <h1 class="h3"><%= t('companies.members') %></h1>
+      <% @company.members.each do |user| %>
+        <div class="card">
+          <p class="card-header"><%= user.name %></p>
+          <div class="lg:grid lg:grid-cols-4">
+            <p class="card-paragraph">
+              <%= t('.email') %>
+            </p>
+            <p class="card-paragraph lg:col-span-3">
+              <%= user.email %>
+            </p>
+            <p class="card-paragraph">
+              <%= t('.phone') %>
+            </p>
+            <p class="card-paragraph lg:col-span-3">
+              <%= user.phone_number %>
+            </p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

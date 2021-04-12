@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_29_171952) do
+ActiveRecord::Schema.define(version: 2021_04_07_163019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -127,6 +127,14 @@ ActiveRecord::Schema.define(version: 2021_03_29_171952) do
     t.index ["user_id"], name: "index_api_tokens_on_user_id"
   end
 
+  create_table "companies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.uuid "account_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_companies_on_account_id"
+  end
+
   create_table "document_accesses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "document_id", null: false
     t.uuid "meeting_member_id", null: false
@@ -162,10 +170,11 @@ ActiveRecord::Schema.define(version: 2021_03_29_171952) do
     t.uuid "meeting_id", null: false
     t.string "memberable_type", null: false
     t.uuid "memberable_id", null: false
-    t.string "company"
     t.boolean "must_sign"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "company_id"
+    t.index ["company_id"], name: "index_meeting_members_on_company_id"
     t.index ["meeting_id"], name: "index_meeting_members_on_meeting_id"
     t.index ["memberable_type", "memberable_id"], name: "index_meeting_members_on_memberable"
   end
@@ -348,6 +357,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_171952) do
   add_foreign_key "accounts", "users", column: "owner_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "api_tokens", "users"
+  add_foreign_key "companies", "accounts"
   add_foreign_key "document_accesses", "documents"
   add_foreign_key "document_accesses", "meeting_members"
   add_foreign_key "documents", "meetings"
