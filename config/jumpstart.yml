@@ -1,9 +1,9 @@
 --- !ruby/object:Jumpstart::Configuration
 application_name: Agree.Live
 business_name: Lawing S.R.L.
-domain: staging.agree.live
-support_email: no-reply@staging.agree.live
-default_from_email: Agree.Live <no-reply@staging.agree.live>
+domain: agreev2.herokuapp.com
+support_email: no-reply@agreev2.herokuapp.com
+default_from_email: Agree.Live <no-reply@agreev2.herokuapp.com>
 business_address: ''
 background_job_processor: async
 email_provider: 'sendgrid'
