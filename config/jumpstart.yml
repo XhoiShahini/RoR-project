@@ -6,7 +6,7 @@ support_email: no-reply@staging.agree.live
 default_from_email: Agree.Live <no-reply@staging.agree.live>
 business_address: ''
 background_job_processor: async
-email_provider: ''
+email_provider: 'sendgrid'
 personal_accounts: false
 livereload: false
 solargraph: false
