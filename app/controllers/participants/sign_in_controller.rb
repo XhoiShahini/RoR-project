@@ -15,7 +15,7 @@ class Participants::SignInController < ApplicationController
       @participant.accept! unless @participant.accepted?
       redirect_to meeting_path(@meeting), notice: I18n.t("participants.sign_in.success")
     else
-      redirect_to :show, notice: @sms_verification.error
+      redirect_to meeting_participant_sign_in_path(@meeting, @participant), notice: @sms_verification.error
     end
   end
 
