@@ -104,3 +104,5 @@ gem "active_storage_validations", "~> 0.9.2"
 gem "ransack", "~> 2.4"
 
 gem "aws-sdk-s3", require: false
+
+gem "simple_calendar", "~> 2.4"

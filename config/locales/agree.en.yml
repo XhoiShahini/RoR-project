@@ -1,5 +1,16 @@
 ---
 en:
+  welcome: "Welcome, %{user}."
+
+  dashboard:
+    show:
+      meetings: "Meetings"
+      legend: "Legend"
+
+  simple_calendar:
+    previous: "<"
+    next: ">"
+
   phone_number:
     invalid_number: "Invalid Phone Number"
 
