@@ -143,6 +143,14 @@ en:
       subject: "Agree.Live: Invitation to %{meeting}"
       header_html: "You have been invited to <strong>%{meeting}</strong> on Agree.Live!"
       description_html: "<strong>%{host}</strong> has invited you to <strong>%{meeting}</strong> with <strong>%{account}</strong>. This meeting is scheduled to start %{time}. Sign In below to view details."
+      sign_in: "Sign In"
+
+  post_meeting_mailer:
+    post_meeting:
+      subject: "Agree.Live: %{meeting} is now complete"
+      header_html: "<strong>%{meeting}</strong> is now complete!"
+      description_html: "You can use the link below to access the details of your meeting at any time."
+      view_meeting: "View Meeting"
 
   #ActiveStorage Validations
   errors:
