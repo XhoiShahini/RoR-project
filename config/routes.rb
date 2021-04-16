@@ -14,6 +14,9 @@ Rails.application.routes.draw do
       member do
         get :pdf
         get :download
+        post :sign
+        post :send_otp
+        post :verify_otp
       end
     end
 
