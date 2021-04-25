@@ -1,10 +1,11 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
+  resources :companies
   resources :sms_verifications, only: [:new, :create]
   resources :meetings do
     resources :participants do
       resource :id_upload, controller: "participants/id_uploads", only: [:new, :create, :show]
-      resource :sign_in, controller: "participants/sign_in", only: [:create, :show] do
+      resource :sign_in, controller: "participants/sign_in", only: [:create, :show, :destroy] do
         get :otp
       end
     end
@@ -13,6 +14,9 @@ Rails.application.routes.draw do
       member do
         get :pdf
         get :download
+        post :sign
+        post :send_otp
+        post :verify_otp
       end
     end
 

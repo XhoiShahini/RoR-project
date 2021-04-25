@@ -77,7 +77,8 @@ en:
       new:
         sign_up: Sign up
         login_html: "Or %{link}"
-        terms_html: "I accept the %{terms} &amp; %{privacy}"
+        terms_html: "I accept the %{terms}"
+        privacy_html: "I accept the %{privacy}"
         submitting: "Submitting..."
       signed_up: "Welcome! You have signed up successfully."
       signed_up_but_inactive: "You have signed up successfully. However, we could not sign you in because your account is not yet activated."

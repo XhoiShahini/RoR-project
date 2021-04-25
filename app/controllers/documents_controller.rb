@@ -2,6 +2,7 @@ class DocumentsController < ApplicationController
   include MeetingsHelper
   before_action :set_meeting
   before_action :set_document, except: [:index, :new, :create]
+  before_action :set_signature, only: [:sign, :send_otp, :verify_otp]
   before_action :require_meeting_member!
   before_action :cannot_modify_signed!, only: [:edit, :update, :destroy]
   before_action :require_current_account_admin, except: [:index, :show, :pdf, :download]
@@ -56,6 +57,28 @@ class DocumentsController < ApplicationController
     end
   end
 
+  # POST /meetings/:meeting_id/documents/:id/sign
+  def sign
+    @signature.sign! ip: request.remote_ip
+    render plain: ""
+  end
+
+  # POST /meetings/:meeting_id/documents/:id/send_otp
+  def send_otp
+    @sms_verification = SmsVerification.create(sms_verifiable: @signature, phone_number: @meeting_member.memberable.phone_number)
+    render plain: ""
+  end
+
+  # POST /meetings/:meeting_id/documents/:id/verify_otp
+  def verify_otp
+    @signature.sms_verification.verify_code! params[:code]
+    if @signature.sms_verification.verified?
+      render plain: ""
+    else
+      redirect_to meeting_room_path(@meeting), notice: @signature.sms_verification.error
+    end
+  end
+
   # DELETE /meetings/meeting_:id/documents/:id
   def destroy
     @document.destroy
@@ -81,6 +104,11 @@ class DocumentsController < ApplicationController
 
   def set_document
     @document = Document.find(params[:id])
+  end
+
+  def set_signature
+    @meeting_member = @meeting.meeting_members.find_by(memberable: current_user || current_participant)
+    @signature = @document.signatures.find_by(meeting_member: @meeting_member)
   end
 
   def document_params

@@ -1,0 +1,64 @@
+.calendar-title {
+  @apply text-xl mt-3;
+}
+
+.calendar-heading {
+  @apply flex justify-center;
+}
+
+.calendar-heading > a {
+  @apply px-4 py-2 text-white bg-primary-600 text-sm rounded m-2 font-semibold;
+
+  &:hover {
+    @apply text-white bg-primary-500;
+  }
+}
+
+.day {
+  @apply h-32 w-32 border border-black p-2;
+}
+
+.day > ::-webkit-scrollbar {
+  width: 5px;
+}
+
+.day > ::-webkit-scrollbar-thumb {
+  @apply bg-tertiary-300 rounded-full;
+}
+
+.today {
+  @apply bg-green-50;
+}
+
+.past {
+  @apply bg-gray-100;
+}
+
+.table.table-striped > thead > tr > th {
+  @apply border border-black;
+}
+
+.calendar-event {
+  @apply block rounded-full py-1 px-4 text-sm text-white font-bold leading-normal m-2 flex justify-between;
+
+  &.status-created {
+    @apply bg-primary-600;
+    &:hover {
+      @apply text-white bg-primary-500 cursor-pointer;
+    }
+  }
+
+  &.status-incomplete {
+    @apply bg-secondary-700;
+    &:hover {
+      @apply text-white bg-secondary-600 cursor-pointer;
+    }
+  }
+
+  &.status-completed {
+    @apply bg-tertiary-600;
+    &:hover {
+      @apply text-white bg-tertiary-500 cursor-pointer;
+    }
+  }
+}

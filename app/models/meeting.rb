@@ -69,5 +69,8 @@ class Meeting < ApplicationRecord
   private
 
   def complete_meeting
+    meeting_members.each do |member|
+      PostMeetingMailer.with(meeting_member: meeting_member).post_meeting.deliver_later
+    end
   end
 end

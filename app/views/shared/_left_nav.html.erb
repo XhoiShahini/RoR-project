@@ -1,1 +1,10 @@
 <%# Place any links for the LEFT side of the nav bar here. Be sure to add class: "nav-link" to each item for proper spacing. %>
+<% if current_user %>
+  <%= link_to t(".meetings"), meetings_path, class: "nav-link" %>
+  <% if current_account_admin? %>
+    <%= nav_link_to "Companies", companies_path, class: 'nav-link' %>
+    <%= link_to t(".new_meeting"), new_meeting_path, class: "btn btn-primary" %>
+  <% end %>
+<% elsif current_participant %>
+  <%= link_to t(".meeting"), meeting_path(current_participant.meeting), class: "nav-link" %>
+<% end %>

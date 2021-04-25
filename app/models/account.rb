@@ -41,6 +41,7 @@ class Account < ApplicationRecord
   has_many :users, through: :account_users
   has_many :participants
   has_many :meetings
+  has_many :companies
 
   scope :personal, -> { where(personal: true) }
   scope :impersonal, -> { where(personal: false) }

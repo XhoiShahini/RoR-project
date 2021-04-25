@@ -1,0 +1,11 @@
+<div style="text-align: center;">
+  <h1 style="font-weight:400;line-height: 1.25;">
+    <%= t(".header_html", meeting: @meeting.title) %>
+  </h1>
+
+  <p style="margin-bottom:2rem;">
+    <%= t(".description_html", account: @meeting.account.name, meeting: @meeting.title, host: @meeting.host.name, time: @meeting.starts_at.strftime("%d/%m/%Y at %H:%M")) %>
+  </p>
+
+  <%= link_to t(".sign_in"), meeting_participant_sign_in_url(@meeting, @participant), style: "background:#38b2ac; color:#fff; border-radius: 4px; text-decoration: none; padding:.75rem 1rem;" %>
+</div>

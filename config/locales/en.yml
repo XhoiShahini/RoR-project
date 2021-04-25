@@ -146,10 +146,6 @@ en:
         button: "Update Card"
         processing: "Processing..."
 
-  dashboard:
-    show:
-      title: "Dashboard"
-
   payments:
     success: "Thanks for subscribing!"
     show:

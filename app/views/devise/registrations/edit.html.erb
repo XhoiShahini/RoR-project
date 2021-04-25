@@ -12,14 +12,21 @@
         <div class="flex flex-wrap items-start justify-between">
           <div class="w-full lg:w-1/2">
             <div class="form-group">
-              <%= f.label :name, "Full name" %>
-              <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "Steve Jobs", class: "form-control" %>
+              <%= f.label :first_name %>
+              <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", placeholder: "Steve", class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :last_name %>
+              <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", placeholder: "Jobs", class: "form-control" %>
             </div>
 
             <div class="form-group">
               <%= f.label :email %>
               <%= f.email_field :email, autocomplete: "email", placeholder: "you@example.com", class: "form-control" %>
             </div>
+
+            <%= phone_number_field(f, resource.phone_number) %>
 
             <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
               <div><%= t('.currently_waiting_confirmation_for_email', email: resource.unconfirmed_email) %></div>
