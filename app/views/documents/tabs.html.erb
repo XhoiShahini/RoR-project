@@ -1,0 +1,8 @@
+<%= turbo_frame_tag "documents", data: { controller: "documents--tabs", documents__tabs_id_value: @meeting.id } do %>
+  <%= render partial: "shared/flash" %>
+  <div>
+    <% @documents.each do |document| %>
+      <%= render "documents/tab", document: document %>
+    <% end %>
+  </div>
+<% end %>

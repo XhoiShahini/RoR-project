@@ -1,6 +1,6 @@
 <%= turbo_frame_tag dom_id(document) do %>
   <div class="card">
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center gap-2">
       <div>
         <p class="card-title"><%= document.title %></p>
         <p class="card-paragraph">
@@ -14,9 +14,6 @@
         <% if @host %>
           <%= link_to edit_meeting_document_path(document.meeting, document), class: "btn btn-small text-lg btn-primary ml-2" do %>
             <%= fa_icon "edit", weight: "fas" %>
-          <% end %>
-          <%= button_to meeting_document_path(document.meeting, document), method: :delete, class: "btn btn-small text-lg btn-danger outline ml-2" do %>
-            <%= fa_icon "trash", weight: "fas" %>
           <% end %>
         <% end %>
       </div>

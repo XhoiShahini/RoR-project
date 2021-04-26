@@ -1,7 +1,7 @@
 class DocumentsController < ApplicationController
   include MeetingsHelper
   before_action :set_meeting
-  before_action :set_document, except: [:index, :new, :create]
+  before_action :set_document, except: [:index, :tabs, :new, :create]
   before_action :set_signature, only: [:sign, :send_otp, :verify_otp]
   before_action :require_meeting_member!
   before_action :cannot_modify_signed!, only: [:edit, :update, :destroy]
@@ -9,6 +9,12 @@ class DocumentsController < ApplicationController
 
   # GET /meetings/:meeting_id/documents
   def index
+    @host = current_account_admin?
+    @documents = @meeting.documents
+  end
+
+  # GET /meetings/:meeting_id/documents/tabs
+  def tabs
     @host = current_account_admin?
     @documents = @meeting.documents
   end

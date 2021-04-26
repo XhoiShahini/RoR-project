@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     end
 
     resources :documents do
+      collection do
+        get :tabs
+      end
+
       member do
         get :pdf
         get :download
