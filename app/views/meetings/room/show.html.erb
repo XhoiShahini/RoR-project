@@ -84,6 +84,7 @@ var memberId = "<%= @meeting_member.signed_member_id %>";
 var username = "<%= @meeting_member.full_name %>";
 var useAudio = true;
 var myroom = "<%= @meeting_member.meeting.signed_room_id %>";
+var roomId = "<%= @meeting_member.meeting.id %>";
 var userToken = "<%= @meeting_member.janus_token %>";
 var feeds = [];
 var audioDeviceId = null;
@@ -370,7 +371,7 @@ ready(async function() {
     }
   }
 
-  Janus.init({debug: "all", callback: function() {
+  Janus.init({debug: false, callback: function() {
     if(!Janus.isWebrtcSupported()) {
       console.log("No WebRTC support... ");
       return;

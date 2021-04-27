@@ -5,7 +5,7 @@ class DocumentsController < ApplicationController
   before_action :set_signature, only: [:sign, :send_otp, :verify_otp]
   before_action :require_meeting_member!
   before_action :cannot_modify_signed!, only: [:edit, :update, :destroy]
-  before_action :require_current_account_admin, except: [:index, :show, :pdf, :download]
+  before_action :require_current_account_admin, except: [:index, :show, :pdf, :download, :tabs]
 
   # GET /meetings/:meeting_id/documents
   def index

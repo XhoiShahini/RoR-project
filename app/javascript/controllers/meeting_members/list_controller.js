@@ -27,7 +27,9 @@ export default class extends Controller {
       })
   }
 
-  _connected() {}
+  _connected() {
+    console.log('CONNECTED')
+  }
 
   _disconnected() {}
 

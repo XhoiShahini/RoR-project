@@ -66,8 +66,8 @@ class JanusService
         id: meeting_member.signed_member_id
       }
 
-      payload[:mute_audio] = audio_state if !mute_audio.nil?
-      payload[:mute_video] = video_state if !mute_video.nil?
+      payload[:mute_audio] = mute_audio if !mute_audio.nil?
+      payload[:mute_video] = mute_video if !mute_video.nil?
 
       send_room_request(meeting_member.server, payload)
     end
