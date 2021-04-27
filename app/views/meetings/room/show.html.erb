@@ -41,21 +41,31 @@
         <h1 class="h3">
           <%= t('.video') %>
         </h1>
-        <div class="w-100 rounded bg-gray-900 h-64 text-white font-bold">
-          Coming Soon...
+        <div class="w-100 rounded bg-white">
+          <h4>My video</h4>
+          <div id="localvideo">
+            <video class="rounded centered" id="myvideo" width="100%" height="100%" autoplay playsinline />
+          </div>
+          <div>
+            <p>Audio input</p>
+            <select id="audioInput"></select>
+            <p>Video input</p>
+            <select id="videoInput"></select>
+            <button type="button" id="changeInput" class="btn btn-small btn-primary mt-2 mr-2">Change input devices</button>
+            <p>Audio output</p>
+            <select id="audioOutput"></select>
+            <button type="button" id="changeOutput" class="btn btn-small btn-primary mt-2 mr-2">Change output devices</button>
+          </div>
+
+          <h4>Remote video</h4>
+          <div id="remotevideo">
+          </div>
         </div>
       </div>
       <div>
         <h3>Signatures</h3>
-        <button type="button" onclick="joinRoom();">Start room</button>
-        <button type="button" onclick="tryDataChannel();">Test DC</button>
 
-        <div id="localvideo">
-          <video class="rounded centered" id="myvideo" width="100%" height="100%" autoplay playsinline />
-        </div>
 
-        <div id="remotevideo">
-        </div>
       </div>
     </div>
   </div>
@@ -76,6 +86,8 @@ var useAudio = true;
 var myroom = "<%= @meeting_member.meeting.signed_room_id %>";
 var userToken = "<%= @meeting_member.janus_token %>";
 var feeds = [];
+var audioDeviceId = null;
+var videoDeviceId = null;
 
 function ready(callback) {
   if (document.readyState != 'loading') {
@@ -263,7 +275,101 @@ function destroyRemoteFeed(remoteFeedId) {
   
 }
 
+function initDevices(devices) {
+  var audioInput = document.getElementById('audioInput');
+  audioInput.options.length = 0;
+  var videoInput = document.getElementById('videoInput');
+  videoInput.options.length = 0;
+  var audioOutput = document.getElementById('audioOutput');
+  audioOutput.options.length = 0;
+
+	devices.forEach(function(device) {
+		var label = device.label;
+		if (!label || label === "") {
+			label = device.deviceId;
+    }
+		if (device.kind === 'audioinput') {
+      addOptionToSelect(audioInput, label, device.deviceId)
+		} else if (device.kind === 'videoinput') {
+      addOptionToSelect(videoInput, label, device.deviceId)
+		} else if (device.kind === 'audiooutput') {
+      addOptionToSelect(audioOutput, label, device.deviceId)
+    }
+  });
+
+  audioDeviceId = audioInput.value;
+  videoDeviceId = videoInput.value;
+}
+
+function addOptionToSelect(select, label, value) {
+  var option = document.createElement('option');
+  option.innerText = label;
+  option.value = value;
+
+  select.appendChild(option)
+}
+
+function restartCapture() {
+	// Negotiate WebRTC
+	var body = { audio: true, video: true };
+
+	sfutest.send({ message: body });
+
+	var replaceAudio = document.getElementById('audioInput').value !== audioDeviceId;
+	audioDeviceId = document.getElementById('audioInput').value;
+	var replaceVideo = document.getElementById('videoInput').value !== videoDeviceId;
+	videoDeviceId = document.getElementById('videoInput').value;
+	sfutest.createOffer(
+		{
+			// We provide a specific device ID for both audio and video
+			media: {
+				audio: {
+					deviceId: {
+						exact: audioDeviceId
+					}
+				},
+				replaceAudio: replaceAudio,	// This is only needed in case of a renegotiation
+				video: {
+					deviceId: {
+						exact: videoDeviceId
+					}
+				},
+				replaceVideo: replaceVideo,	// This is only needed in case of a renegotiation
+				data: true	// Let's negotiate data channels as well
+			},
+
+			success: function(jsep) {
+
+				// sfutest.send({ message: body, jsep: jsep });
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		});
+}
+
 ready(async function() {
+  document.getElementById('changeInput').onclick = function () {
+    restartCapture();
+  }
+
+  document.getElementById('changeOutput').onclick = function () {
+    var deviceId = document.getElementById("audioOutput").value;
+
+    for (var key in feeds) {
+      console.log(feeds[key])
+      var elm = document.getElementById(feeds[key].rfid);
+      if (elm) {
+        var vid = elm.querySelector('video');
+        if (vid && vid.setSinkId) {
+          vid.setSinkId(deviceId).then(function() {
+							console.log('Audio output device attached:', deviceId);
+          });
+        }
+      }
+    }
+  }
+
   Janus.init({debug: "all", callback: function() {
     if(!Janus.isWebrtcSupported()) {
       console.log("No WebRTC support... ");
@@ -283,6 +389,8 @@ ready(async function() {
               success: function(pluginHandle) {
                 sfutest = pluginHandle;
                 //Janus.log("Plugin attached! (" + sfutest.getPlugin() + ", id=" + sfutest.getId() + ")");
+                // set up devices
+                Janus.listDevices(initDevices);
                 joinRoom();
               },
               error: function(error) {
@@ -307,7 +415,7 @@ ready(async function() {
                 //Janus.log("Event: " + event);
                 if(event) {
                   if(event === "joined") {
-                    // Publisher/manager created, negotiate WebRTC and attach to existing feeds, if any
+                    // Publisher/manager created, negotiate WebRTC and attach to existing , if any
                     myid = msg["id"];
                     mypvtid = msg["private_id"];
                     //Janus.log("Successfully joined room " + msg["room"] + " with ID " + myid);
@@ -315,7 +423,7 @@ ready(async function() {
                     // Any new feed to attach to?
                     if(msg["publishers"]) {
                       var list = msg["publishers"];
-                      //Janus.log("Got a list of available publishers/feeds:", list);
+                      //Janus.log("Got a list of available publishers/fds:", list);
                       for(var f in list) {
                         var id = list[f]["id"];
                         var display = list[f]["display"];

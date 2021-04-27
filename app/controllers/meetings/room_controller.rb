@@ -13,10 +13,11 @@ class Meetings::RoomController < ApplicationController
 
   # POST perform_action
   def perform_action
-    if @meeting_member.memberable.is_a? User
+    if @meeting_member.is_moderator?
       # for now we do not have "real" controls
       case params[:action]
-      when 'moderate':
+      when 'audio'
+        
       end
     end
   end

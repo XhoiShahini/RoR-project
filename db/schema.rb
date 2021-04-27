@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_26_142946) do
+ActiveRecord::Schema.define(version: 2021_04_27_080747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -175,6 +175,8 @@ ActiveRecord::Schema.define(version: 2021_04_26_142946) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "janus_token"
     t.uuid "company_id"
+    t.boolean "audio", default: true
+    t.boolean "video", default: true
     t.index ["company_id"], name: "index_meeting_members_on_company_id"
     t.index ["meeting_id"], name: "index_meeting_members_on_meeting_id"
     t.index ["memberable_type", "memberable_id"], name: "index_meeting_members_on_memberable"
@@ -223,8 +225,6 @@ ActiveRecord::Schema.define(version: 2021_04_26_142946) do
     t.datetime "verified_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "audio", default: true
-    t.boolean "video", default: true
     t.index ["account_id"], name: "index_participants_on_account_id"
     t.index ["verifier_id"], name: "index_participants_on_verifier_id"
   end

@@ -3,9 +3,11 @@
 # Table name: meeting_members
 #
 #  id              :uuid             not null, primary key
+#  audio           :boolean          default(TRUE)
 #  janus_token     :string
 #  memberable_type :string           not null
 #  must_sign       :boolean
+#  video           :boolean          default(TRUE)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  company_id      :uuid
@@ -36,7 +38,7 @@ class MeetingMember < ApplicationRecord
   end
 
   after_create do |meeting_member|
-    JanusService.create_room(meeting)
+    JanusService.create_and_add_token(meeting_member)
   end
 
   include ValidatesMaximumMembers
@@ -53,6 +55,11 @@ class MeetingMember < ApplicationRecord
 
   def full_name
     "#{self.memberable.first_name} #{self.memberable.last_name}"
+  end
+
+  def is_moderator?
+    # TODO: currently any User is a moderator
+    self.memberable.is_a? User
   end
 
   private
