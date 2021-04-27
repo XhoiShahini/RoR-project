@@ -91,13 +91,13 @@ var audioDeviceId = null;
 var videoDeviceId = null;
 
 function ready(callback) {
-  if (document.readyState != 'loading') {
+  if (document.readyState != 'loading' && typeof Janus !== "undefined") {
     callback();
   } else if (document.addEventListener) {
-    document.addEventListener('DOMContentLoaded', callback);
+    document.addEventListener('janus:load', callback);
   } else {
     document.attachEvent('onreadystatechange', function() {
-      if (document.readyState != 'loading') {
+      if (document.readyState != 'loading' && typeof Janus !== "undefined") {
         callback();
       }
     });
