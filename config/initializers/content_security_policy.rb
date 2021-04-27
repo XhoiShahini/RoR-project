@@ -15,12 +15,13 @@ Rails.application.config.content_security_policy do |policy|
   # If you are using webpack-dev-server then specify webpack-dev-server host
   if Rails.env.development?
     srcs = ["http://localhost:3035", "ws://localhost:3035", "ws://localhost:3000", "ws://localhost:5000"]
+    srcs += ["wss://*.agreelivevideo.com"]
     srcs += ["http://localhost:35729", "ws://localhost:35729"] if Jumpstart.config.livereload?
     policy.connect_src :self, :https, *srcs
+  else
+    # For subdomains, add your domain:
+    policy.connect_src :self, :https, "wss://*.agreelivevideo.com"
   end
-
-  # For subdomains, add your domain:
-  policy.connect_src :self, :https, "wss://*.agreelivevideo.com"
 
   #   # Specify URI for violation reports
   #   # policy.report_uri "/csp-violation-report-endpoint"
