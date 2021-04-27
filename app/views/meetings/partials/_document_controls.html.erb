@@ -1,0 +1,49 @@
+<div class="document-controls flex justify-between">
+  <div>
+    <button class="btn btn-small btn-primary mt-2 mr-2" data-action="click->documents--pdf#firstPage" data-controller="tooltip" data-tippy-content="<%= t("documents.controls.first") %>">
+      <%= fa_icon "arrow-left", weight: "fas", class: "mr-1" %>
+    </button>
+    <button class="btn btn-small btn-primary mt-2" data-action="click->documents--pdf#prevPage" data-controller="tooltip" data-tippy-content="<%= t("documents.controls.previous") %>">
+      <%= fa_icon "chevron-left", weight: "fas", class: "mr-1" %>
+    </button>
+  </div>
+
+  <div>
+    <input type="text" value="1" data-action="blur->pdf#skipToPage keyup->documents--pdf#skipOnEnter" data-pdf-target="pageNum" class="form-control inline-block w-20">
+    <span class="mt-1">/</span>
+    <span data-pdf-target="pageCount" class="mt-1"></span>
+  </div>
+
+  <div>
+    <button class="btn btn-small btn-primary mt-2 mr-2" data-action="click->documents--pdf#nextPage" data-controller="tooltip" data-tippy-content="<%= t("documents.controls.next") %>">
+      <%= fa_icon "chevron-right", weight: "fas", class: "ml-1" %>
+    </button>
+    <button class="btn btn-small btn-primary mt-2 mr-2" data-action="click->documents--pdf#lastPage" data-controller="tooltip" data-tippy-content="<%= t("documents.controls.last") %>">
+      <%= fa_icon "arrow-right", weight: "fas", class: "ml-1" %>
+    </button>
+  </div>
+
+  <% if @in_meeting && !@meeting_user.spectator && !@meeting.completed? %>
+    <%= render "meetings/documents/sign" %>
+  <% end %>
+
+  <div>
+    <button class="btn btn-small btn-tertiary mt-2 mr-2" data-action="click->documents--pdf#zoomOut">
+      <%= fa_icon "search-minus", weight: "fas" %>
+    </button>
+    <button class="btn btn-small btn-tertiary mt-2 mr-2" data-action="click->documents--pdf#zoomIn">
+      <%= fa_icon "search-plus", weight: "fas" %>
+    </button>
+  </div>
+
+  <% if @in_meeting && @meeting_user.host && !@meeting.completed? %>
+    <% button_data = {
+        confirm: t("meetings.meet.show.completed_warning"),
+        controller: "tooltip",
+        tippy_content: t("documents.controls.complete_meeting")
+    } %>
+    <%= button_to close_meeting_meet_path(@meeting), class: "btn btn-small btn-danger mt-2", data: button_data, method: :get do %>
+      <%= fa_icon "calendar-check", weight: "far" %>
+    <% end %>
+  <% end %>
+</div>

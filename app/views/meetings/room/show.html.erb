@@ -1,170 +1,49 @@
-<div class="container mx-auto my-2 px-4">
+<div class="w-100 mx-auto my-2 px-4">
   <div>
     <h1 class="h3">
       <%= link_to t('.meetings'), meetings_path %> > <%= link_to @meeting.title, @meeting %> 
     </h1>
+    <div class="grid grid-cols-12 gap-2">
+      <div class="col-span-2 bg-white rounded shadow-md p-4">
+        <h1 class="h3">
+          <%= t('.documents') %>
+        </h1>
+        <%= turbo_frame_tag(
+            "documents",
+            src: tabs_meeting_documents_path(@meeting),
+            data: {
+              controller: "documents--tabs",
+              documents__tabs_id_value: @meeting.id
+            }
+          ) %>
 
-    <div class="flex justify-between">
-      <div>
-        <h3>Members</h3>
-        <% @meeting.meeting_members.each do |member| %>
-          <div class="card">
-            <div class="card-title">
-              <%= member.memberable.name %>
-            </div>
-            <div class="grid grid-cols-4">
-              <p class="card-paragraph">
-                <%= t(".id") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= member.id %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".email") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= member.memberable.email %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".phone_number") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= member.memberable.phone_number %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".memberable_id") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= member.memberable_id %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".memberable_type") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= member.memberable_type %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".identification_attached") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= member.memberable.identification.attached? %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".identification") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= member.memberable.identification.url %>
-              </p>
-
-              <% if member.memberable_type == "Participant" %>
-                <p class="card-paragraph">
-                  <%= t(".status") %>:
-                </p>
-                <p class="card-paragraph col-span-3">
-                  <%= member.memberable.aasm.human_state %>
-                </p>
-                <% if @host %>
-                  <p class="col-span-4">
-                    <%= link_to t(".edit"), edit_meeting_participant_path(member.meeting, member.memberable), class: "btn btn-link pl-0" %>
-                  </p>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
+        <h1 class="h3">
+          <%= t('.members') %>
+        </h1>
+        <%= turbo_frame_tag(
+          "meeting_members",
+          src: meeting_meeting_members_path(@meeting),
+          data: {
+            controller: "meeting-members--list",
+            meeting_members__list_id_value: @meeting.id,
+          }
+        ) %>
       </div>
-      <div>
-        <h3>Documents</h3>
-        <% @meeting.documents.each do |doc| %>
-          <div class="card">
-            <div class="card-title"><%= doc.title %></div>
-            <div class="grid grid-cols-4">
-              <p class="card-paragraph">
-                <%= t(".id") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= doc.id %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".file_url") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= link_to t('.file'), url_for(doc.file), class: "btn btn-link pl-0" %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".status") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= doc.aasm.human_state %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".signatures") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= doc.signatures.where.not(signed_at: nil).count %>
-              </p>
-            </div>
+      <div class="col-span-7 bg-white rounded shadow-md">
+        <div data-controller="documents--pdf" data-scale="1.25" id="pdf-controller" data-meeting-id="<%= @meeting.id %>">
+          <div id="pdf-container" class="max-h-128 overflow-y-scroll overflow-auto">
+            <canvas data-documents--pdf-target="canvas"></canvas>
           </div>
-        <% end %>
+          <%= render "meetings/partials/document_controls" %>
+        </div>
       </div>
-      <div>
-        <h3>Signatures</h3>
-        <% @meeting.signatures.each do |signature| %>
-          <div class="card">
-            <div class="grid grid-cols-4">
-              <p class="card-paragraph">
-                <%= t(".member_name") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= signature.meeting_member.memberable.name %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".member_id") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= signature.meeting_member.id %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".document_name") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= signature.document.title %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".document_id") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= signature.document.id %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".signed") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= signature.signed?.to_s %>
-              </p>
-
-              <p class="card-paragraph">
-                <%= t(".signed_at") %>:
-              </p>
-              <p class="card-paragraph col-span-3">
-                <%= signature.signed_at.to_s %>
-              </p>
-            </div>
-          </div>
-        <% end %>
+      <div class="col-span-3 bg-white rounded shadow-md p-4">
+        <h1 class="h3">
+          <%= t('.video') %>
+        </h1>
+        <div class="w-100 rounded bg-gray-900 h-64 text-white font-bold">
+          Coming Soon...
+        </div>
       </div>
       <div>
         <h3>Signatures</h3>

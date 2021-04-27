@@ -35,6 +35,11 @@ en:
       cancel: "Cancel"
     form:
       submit: "Create Document"
+    controls:
+      first: "First"
+      previous: "Previous"
+      next: "Next"
+      last: "Last"
     
   meetings:
     errors:

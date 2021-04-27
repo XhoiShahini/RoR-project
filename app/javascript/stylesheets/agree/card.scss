@@ -4,6 +4,14 @@
   &:hover {
     @apply bg-gray-50;
   }
+
+  &.active {
+    @apply bg-gray-100 shadow-inner;
+  }
+}
+
+.document-controls {
+  @apply bg-white p-1 my-2 mx-1 border rounded-lg shadow-md;
 }
 
 .card-header {
