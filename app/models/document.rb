@@ -47,12 +47,9 @@ class Document < ApplicationRecord
     state :incomplete, display: I18n.t("documents.state.incomplete")
     state :finalized, display: I18n.t("documents.state.finalized")
 
-    event :sign do
-      transitions from: [:created, :incomplete], to: :incomplete, after_commit: :finalize_if_signing_complete
-    end
-
-    event :finalize do
-      transitions from: :incomplete, to: :finalized, after: :add_signature_page
+    event :sign, after: :broadcast_update do
+      transitions from: [:created, :incomplete], to: :finalized, if: :signing_complete?, after: :add_signature_page
+      transitions from: [:created, :incomplete], to: :incomplete, unless: :signing_complete?
     end
   end
 
@@ -68,11 +65,12 @@ class Document < ApplicationRecord
     end
   end
 
-  def finalize_if_signing_complete
+  def broadcast_update
     broadcast_to_meeting("update")
-    unless signatures.find_by(signed_at: nil).present?
-      finalize!
-    end
+  end
+
+  def signing_complete?
+    !signatures.find_by(signed_at: nil).present?
   end
 
   def generate_signatures
