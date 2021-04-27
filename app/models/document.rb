@@ -48,7 +48,7 @@ class Document < ApplicationRecord
     state :finalized, display: I18n.t("documents.state.finalized")
 
     event :sign do
-      transitions from: [:created, :incomplete], to: :incomplete, after: :finalize_if_signing_complete
+      transitions from: [:created, :incomplete], to: :incomplete, after_commit: :finalize_if_signing_complete
     end
 
     event :finalize do
@@ -69,6 +69,7 @@ class Document < ApplicationRecord
   end
 
   def finalize_if_signing_complete
+    broadcast_to_meeting("update")
     unless signatures.find_by(signed_at: nil).present?
       finalize!
     end
@@ -94,7 +95,8 @@ class Document < ApplicationRecord
     pdf = CombinePDF.new
     pdf << CombinePDF.parse(file.download)
     pdf << CombinePDF.parse(generate_signatures)
-    file.attach(io: pdf.to_pdf, filename: "#{id}.pdf")
+    file.attach(io: StringIO.new(pdf.to_pdf), filename: "#{id}.pdf")
+    broadcast_to_meeting("update")
   end
 
   def enforce_maximum_documents

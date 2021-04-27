@@ -1,0 +1,26 @@
+<% if @meeting_member.must_sign %>
+  <div data-controller="signature" 
+      data-signature-document-id-value="" 
+      data-signature-signed-value="false" 
+      id="signature-controller"
+      data-signature-meeting-id-value="<%= @meeting.id %>">
+
+    <div data-controller="modal" id="signature_modal">
+
+      <button data-action="click->modal#open" data-signature-target="modalButton" class="btn btn-secondary">
+        <%= fa_icon "file-signature", weight: "fas", class: "mr-2" %>
+        <%= t(".sign") %>
+      </button>
+      <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+        <!-- Modal Inner Container -->
+        <div class="max-h-screen w-full max-w-xl relative">
+          <div class="m-1 bg-white rounded shadow">
+            <div class="p-8">
+              <%= turbo_frame_tag "new_signature", data: { signature_target: "modal" } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

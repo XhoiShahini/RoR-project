@@ -18,8 +18,10 @@ Rails.application.routes.draw do
       member do
         get :pdf
         get :download
-        post :sign
-        post :send_otp
+        get :new_signature
+        get :sign
+        get :otp
+        get :otp_verified
         post :verify_otp
       end
     end

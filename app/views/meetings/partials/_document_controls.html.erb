@@ -9,9 +9,9 @@
   </div>
 
   <div>
-    <input type="text" value="1" data-action="blur->pdf#skipToPage keyup->documents--pdf#skipOnEnter" data-pdf-target="pageNum" class="form-control inline-block w-20">
+    <input type="text" value="1" data-action="blur->documents--pdf#skipToPage keyup->documents--pdf#skipOnEnter" data-documents--pdf-target="pageNum" class="form-control inline-block w-20">
     <span class="mt-1">/</span>
-    <span data-pdf-target="pageCount" class="mt-1"></span>
+    <span data-documents--pdf-target="pageCount" class="mt-1"></span>
   </div>
 
   <div>
@@ -23,8 +23,8 @@
     </button>
   </div>
 
-  <% if @in_meeting && !@meeting_user.spectator && !@meeting.completed? %>
-    <%= render "meetings/documents/sign" %>
+  <% if @meeting_member.must_sign && !@meeting.completed? %>
+    <%= render "meetings/partials/sign" %>
   <% end %>
 
   <div>
