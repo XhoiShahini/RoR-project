@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
     resource :room, controller: "meetings/room", only: [:show] do
       get :pre_meeting
+      post :perform_action
     end
   end
     

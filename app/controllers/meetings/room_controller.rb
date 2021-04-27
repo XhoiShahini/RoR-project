@@ -11,6 +11,16 @@ class Meetings::RoomController < ApplicationController
     @id_attached = @meeting_member.memberable.identification.attached?
   end
 
+  # POST perform_action
+  def perform_action
+    if @meeting_member.memberable.is_a? User
+      # for now we do not have "real" controls
+      case params[:action]
+      when 'moderate':
+      end
+    end
+  end
+
   private
 
   def set_meeting

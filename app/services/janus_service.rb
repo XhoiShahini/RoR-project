@@ -103,6 +103,11 @@ class JanusService
       post_to_server(meeting_member.server, payload)
     end
 
+    def create_and_add_token(meeting_member)
+      add_token(meeting_member)
+      add_token_to_room(meeting_member)
+    end
+
     # "private"
 
     def send_room_request(server, payload)

@@ -3,7 +3,6 @@
 # Table name: meeting_members
 #
 #  id              :uuid             not null, primary key
-#  company         :string
 #  janus_token     :string
 #  memberable_type :string           not null
 #  must_sign       :boolean

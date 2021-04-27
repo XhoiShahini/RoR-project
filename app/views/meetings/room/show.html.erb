@@ -176,9 +176,6 @@
         </div>
 
         <div id="remotevideo">
-          <video class="rounded centered" id="remotevideo1" width="100%" height="100%" autoplay playsinline />
-          <video class="rounded centered" id="remotevideo2" width="100%" height="100%" autoplay playsinline />
-          <video class="rounded centered" id="remotevideo3" width="100%" height="100%" autoplay playsinline />
         </div>
       </div>
     </div>
@@ -190,15 +187,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/7.4.0/adapter.min.js" ></script>
 <script src="/js/janus.js"></script>
 <script>
-var server = "wss://janus-01.agreelivevideo.com/wsjanus";
+var server = "wss://<%= @meeting_member.server.domain %>/wsjanus";
 var janus = null;
 var sfutest = null;
-var opaqueId = "videoroomtest-"+Janus.randomString(12);
-var memberId = "member-"+Janus.randomString(12);
-var username = "foobar";
+var opaqueId = "<%= @meeting_member.signed_member_id %>";
+var memberId = "<%= @meeting_member.signed_member_id %>";
+var username = "<%= @meeting_member.full_name %>";
 var useAudio = true;
-var myroom = "mytestroom";
-var userToken = "a1b2c3d4";
+var myroom = "<%= @meeting_member.meeting.signed_room_id %>";
+var userToken = "<%= @meeting_member.janus_token %>";
 var feeds = [];
 
 function ready(callback) {

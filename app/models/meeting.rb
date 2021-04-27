@@ -44,6 +44,10 @@ class Meeting < ApplicationRecord
     self.janus_secret = SecureRandom.hex(16)
   end
 
+  after_create do |meeting|
+    JanusService.create_room(meeting)
+  end
+
   aasm(column: :state, logger: Rails.logger, timestamps: true) do
     state :created, initial: true, display: I18n.t("meetings.state.created")
     state :incomplete, display: I18n.t("meetings.state.incomplete")
@@ -64,6 +68,10 @@ class Meeting < ApplicationRecord
 
   def signed_room_id
     Digest::SHA1.hexdigest "#{self.id}#{ENV.fetch('SIGNATURE_SALT', 'salt is bad for you')}"
+  end
+
+  def server
+    Server.first
   end
 
   private

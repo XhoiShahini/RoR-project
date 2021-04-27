@@ -3,7 +3,6 @@
 # Table name: meeting_members
 #
 #  id              :uuid             not null, primary key
-#  company         :string
 #  janus_token     :string
 #  memberable_type :string           not null
 #  must_sign       :boolean
@@ -36,6 +35,10 @@ class MeetingMember < ApplicationRecord
     self.janus_token = SecureRandom.hex(16)
   end
 
+  after_create do |meeting_member|
+    JanusService.create_room(meeting)
+  end
+
   include ValidatesMaximumMembers
   after_create :initialize_signatures
   after_create_commit { broadcast_to_meeting("create") }
@@ -46,6 +49,10 @@ class MeetingMember < ApplicationRecord
 
   def signed_member_id
     Digest::SHA1.hexdigest "#{self.id}#{ENV.fetch('SIGNATURE_SALT', 'salt is bad for you')}"
+  end
+
+  def full_name
+    "#{self.memberable.first_name} #{self.memberable.last_name}"
   end
 
   private
