@@ -58,7 +58,7 @@ class JanusService
       send_room_request(meeting_member.server, payload)
     end
 
-    def moderate_member(meeting_member, change_audio: false, audio_state: true, change_video: false, video_state: true)
+    def moderate_member(meeting_member, mute_audio: nil, mute_video: nil)
       payload = {
         request:"moderate",
         room: meeting_member.meeting.signed_room_id,
@@ -66,8 +66,8 @@ class JanusService
         id: meeting_member.signed_member_id
       }
 
-      payload[:audio] = audio_state if change_audio
-      payload[:video] = video_state if change_video
+      payload[:mute_audio] = audio_state if !mute_audio.nil?
+      payload[:mute_video] = video_state if !mute_video.nil?
 
       send_room_request(meeting_member.server, payload)
     end

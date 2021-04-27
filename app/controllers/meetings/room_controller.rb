@@ -15,7 +15,7 @@ class Meetings::RoomController < ApplicationController
   def perform_action
     if @meeting_member.is_moderator?
       # for now we do not have "real" controls
-      case params[:action]
+      case params[:command]
       when 'audio'
         
       end

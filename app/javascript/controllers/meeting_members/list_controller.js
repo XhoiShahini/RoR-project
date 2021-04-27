@@ -32,6 +32,7 @@ export default class extends Controller {
   _disconnected() {}
 
   _received(data) {
+    console.log(data)
     switch (data.type) {
       case "create":
         this._loadMembers()
