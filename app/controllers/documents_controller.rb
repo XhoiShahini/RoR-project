@@ -80,6 +80,7 @@ class DocumentsController < ApplicationController
 
   # GET /meetings/:meeting_id/documents/:id/otp
   def otp
+    @signature.sms_verification.destroy! if @signature.sms_verification.present?
     @signature.sms_verification = SmsVerification.create(sms_verifiable: @signature, phone_number: @meeting_member.memberable.phone_number)
     render layout: false
   end

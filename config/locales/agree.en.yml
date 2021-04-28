@@ -40,6 +40,11 @@ en:
       previous: "Previous"
       next: "Next"
       last: "Last"
+    otp:
+      instructions: "Enter the code sent to you via SMS"
+    otp_verified:
+      title: "Verify and Sign"
+      instructions: "Thank you for verifying. Click the SIGN button now to sign!"
     
   meetings:
     errors:
@@ -107,7 +112,18 @@ en:
       success: "Signed in successfully."
       title: "Please Sign In"
       signed_out: "Signed Out."
+      must_accept_terms: "You must read and agree to all terms before signing in."
       show:
+        title: "Welcome to Agree.Live!"
+        paragraph1: "Before joining your meeting we kindly ask you to read and approve our disclaimers."
+        paragraph2: "Making you aware about our electronic signature and the processing of personal data is very important to us."
+        data_html: "​I hereby declare that I have read the %{link} and express my consent to the processing of my personal data"
+        data_processing: "data processing information"
+        media_html: "​I hereby declare that I have read the %{link} and express my consent to the use of images, video and audio shooting"
+        media_processing: "media usage information"
+        signature_html: "I hereby declare that I have read the %{link} regarding the provision of the advanced electronic signature"
+        signature_processing: "information"
+        paragraph3: "Once You’ve read and approved the previous disclaimer, click the SEND CODE button to receive the OTP code via SMS on your mobile phone"
         send_code: "Send Code"
       otp:
         instructions: "Please enter the code sent to you via SMS."
@@ -156,6 +172,11 @@ en:
       header_html: "<strong>%{meeting}</strong> is now complete!"
       description_html: "You can use the link below to access the details of your meeting at any time."
       view_meeting: "View Meeting"
+  
+  signatures:
+    otp:
+      title: "Verify and Sign"
+
 
   #ActiveStorage Validations
   errors:

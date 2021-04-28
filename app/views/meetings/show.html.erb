@@ -30,12 +30,6 @@
               <h4><%= t(".completed") %></h4>
               <%= @meeting.completed_at %>
             </div>
-          <% elsif @meeting.incomplete? %>
-            <div class="mb-2">
-              <h4><%= t(".starts_at") %></h4>
-              <%= @meeting.starts_at %>
-              <%= render "meetings/partials/postpone" %>
-            </div>
           <% else %>
             <div class="mb-2">
               <h4><%= t(".starts_at") %></h4>
