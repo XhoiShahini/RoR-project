@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resource :id_upload, controller: "participants/id_uploads", only: [:new, :create, :show]
       resource :sign_in, controller: "participants/sign_in", only: [:create, :show, :destroy] do
         get :otp
+        post :send_otp
       end
     end
 
@@ -132,6 +133,9 @@ Rails.application.routes.draw do
     get :privacy
     get :pricing
     get :phone_input_utils
+    get :processing_permission
+    get :media_permission
+    get :signature_permission
   end
 
   post :sudo, to: "users/sudo#create"
