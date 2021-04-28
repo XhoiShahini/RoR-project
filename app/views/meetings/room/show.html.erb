@@ -1,8 +1,18 @@
 <div class="w-100 mx-auto my-2 px-4">
   <div>
     <h1 class="h3">
-      <%= link_to t('.meetings'), meetings_path %> > <%= link_to @meeting.title, @meeting %> 
+      <div class="flex justfy-start gap-4 items-center">
+        <div>
+          <%= link_to t('.meetings'), meetings_path %> > <%= link_to @meeting.title, @meeting %>
+        </div>
+        <% if @meeting_member.is_moderator? %>
+          <div>
+            <%= link_to t('.complete_meeting'), post_meeting_meeting_room_path(@meeting), class: "btn btn-small btn-danger rounded-full" %>
+          </div>
+        <% end %>
     </h1>
+    <div class="hidden" data-controller="meetings--events" data-meetings--events-id-value="<%= @meeting.id %>">
+    </div>
     <div class="grid grid-cols-12 gap-2">
       <div class="col-span-2 bg-white rounded shadow-md p-4">
         <h1 class="h3">

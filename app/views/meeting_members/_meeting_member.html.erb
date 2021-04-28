@@ -11,7 +11,7 @@
         </p>
       </div>
       <div>
-        <% if @host && meeting_member.memberable != current_user %>
+        <% if @host && meeting_member.memberable != current_user && !meeting_member.finalized? && !meeting_member.meeting.completed? %>
           <%= button_to meeting_meeting_member_path(meeting_member.meeting, meeting_member), method: :delete, class: "btn btn-small text-lg btn-danger outline" do %>
             <%= fa_icon "trash", weight: "fas" %>
           <% end %>

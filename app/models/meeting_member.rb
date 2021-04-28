@@ -62,6 +62,10 @@ class MeetingMember < ApplicationRecord
     self.memberable.is_a? User
   end
 
+  def finalized?
+    self.signatures.count > 0
+  end
+
   private
 
   def broadcast_to_meeting(type)

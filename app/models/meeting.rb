@@ -54,7 +54,7 @@ class Meeting < ApplicationRecord
     state :completed, display: I18n.t("meetings.state.completed")
 
     event :start do
-      transitions from: :created, to: :incomplete
+      transitions from: :created, to: :incomplete, after_commit: :broadcast_start
     end
 
     event :pause do
@@ -62,7 +62,7 @@ class Meeting < ApplicationRecord
     end
 
     event :complete do
-      transitions from: :incomplete, to: :completed, after: :complete_meeting
+      transitions from: :incomplete, to: :completed, after_commit: :complete_meeting
     end
   end
 
@@ -76,7 +76,12 @@ class Meeting < ApplicationRecord
 
   private
 
+  def broadcast_start
+    MeetingEventsChannel.broadcast_to self, type: "start"
+  end
+
   def complete_meeting
+    MeetingEventsChannel.broadcast_to self, type: "end"
     meeting_members.each do |member|
       PostMeetingMailer.with(meeting_member: meeting_member).post_meeting.deliver_later
     end

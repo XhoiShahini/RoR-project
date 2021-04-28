@@ -38,7 +38,7 @@
         <% if (company = @meeting.meeting_members.find_by(memberable_id: @meeting.host_id).company) && company.present? %>
           <div class="mb-2 mr-8">
             <h4><%= t(".company") %></h4>
-            <%= company %>
+            <%= company.name %>
           </div>
         <% end %>
       </div>
