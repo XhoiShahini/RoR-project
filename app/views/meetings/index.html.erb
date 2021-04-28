@@ -33,7 +33,7 @@
               <td class="p-3"><%= meeting.aasm.human_state %></td>
               <td class="p-3"><%= render "meetings/partials/member_heads", members: meeting.meeting_members %></td>
               <% if meeting.completed? %>
-                <td class="p-3"><%= meeting.completed_at.to_s :db %></td>
+                <td class="p-3"><%= meeting.completed_at.to_s %></td>
               <% elsif meeting.starts_at.present? %>
                 <td class="p-3"><%= meeting.starts_at.to_s :db %></td>
               <% else %>

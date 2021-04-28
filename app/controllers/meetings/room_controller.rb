@@ -4,7 +4,7 @@ class Meetings::RoomController < ApplicationController
   before_action :require_meeting_member!
   # GET /meetings/:meeting_id/room
   def show
-    redirect_to post_meeting_meeting_room_path(@meeting) if @meeting.completed?
+    redirect_to post_meeting_meeting_room_path(@meeting) and return if @meeting.completed?
     if @meeting_member.is_moderator? && !@meeting.incomplete?
       @meeting.start!
     end
