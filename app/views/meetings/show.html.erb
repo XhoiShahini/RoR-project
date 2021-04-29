@@ -64,7 +64,7 @@
               meeting_members__list_id_value: @meeting.id,
             }
           ) %>
-          <% if @meeting.host == current_user %>
+          <% if @meeting.host == current_user && !@meeting.completed? %>
             <%= turbo_frame_tag "new_participant", src: new_meeting_participant_path(@meeting) %>
           <% end %>
         </div>
