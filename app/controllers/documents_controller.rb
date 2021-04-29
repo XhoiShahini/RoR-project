@@ -63,8 +63,9 @@ class DocumentsController < ApplicationController
     end
   end
 
-  # GET /meetings/:meeting_id/documents/:id/sign
+  # GET /meetings/:meeting_id/documents/:id/new_signature
   def new_signature
+    redirect_to cannot_sign_meeting_document_path(@meeting, @document) and return unless @meeting.all_participants_verified?
     redirect_to sign_meeting_document_path(@meeting, @document) and return if @signature.signed_at.present?
     @memberable = current_user || current_participant
     render layout: false
@@ -75,6 +76,10 @@ class DocumentsController < ApplicationController
     unless @signature.signed_at.present?
       @signature.sign! ip: request.remote_ip
     end
+    render layout: false
+  end
+
+  def cannot_sign
     render layout: false
   end
 

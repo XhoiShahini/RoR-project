@@ -45,6 +45,9 @@ en:
     otp_verified:
       title: "Verify and Sign"
       instructions: "Thank you for verifying. Click the SIGN button now to sign!"
+    cannot_sign:
+      title: "Cannot Sign Yet"
+      cannot_sign: "All participants must first be verified before you can sign."
     
   meetings:
     errors:

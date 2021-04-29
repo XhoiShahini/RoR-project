@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         get :download
         get :new_signature
         get :sign
+        get :cannot_sign
         get :otp
         get :otp_verified
         post :verify_otp

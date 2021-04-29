@@ -74,6 +74,10 @@ class Meeting < ApplicationRecord
     Server.first
   end
 
+  def all_participants_verified?
+    !participants.find_by(state: [:invited, :accepted]).present?
+  end
+
   private
 
   def broadcast_start

@@ -25,6 +25,8 @@ export default class extends Controller {
       .then(response => {
         this.element.innerHTML = response.querySelector("#meeting_members").innerHTML
       })
+    let signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector('div[data-controller="signature"]'), "signature")
+    signatureController.documentIdValueChanged()
   }
 
   _connected() {
