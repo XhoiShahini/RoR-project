@@ -69,6 +69,8 @@ class JanusService
       payload[:mute_audio] = mute_audio if !mute_audio.nil?
       payload[:mute_video] = mute_video if !mute_video.nil?
 
+      Rails.logger.info "------------------------ #{payload}"
+
       send_room_request(meeting_member.server, payload)
     end
 

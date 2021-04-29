@@ -2,17 +2,18 @@
 #
 # Table name: meeting_members
 #
-#  id              :uuid             not null, primary key
-#  audio           :boolean          default(TRUE)
-#  janus_token     :string
-#  memberable_type :string           not null
-#  must_sign       :boolean
-#  video           :boolean          default(TRUE)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  company_id      :uuid
-#  meeting_id      :uuid             not null
-#  memberable_id   :uuid             not null
+#  id               :uuid             not null, primary key
+#  audio            :boolean          default(TRUE)
+#  janus_token      :string
+#  memberable_type  :string           not null
+#  must_sign        :boolean
+#  video            :boolean          default(TRUE)
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  company_id       :uuid
+#  meeting_id       :uuid             not null
+#  memberable_id    :uuid             not null
+#  signed_member_id :string
 #
 # Indexes
 #

@@ -45,6 +45,9 @@ export default class extends Controller {
       case "destroy":
         this._loadMembers()
         break;
+      case "presence":
+        console.log(data);
+        break;
     }
   }
 }

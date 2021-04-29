@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_28_193426) do
+ActiveRecord::Schema.define(version: 2021_04_29_114458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -173,10 +173,11 @@ ActiveRecord::Schema.define(version: 2021_04_28_193426) do
     t.boolean "must_sign"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.uuid "company_id"
     t.string "janus_token"
+    t.uuid "company_id"
     t.boolean "audio", default: true
     t.boolean "video", default: true
+    t.string "signed_member_id"
     t.index ["company_id"], name: "index_meeting_members_on_company_id"
     t.index ["meeting_id"], name: "index_meeting_members_on_meeting_id"
     t.index ["memberable_type", "memberable_id"], name: "index_meeting_members_on_memberable"

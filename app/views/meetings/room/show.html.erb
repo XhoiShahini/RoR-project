@@ -66,6 +66,11 @@
             <select id="audioOutput"></select>
             <button type="button" id="changeOutput" class="btn btn-small btn-primary mt-2 mr-2">Change output devices</button>
           </div>
+          <div id="<%= @meeting_member.signed_member_id %>">
+            <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myAudio"><i class="fas fa-microphone"></i></button>
+            <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myVideo"><i class="fas fa-video"></i></button>
+
+          </div>
 
           <h4>Remote video</h4>
           <div id="remotevideo">
@@ -87,6 +92,7 @@
 <script src="/js/janus.js"></script>
 <script>
 var server = "wss://<%= @meeting_member.server.domain %>/wsjanus";
+const globalSubmitUrl = '<%= perform_action_meeting_room_path(@meeting_member.meeting) %>';
 var janus = null;
 var sfutest = null;
 var opaqueId = "<%= @meeting_member.signed_member_id %>";
@@ -99,15 +105,16 @@ var userToken = "<%= @meeting_member.janus_token %>";
 var feeds = [];
 var audioDeviceId = null;
 var videoDeviceId = null;
+var isModerator = <%= @meeting_member.is_moderator? %>;
 
 function ready(callback) {
-  if (document.readyState != 'loading' && typeof Janus !== "undefined") {
+  if (document.readyState != 'loading') {
     callback();
   } else if (document.addEventListener) {
-    document.addEventListener('janus:load', callback);
+    document.addEventListener('DOMContentLoaded', callback);
   } else {
     document.attachEvent('onreadystatechange', function() {
-      if (document.readyState != 'loading' && typeof Janus !== "undefined") {
+      if (document.readyState != 'loading') {
         callback();
       }
     });
@@ -250,10 +257,10 @@ function newRemoteFeed(id, display, audio, video) {
 }
 
 function createNewStream(remoteFeed, stream) {
-  console.log("Adding stream", remoteFeed.rfid);
   //Janus.log("Remote feed #" + remoteFeed.rfindex + " id "+ remoteFeed.rfid + ", stream:", stream);
   var existingElement = document.getElementById(remoteFeed.rfid);
   if (existingElement) {
+    console.log("Adding stream", remoteFeed.rfid);
     return;
   }
 
@@ -262,13 +269,72 @@ function createNewStream(remoteFeed, stream) {
 
   var videoElm = document.createElement('video');
   videoElm.width = "300";
-  videoElm.height = "200";
   videoElm.autoplay = true;
   videoElm.playsInline = true;
   videoFrame.appendChild(videoElm);
 
+  if (isModerator) {
+    var muteBtn = document.createElement('button');
+    muteBtn.type = 'button';
+    muteBtn.className = "btn btn-small btn-primary";
+    muteBtn.title = 'Toggle camera';
+    muteBtn.addEventListener('click', function(e){
+      toggleAudio(e);
+    });
+    var icon = document.createElement('i');
+    icon.className = 'fas fa-microphone';
+    // fa-microphone-slash
+    muteBtn.appendChild(icon);
+
+
+    videoFrame.appendChild(muteBtn);
+
+    var vmuteBtn = document.createElement('button');
+    vmuteBtn.type = 'button';
+    vmuteBtn.className = "btn btn-small btn-primary";
+    vmuteBtn.title = 'Toggle camera';
+    vmuteBtn.addEventListener('click', function(e){
+      toggleVideo(e);
+    });
+    var icon = document.createElement('i');
+    icon.className = 'fas fa-video';
+    // fa-video-slash
+    vmuteBtn.appendChild(icon);
+    videoFrame.appendChild(vmuteBtn);
+  }
+
   document.getElementById('remotevideo').appendChild(videoFrame)
 	Janus.attachMediaStream(videoElm, stream);
+}
+
+function toggleVideo(e) {
+  console.log(e.target.parentNode.id);
+
+  formSubmit({
+    member_id: e.target.parentNode.id,
+    command: 'toggle_video'
+  })
+}
+
+function toggleAudio(e) {
+  formSubmit({
+    member_id: e.target.parentNode.id,
+    command: 'toggle_audio'
+  })
+}
+
+function formSubmit(body) {
+  var token = document.getElementsByName('csrf-token')[0].content
+  var formData = new FormData();
+  for (const [key, value] of Object.entries(body)) {
+    formData.append(key, value)
+  }
+
+  fetch(globalSubmitUrl, {
+    body: formData,
+    method: "post"
+  })
+  return false;
 }
 
 function destroyRemoteFeed(remoteFeedId) {
@@ -363,6 +429,14 @@ ready(async function() {
   document.getElementById('changeInput').onclick = function () {
     restartCapture();
   }
+
+  document.getElementById('myVideo').addEventListener('click', function(e){
+    toggleVideo(e);
+  });
+
+  document.getElementById('myAudio').addEventListener('click', function(e){
+    toggleAudio(e);
+  });
 
   document.getElementById('changeOutput').onclick = function () {
     var deviceId = document.getElementById("audioOutput").value;
