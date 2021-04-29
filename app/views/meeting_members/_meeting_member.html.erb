@@ -9,6 +9,40 @@
           <%= meeting_member.memberable == meeting_member.meeting.host ? t(".host") : meeting_member.memberable_type %>
           <%= meeting_member.must_sign ? "" : "(Spectator)" %>
         </p>
+        <% if meeting_member.memberable.identification&.attached? %>
+          <div data-controller="modal">
+            <button class="btn btn-link pl-0 py-0 my-0 leading-tight" data-action="click->modal#open">
+              <%= t('.identification') %>
+            </button>
+            <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+              <!-- Modal Inner Container -->
+              <div class="max-h-screen w-full max-w-2xl relative">
+                <div class="m-1 bg-white rounded shadow">
+                  <div class="p-8">
+                    <div>
+                      <p class="text-xl font-semibold text-primary-500 mb-4">
+                        <%= meeting_member.memberable.name.possessive %> ID
+                      </p>
+                    </div>
+                    <div>
+                      <div class="flex justify-center">
+                        <% if meeting_member.memberable.identification&.content_type == "application/pdf" %>
+                          <div data-controller="id-pdf" data-scale="1.0" data-id-pdf-url-value="<%= url_for(meeting_member.memberable.identification) %>">
+                            <div class="pdf-container">
+                              <canvas data-id-pdf-target="canvas"></canvas>
+                            </div>
+                          </div>
+                        <% else %>
+                          <%= image_tag url_for(meeting_member.memberable.identification), class: "max-h-96" %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
       <div>
         <% if @host && meeting_member.memberable != current_user && !meeting_member.finalized? && !meeting_member.meeting.completed? %>
