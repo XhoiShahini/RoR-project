@@ -1,10 +1,10 @@
 class MeetingMembersController < ApplicationController
   include MeetingsHelper
   before_action :set_meeting
-  before_action :set_member, except: [:index, :new, :create]
   before_action :require_meeting_member!, only: [:index, :show, :identification]
   before_action :require_current_account_admin, except: [:index, :show, :identification]
-  before_action :cannot_modify_completed!, except: [:index, :show]
+  before_action :cannot_modify_completed!, except: [:index, :show, :identification]
+  before_action :set_member, except: [:index, :new, :create]
   before_action :set_users_for_select, only: [:new, :edit, :create, :update]
 
   # GET /meetings/:meeting_id/members
