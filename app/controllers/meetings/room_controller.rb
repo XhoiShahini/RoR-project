@@ -2,6 +2,7 @@ class Meetings::RoomController < ApplicationController
   include MeetingsHelper
   before_action :set_meeting
   before_action :require_meeting_member!
+  skip_before_action :verify_authenticity_token, only: :perform_action
   # GET /meetings/:meeting_id/room
   def show
     redirect_to post_meeting_meeting_room_path(@meeting) and return if @meeting.completed?
@@ -25,11 +26,15 @@ class Meetings::RoomController < ApplicationController
 
   # POST perform_action
   def perform_action
-    if @meeting_member.is_moderator?
-      # for now we do not have "real" controls
+    # for now we do not have "real" controls
+    mm = MeetingMember.where(signed_member_id: params[:member_id]).first
+
+    if mm
       case params[:command]
-      when 'audio'
-        
+      when 'toggle_audio'
+        mm.toggle_audio
+      when 'toggle_video'
+        mm.toggle_video
       end
     end
   end

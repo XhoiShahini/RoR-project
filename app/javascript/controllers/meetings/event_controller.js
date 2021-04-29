@@ -24,9 +24,6 @@ export default class extends Controller {
       case "start":
         //TODO: Don't let participants in before host
         break;
-      case "presence":
-        console.log(data);
-        break;
       case "end":
         window.location.reload()
         break;
