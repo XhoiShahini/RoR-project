@@ -35,6 +35,7 @@ class MeetingMembersController < ApplicationController
 
   # GET /meetings/:meeting_id/members/:id/identification
   def identification
+    stream_identification_file
   end
 
   # GET /meetings/:meeting_id/members/:id/edit
