@@ -173,8 +173,8 @@ ActiveRecord::Schema.define(version: 2021_04_28_193426) do
     t.boolean "must_sign"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.uuid "company_id"
     t.string "janus_token"
+    t.uuid "company_id"
     t.boolean "audio", default: true
     t.boolean "video", default: true
     t.index ["company_id"], name: "index_meeting_members_on_company_id"

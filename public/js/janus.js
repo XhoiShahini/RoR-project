@@ -3643,8 +3643,3 @@ function Janus(gatewayCallbacks) {
 		return (trickle === false) ? false : true;
 	}
 }
-
-if (document !== undefined && document !== null) {
-	const loadEvent = new Event("janus:load");
-	document.dispatchEvent(loadEvent);
-}
