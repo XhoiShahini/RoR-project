@@ -27,13 +27,13 @@
                     <div>
                       <div class="flex justify-center">
                         <% if meeting_member.memberable.identification&.content_type == "application/pdf" %>
-                          <div data-controller="id-pdf" data-scale="1.0" data-id-pdf-url-value="<%= url_for(meeting_member.memberable.identification) %>">
+                          <div data-controller="id-pdf" data-scale="1.0" data-id-pdf-url-value="<%= identification_meeting_meeting_member_path(meeting_member.meeting, meeting_member) %>">
                             <div class="pdf-container">
                               <canvas data-id-pdf-target="canvas"></canvas>
                             </div>
                           </div>
                         <% else %>
-                          <%= image_tag url_for(meeting_member.memberable.identification), class: "max-h-96" %>
+                          <%= image_tag identification_meeting_meeting_member_path(meeting_member.meeting, meeting_member), class: "max-h-96" %>
                         <% end %>
                       </div>
                     </div>

@@ -32,6 +32,9 @@ Rails.application.routes.draw do
     end
 
     resources :meeting_members, path: :members do
+      member do
+        get :identification
+      end
     end
 
     resource :room, controller: "meetings/room", only: [:show] do
