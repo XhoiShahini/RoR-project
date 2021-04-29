@@ -68,6 +68,10 @@ class MeetingMember < ApplicationRecord
     self.signatures.count > 0
   end
 
+  def verifiable?
+    memberable_type == "Participant" && !memberable.invited?
+  end
+
   def toggle_audio
     reverse = !self.audio
     self.audio = reverse

@@ -54,6 +54,7 @@ class Participant < ApplicationRecord
   has_many :sms_verifications, as: :sms_verifiable
 
   after_create { send_invite }
+  after_update_commit { MeetingMembersChannel.broadcast_to meeting, type: "update" }
   validate :send_invite, on: :update, if: -> { email_changed? }
 
   accepts_nested_attributes_for :meeting_member

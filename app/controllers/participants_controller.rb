@@ -51,6 +51,12 @@ class ParticipantsController < ApplicationController
     redirect_to @meeting, notice: t("participants.notice.destroy")
   end
 
+  # GET /meetings/:meeting_id/participants/:id/verify
+  def verify
+    @participant.verify! verifier: current_user
+    render plain: ""
+  end
+
   private
 
   def set_meeting

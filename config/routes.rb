@@ -9,6 +9,9 @@ Rails.application.routes.draw do
         get :otp
         post :send_otp
       end
+      member do
+        get :verify
+      end
     end
 
     resources :documents do

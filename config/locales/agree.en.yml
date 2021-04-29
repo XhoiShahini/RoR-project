@@ -147,6 +147,7 @@ en:
       verified: "Verified"
 
   meeting_members:
+    verify_confirmation: "Are you sure? Please make sure you have verified %{user} identity before confirming."
     notice:
       create: "Member added successfully"
       update: "Member updated successfully"

@@ -11,7 +11,7 @@
         </p>
         <% if meeting_member.memberable.identification&.attached? %>
           <div data-controller="modal">
-            <button class="btn btn-link pl-0 py-0 my-0 leading-tight" data-action="click->modal#open">
+            <button class="btn btn-link card-link" data-action="click->modal#open">
               <%= t('.identification') %>
             </button>
             <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
@@ -41,6 +41,24 @@
                 </div>
               </div>
             </div>
+          </div>
+        <% end %>
+        <% if @host && meeting_member.verifiable? %>
+          <div>
+            <%= link_to verify_meeting_participant_path(meeting_member.meeting, meeting_member.memberable), {
+                  class: "btn btn-link card-link #{meeting_member.memberable.verified? ? "success-text cursor-default" : "danger-text"}", 
+                  data: {
+                    confirm: t("meeting_members.verify_confirmation", user: meeting_member.memberable.name.possessive)
+                  }, 
+                  disabled: meeting_member.memberable.verified?
+            } do %>
+              <% if meeting_member.memberable.verified? %>
+                <%= t('.verified') %>
+                <%= fa_icon "check", weight: "fas", class: "ml-2" %>
+              <% else %>
+                <%= t('.verify') %>
+              <% end %>
+            <% end %>
           </div>
         <% end %>
       </div>
