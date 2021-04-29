@@ -173,8 +173,8 @@ ActiveRecord::Schema.define(version: 2021_04_29_114458) do
     t.boolean "must_sign"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "janus_token"
     t.uuid "company_id"
+    t.string "janus_token"
     t.boolean "audio", default: true
     t.boolean "video", default: true
     t.string "signed_member_id"
