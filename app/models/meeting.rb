@@ -87,7 +87,7 @@ class Meeting < ApplicationRecord
   def complete_meeting
     MeetingEventsChannel.broadcast_to self, type: "end"
     meeting_members.each do |member|
-      PostMeetingMailer.with(meeting_member: meeting_member).post_meeting.deliver_later
+      PostMeetingMailer.with(meeting_member: member).post_meeting.deliver_later
     end
   end
 end

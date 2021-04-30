@@ -5,7 +5,7 @@
       <p class="card-paragraph"><%= t(".instructions") %></p>
       <%= form_with(
             url: verify_otp_meeting_document_path(@meeting, @document),
-            data: { controller: "sms-animation", action: "turbo:submit-start->sms-animation#animate" }) do |form| %>
+            data: { controller: "sms-animation", action: "submit->sms-animation#animate submit->signature#verifyOTP", turbo: "false" }) do |form| %>
 
         <div class="flex">
           <%= form.text_field :code, class: "btn mr-0 rounded-r-none", autocomplete: "off" %>

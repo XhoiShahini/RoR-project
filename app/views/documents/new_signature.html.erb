@@ -8,7 +8,9 @@
         </p>
       </div>
       <div>
-        <%= link_to t(".send_code"), otp_meeting_document_path(@meeting, @document), class: "btn btn-primary" %>
+        <button class="btn btn-primary" data-action="click->signature#sendOTP">
+          <%= t(".send_code") %>
+        </button>
       </div>
     </div>
   </div>

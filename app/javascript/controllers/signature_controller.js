@@ -12,7 +12,27 @@ export default class extends Controller {
       return
     }
     let signatureUrl = "/meetings/" + this.meetingIdValue + "/documents/" + this.documentIdValue + "/new_signature"
-    fetch(signatureUrl)
+    this._fetchAndReplace(signatureUrl)
+  }
+
+  signedValueChanged() {
+    this.modalButtonTarget.disabled = this.signedValue
+  }
+
+  sendOTP() {
+    let otpUrl = "/meetings/" + this.meetingIdValue + "/documents/" + this.documentIdValue + "/otp"
+    this._fetchAndReplace(otpUrl)
+  }
+
+  verifyOTP(event) {
+    event.preventDefault()
+    let form = event.target
+    let formData = new FormData(form)
+    let otpUrl = "/meetings/" + this.meetingIdValue + "/documents/" + this.documentIdValue + "/verify_otp"
+    fetch(otpUrl, {
+      method: "POST",
+      body: formData
+    })
       .then(response => response.text())
       .then(data => {
         let parser = new DOMParser()
@@ -23,7 +43,20 @@ export default class extends Controller {
       })
   }
 
-  signedValueChanged() {
-    this.modalButtonTarget.disabled = this.signedValue
+  sign() {
+    let signUrl = "/meetings/"+ this.meetingIdValue + "/documents/" + this.documentIdValue + "/sign"
+    this._fetchAndReplace(signUrl)
+  }
+
+  _fetchAndReplace(url) {
+    fetch(url)
+      .then(response => response.text())
+      .then(data => {
+        let parser = new DOMParser()
+        return parser.parseFromString(data, "text/html")  
+      })
+      .then(response => {
+        this.modalTarget.innerHTML = response.querySelector("#new_signature").innerHTML
+      })
   }
 }
