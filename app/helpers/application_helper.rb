@@ -15,6 +15,16 @@ module ApplicationHelper
     end
   end
 
+  def identification_preview(memberable)
+    if memberable.identification.representable?
+      image_tag(memberable.identification.representation(resize_to_limit: [400, 400]), class: "w-64 h-36")
+    elsif memberable.identification.previewable?
+      image_tag(memberable.identification.preview(resize_to_limit: [400, 400]), class: "w-64 h-36")
+    else
+      image_tag("id-placeholder.png", class: "w-64 h-36")
+    end
+  end
+
   def nav_link_to(title, path, options = {})
     options[:class] = Array.wrap(options[:class])
     active_class = options.delete(:active_class) || "active"

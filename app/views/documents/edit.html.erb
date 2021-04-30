@@ -24,10 +24,16 @@
         </div>
       </div>
 
-      <div class="flex">
-        <%= form.button t(".submit"), class: "btn btn-primary" %>
-        <%= link_to t(".cancel"), meeting_documents_path(@document.meeting), class: "btn btn-link" %>
-      </div>
+      <div class="flex justify-between">
+        <div class="flex">
+          <%= form.button t(".submit"), class: "btn btn-primary" %>
+          <%= link_to t(".cancel"), meeting_documents_path(@document.meeting), class: "btn btn-link" %>
+        </div>
+        <div class="flex">
+          <% if form.object.persisted? %>
+            <%= link_to t(".delete"), meeting_document_path(@document.meeting, @document), class: "btn btn-danger outline", method: :delete, data: { confirm: "Are you sure?" } %>
+          <% end %>
+        </div>
     <% end %>
   </div>
 <% end %>
