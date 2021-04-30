@@ -111,9 +111,10 @@ var videoDeviceId = null;
 var isModerator = <%= @meeting_member.is_moderator? %>;
 
 function ready(callback) {
-  if (document.readyState != 'loading') {
+  if (document.readyState != 'loading' && typeof Janus !== "undefined") {
     callback();
   } else if (document.addEventListener) {
+    document.addEventListener('janus:load', callback);
     document.addEventListener('DOMContentLoaded', callback);
   } else {
     document.attachEvent('onreadystatechange', function() {
