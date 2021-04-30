@@ -18,6 +18,12 @@ class Users::IdUploadsController < ApplicationController
   def show
   end
 
+  def destroy
+    current_user.identification.destroy
+    MeetingMembersChannel.broadcast_to @meeting, type: "update"
+    redirect_to new_user_id_upload_path
+  end
+
   private
 
   def id_upload_params

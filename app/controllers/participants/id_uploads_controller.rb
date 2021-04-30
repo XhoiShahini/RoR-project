@@ -20,6 +20,12 @@ class Participants::IdUploadsController < ApplicationController
   def show
   end
 
+  def destroy
+    @participant.identification.destroy
+    MeetingMembersChannel.broadcast_to @meeting, type: "update"
+    redirect_to pre_meeting_meeting_room_path(@meeting)
+  end
+
   private
 
   def id_upload_params
