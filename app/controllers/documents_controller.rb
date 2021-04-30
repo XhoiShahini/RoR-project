@@ -116,6 +116,9 @@ class DocumentsController < ApplicationController
   def stream_document_file(disposition:)
     response.headers["Content-Type"] = @document.file.content_type
     response.headers["Content-Disposition"] = "#{disposition};"
+    response.headers["Cache-Control"] = "no-cache, no-store"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Mon, 01 Jan 1990 00:00:00 GMT"
 
     @document.file.download do |chunk|
       response.stream.write(chunk)
