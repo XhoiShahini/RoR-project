@@ -31,10 +31,11 @@ en:
       update: "Document updated successfully"
       destroy: "Document destroyed successfully"
     edit:
-      submit: "Update Document"
+      submit: "Update"
       cancel: "Cancel"
+      delete: "Delete"
     form:
-      submit: "Create Document"
+      submit: "Create"
     controls:
       first: "First"
       previous: "Previous"

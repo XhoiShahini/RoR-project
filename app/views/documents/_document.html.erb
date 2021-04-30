@@ -1,4 +1,7 @@
-<%= turbo_frame_tag dom_id(document) do %>
+<%= turbo_frame_tag dom_id(document), data: {
+  controller: "documents--document",
+  documents__document_url_value: meeting_document_path(document.meeting, document),
+  documents__document_id_value: document.id } do %>
   <div class="card">
     <div class="flex justify-between items-center gap-2">
       <div>
@@ -13,9 +16,9 @@
             <%= fa_icon "download", weight: "fas" %>
           <% end %>
           <% if @host && !@meeting.completed? %>
-            <%= link_to edit_meeting_document_path(document.meeting, document), class: "btn btn-small text-lg btn-primary ml-2" do %>
+            <button class="btn btn-small btn-primary ml-2" data-action="click->documents--document#edit">
               <%= fa_icon "edit", weight: "fas" %>
-            <% end %>
+            </button>
           <% end %>
         </div>
         <div>

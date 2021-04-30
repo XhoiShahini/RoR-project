@@ -38,6 +38,7 @@ class DocumentsController < ApplicationController
 
   # GET /meetings/:meeting_id/documents/:id
   def show
+    @host = current_account_admin?
   end
 
   # GET /meetings/:meeting_id/documents/:id/pdf
