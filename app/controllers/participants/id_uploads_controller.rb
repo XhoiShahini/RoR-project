@@ -10,7 +10,7 @@ class Participants::IdUploadsController < ApplicationController
   def create
     if @participant.update(id_upload_params)
       MeetingMembersChannel.broadcast_to @meeting, type: "update"
-      redirect_to meeting_participant_id_upload_path(@meeting, @participant)
+      redirect_to new_meeting_participant_id_upload_path(@meeting, @participant)
     else
       render :new, status: :unprocessable_entity
     end
