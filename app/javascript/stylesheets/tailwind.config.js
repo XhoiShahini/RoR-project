@@ -23,6 +23,12 @@ module.exports = {
       './app/helpers/**/*.rb',
       './app/javascript/**/*.js',
     ],
+    options: {
+      safelist: [
+        "h-7",
+        "w-7"
+      ]
+    }
   },
 
   // All the default values will be compiled unless they are overridden below
