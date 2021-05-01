@@ -9,7 +9,7 @@ class MeetingMembersController < ApplicationController
 
   # GET /meetings/:meeting_id/members
   def index
-    @host = current_account_admin?
+    @host = @meeting_member.is_moderator?
     @meeting_members = @meeting.meeting_members
   end
 

@@ -65,7 +65,7 @@ class MeetingMember < ApplicationRecord
   end
 
   def finalized?
-    self.signatures.count > 0
+    memberable_type == "Participant" && memberable.finalized?
   end
 
   def verifiable?
