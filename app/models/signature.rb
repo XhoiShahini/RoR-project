@@ -33,6 +33,9 @@ class Signature < ApplicationRecord
     if signable?
       update(signed_at: Time.now, otp: sms_verification.code, ip: ip)
       document.sign!
+      if meeting_member.memberable_type == "Participant"
+        meeting_member.memberable.finalize! unless meeting_member.memberable.finalized?
+      end
     end
   end
 
