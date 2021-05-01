@@ -86,4 +86,5 @@ class Participant < ApplicationRecord
 
   def send_removed_email
     ParticipantsMailer.with(participant: self).removed.deliver_later
+  end
 end
