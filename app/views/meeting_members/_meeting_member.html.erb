@@ -1,5 +1,12 @@
-<%= turbo_frame_tag dom_id(meeting_member) do %>
-  <div class="card" data-controller="meeting-members--member">
+<% is_participant = meeting_member.memberable_type == "Participant" %>
+<% frame_data = { 
+    controller: "meeting-members--member",
+    meeting_members__member_is_participant_value: "#{is_participant}",
+    meeting_members__member_url_value: is_participant ? meeting_participant_path(meeting_member.meeting, meeting_member.memberable) : "",
+    meeting_members__member_id_value: meeting_member.id
+} %>
+<%= turbo_frame_tag dom_id(meeting_member), data: frame_data do %>
+  <div class="card">
     <div class="flex justify-between items-center">
       <div>
         <p class="card-title pointer-events-active" data-action="click->meeting-members--member#toggle">
@@ -95,7 +102,9 @@
           </p>
           <% if @host %>
             <p class="col-span-4">
-              <%= link_to t(".edit"), edit_meeting_participant_path(meeting_member.meeting, meeting_member.memberable), class: "btn btn-link card-link" %>
+              <button class="btn btn-link card-link" data-action="click->meeting-members--member#edit">
+                <%= t(".edit") %>
+              </button>
             </p>
             <p class="col-span-4">
               <%= tag.button t(".copy_link"), class: "btn btn-link card-link", data: { controller: "clipboard", clipboard_text: meeting_participant_sign_in_url(meeting_member.meeting, meeting_member.memberable) } %>

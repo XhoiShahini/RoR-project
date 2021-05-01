@@ -30,6 +30,7 @@ class ParticipantsController < ApplicationController
 
   # GET /meetings/:meeting_id/participants/:id
   def show
+    @host = current_account_admin?
   end
 
   # GET /meetings/:meeting_id/participants/:id/edit

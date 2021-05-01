@@ -1,6 +1,16 @@
 <%= turbo_frame_tag dom_id(@participant.meeting_member) do %>
   <div class="card">
-    <%= form_with(model: @participant, url: meeting_participant_path(@participant.meeting, @participant), html: { method: :put }) do |form| %>
+    <%= form_with(
+      model: @participant,
+      url: meeting_participant_path(@participant.meeting, @participant),
+      html: { 
+        method: :put,
+        id: "mm_form_#{@participant.meeting_member.id}"
+      },
+      data: {
+        controller: "phone-number",
+        action: "submit->phone-number#beforeSubmit turbo:submit-start->phone-number#beforeSubmit"
+    }) do |form| %>
       <%= render "shared/error_messages", resource: @participant %>
       <div class="form-group">
         <%= form.label :first_name %>
@@ -23,11 +33,14 @@
           <%= f.label :must_sign, class: "inline-block" %>
         </div>
       <% end %>
-
-      <div class="flex">
-        <%= form.button t(".submit"), class: "btn btn-primary" %>
-        <%= link_to t(".cancel"), meeting_meeting_members_path(@participant.meeting), class: "btn btn-link" %>
-      </div>
     <% end %>
+    <div class="flex">
+      <button class="btn btn-primary" data-action="click->phone-number#beforeSubmit click->meeting-members--member#update">
+        <%= t(".submit") %>
+      </button>
+      <button class="btn btn-link" data-action="click->meeting-members--member#cancelEdit">
+        <%= t(".cancel") %>
+      </button>
+    </div>
   </div>
 <% end %>

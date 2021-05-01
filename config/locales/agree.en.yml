@@ -132,7 +132,7 @@ en:
       otp:
         instructions: "Please enter the code sent to you via SMS."
     edit:
-      submit: "Update Participant"
+      submit: "Update"
       cancel: "Cancel"
     id_form:
       submit: "Upload"
