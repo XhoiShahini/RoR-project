@@ -172,7 +172,10 @@ en:
       header_html: "You have been invited to <strong>%{meeting}</strong> on Agree.Live!"
       description_html: "<strong>%{host}</strong> has invited you to <strong>%{meeting}</strong> with <strong>%{account}</strong>. This meeting is scheduled to start %{time}. Sign In below to view details."
       sign_in: "Sign In"
-
+    removed:
+      subject: "Agree.Live: Removed from %{meeting}"
+      header_html: "You have been removed from <strong>%{meeting}</strong> on Agree.Live"
+      description_html: "<strong>%{host}</strong> removed you from <strong>%{meeting}</strong> with <strong>%{account}</strong>. You will no longer be able to sign in to this meeting. We apologize for any inconvenience."
   post_meeting_mailer:
     post_meeting:
       subject: "Agree.Live: %{meeting} is now complete"
