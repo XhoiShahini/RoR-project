@@ -7,7 +7,7 @@
     <div class="p-4 bg-white border border-gray-300 rounded-lg lg:p-10">
       <h2 class="mb-4"><%= t('.title', resource: resource.model_name.human) %></h2>
 
-      <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, class: "mb-16") do |f| %>
+      <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, class: "mb-16", data: { controller: "phone-number", action: "submit->phone-number#beforeSubmit turbo:submit-start->phone-number#beforeSubmit"}) do |f| %>
         <%= render "shared/error_messages", resource: resource %>
         <div class="flex flex-wrap items-start justify-between">
           <div class="w-full lg:w-1/2">

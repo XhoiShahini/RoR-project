@@ -76,7 +76,7 @@ module ApplicationHelper
   end
 
   def phone_number_field(form, phone_number)
-    content_tag(:div, class: "form-group", data: { controller: "phone-number" }) do
+    content_tag(:div, class: "form-group") do
       form.label(:phone_number) + \
       form.hidden_field(:phone_number, autocomplete: "off", data: { phone_number_target: "hidden" }) + \
       telephone_field_tag(

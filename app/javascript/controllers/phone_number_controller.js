@@ -32,4 +32,17 @@ export default class extends Controller {
     this.errorTarget.classList.add("hidden")
     this.validTarget.classList.add("hidden")
   }
+
+  beforeSubmit(event) {
+    this.update()
+    if (this.inputTarget.value.trim() && this.iti.isValidNumber()) {
+      return true
+    } else {
+      event.detail.formSubmission.stop()
+      event.preventDefault()
+      this.inputTarget.classList.add("error")
+      this.errorTarget.classList.remove("hidden")
+      return false
+    }
+  }
 }
