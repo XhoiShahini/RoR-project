@@ -9,16 +9,27 @@
         <p class="card-paragraph">
           <%= document.aasm.human_state %>
         </p>
+        <div class="flex mt-1">
+          <div class="">
+            <%= link_to download_meeting_document_path(document.meeting, document), class: "btn btn-small text-lg btn-primary", data: { turbo_frame: "_top" } do %>
+              <%= fa_icon "download", weight: "fas" %>
+            <% end %>
+          </div>
+          <% if @host && document.created? && !document.meeting.completed? %>
+            <div class="">
+              <button class="btn btn-small btn-primary ml-2" data-action="click->documents--document#edit">
+                <%= fa_icon "edit", weight: "fas" %>
+              </button>
+            </div>
+          <% end %>
+        </div>
       </div>
       <div class="flex jusfify-between flex-col gap-2">
-        <div class="flex">
-          <%= link_to download_meeting_document_path(document.meeting, document), class: "btn btn-small text-lg btn-primary", data: { turbo_frame: "_top" } do %>
-            <%= fa_icon "download", weight: "fas" %>
-          <% end %>
-          <% if @host && document.created? && !document.meeting.completed? %>
-            <button class="btn btn-small btn-primary ml-2" data-action="click->documents--document#edit">
-              <%= fa_icon "edit", weight: "fas" %>
-            </button>
+        <div>
+          <% if document.file.previewable? %>
+            <div class="flex-none">
+              <%= image_tag(document.file.preview(resize_to_limit: [100, 100])) %>
+            </div>
           <% end %>
         </div>
         <div>
