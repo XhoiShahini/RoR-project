@@ -31,7 +31,7 @@ export default class extends Controller {
     })
   }
 
-  verify() {
+  verifyMember() {
     fetch(this.urlValue + "/verify")
   }
   
