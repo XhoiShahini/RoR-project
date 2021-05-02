@@ -10,13 +10,13 @@
           <%= document.aasm.human_state %>
         </p>
         <div class="flex mt-1">
-          <div class="">
+          <div>
             <%= link_to download_meeting_document_path(document.meeting, document), class: "btn btn-small text-lg btn-primary", data: { turbo_frame: "_top" }, target: "_blank" do %>
               <%= fa_icon "download", weight: "fas" %>
             <% end %>
           </div>
           <% if @host && document.created? && !document.meeting.completed? %>
-            <div class="">
+            <div>
               <button class="btn btn-small btn-primary ml-2" data-action="click->documents--document#edit">
                 <%= fa_icon "edit", weight: "fas" %>
               </button>
