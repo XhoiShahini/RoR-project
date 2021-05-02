@@ -6,9 +6,16 @@ class Meetings::RoomController < ApplicationController
   # GET /meetings/:meeting_id/room
   def show
     redirect_to post_meeting_meeting_room_path(@meeting) and return if @meeting.completed?
+    redirect_to pre_meeting_meeting_room_path(@meeting)
+  end
+
+  # PATCH/PUT /meetings/:meeting_id/room
+  def update
+    redirect_to post_meeting_meeting_room_path(@meeting) and return if @meeting.completed?
     if @meeting_member.is_moderator? && !@meeting.incomplete?
       @meeting.start!
     end
+    render "meetings/room/show"
   end
 
   # GET /meetings/:meeting_id/room/pre_meeting

@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resource :room, controller: "meetings/room", only: [:show] do
+    resource :room, controller: "meetings/room", only: [:show, :update] do
       get :pre_meeting
       get :post_meeting
       post :perform_action

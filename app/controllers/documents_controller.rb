@@ -6,6 +6,7 @@ class DocumentsController < ApplicationController
   before_action :require_meeting_member!
   before_action :cannot_modify_signed!, only: [:edit, :update, :destroy]
   before_action :require_current_account_admin, only: [:new, :create, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token, only: [:update]
 
   # GET /meetings/:meeting_id/documents
   def index

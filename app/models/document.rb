@@ -32,8 +32,6 @@ class Document < ApplicationRecord
   has_many :meeting_members, through: :signatures
   has_many :document_accesses
 
-  has_one_attached :file
-
   validates :file, attached: true, content_type: 'application/pdf'
   validate :enforce_maximum_documents, on: :create
 
@@ -41,6 +39,8 @@ class Document < ApplicationRecord
   after_create_commit { broadcast_to_meeting("create") }
   after_update_commit { broadcast_to_meeting("update") }
   after_destroy_commit { broadcast_to_meeting("destroy") }
+
+  has_one_attached :file
 
   aasm(column: :state, logger: Rails.logger) do
     state :created, initial: true, display: I18n.t("documents.state.created")

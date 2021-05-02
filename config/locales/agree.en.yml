@@ -95,6 +95,7 @@ en:
           title: "Upload your ID"
           description: "Upload an image or PDF of your government-issued ID"
           require_same_participant: "You can only upload your own ID"
+        join_meeting: "Join Meeting"
       show:
         meetings: "Meetings"
 
