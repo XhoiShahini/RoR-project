@@ -2,10 +2,10 @@ class DocumentsController < ApplicationController
   include MeetingsHelper
   before_action :set_meeting
   before_action :set_document, except: [:index, :tabs, :new, :create]
-  before_action :set_signature, only: [:sign, :send_otp, :verify_otp]
+  before_action :set_signature, only: [:new_signature, :sign, :otp, :verify_otp, :otp_verified]
   before_action :require_meeting_member!
   before_action :cannot_modify_signed!, only: [:edit, :update, :destroy]
-  before_action :require_current_account_admin, except: [:index, :show, :pdf, :download]
+  before_action :require_current_account_admin, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /meetings/:meeting_id/documents
   def index
@@ -38,6 +38,7 @@ class DocumentsController < ApplicationController
 
   # GET /meetings/:meeting_id/documents/:id
   def show
+    @host = current_account_admin?
   end
 
   # GET /meetings/:meeting_id/documents/:id/pdf
@@ -63,26 +64,45 @@ class DocumentsController < ApplicationController
     end
   end
 
-  # POST /meetings/:meeting_id/documents/:id/sign
-  def sign
-    @signature.sign! ip: request.remote_ip
-    render plain: ""
+  # GET /meetings/:meeting_id/documents/:id/new_signature
+  def new_signature
+    redirect_to cannot_sign_meeting_document_path(@meeting, @document) and return unless @meeting.all_participants_verified?
+    redirect_to sign_meeting_document_path(@meeting, @document) and return if @signature.signed_at.present?
+    @memberable = current_user || current_participant
+    render layout: false
   end
 
-  # POST /meetings/:meeting_id/documents/:id/send_otp
-  def send_otp
-    @sms_verification = SmsVerification.create(sms_verifiable: @signature, phone_number: @meeting_member.memberable.phone_number)
-    render plain: ""
+  # GET /meetings/:meeting_id/documents/:id/sign
+  def sign
+    unless @signature.signed_at.present?
+      @signature.sign! ip: request.remote_ip
+    end
+    render layout: false
+  end
+
+  def cannot_sign
+    render layout: false
+  end
+
+  # GET /meetings/:meeting_id/documents/:id/otp
+  def otp
+    @signature.sms_verification.destroy! if @signature.sms_verification.present?
+    @signature.sms_verification = SmsVerification.create(sms_verifiable: @signature, phone_number: @meeting_member.memberable.phone_number)
+    render layout: false
   end
 
   # POST /meetings/:meeting_id/documents/:id/verify_otp
   def verify_otp
     @signature.sms_verification.verify_code! params[:code]
     if @signature.sms_verification.verified?
-      render plain: ""
+      redirect_to otp_verified_meeting_document_path(@meeting, @document)
     else
       redirect_to meeting_room_path(@meeting), notice: @signature.sms_verification.error
     end
+  end
+
+  # GET /meetings/:meeting_id/documents/:id/otp_verified
+  def otp_verified
   end
 
   # DELETE /meetings/meeting_:id/documents/:id
@@ -96,6 +116,9 @@ class DocumentsController < ApplicationController
   def stream_document_file(disposition:)
     response.headers["Content-Type"] = @document.file.content_type
     response.headers["Content-Disposition"] = "#{disposition};"
+    response.headers["Cache-Control"] = "no-cache, no-store"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Mon, 01 Jan 1990 00:00:00 GMT"
 
     @document.file.download do |chunk|
       response.stream.write(chunk)

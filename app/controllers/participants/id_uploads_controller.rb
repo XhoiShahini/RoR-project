@@ -9,7 +9,8 @@ class Participants::IdUploadsController < ApplicationController
   # POST /users/id_upload
   def create
     if @participant.update(id_upload_params)
-      redirect_to meeting_participant_id_upload_path(@meeting, @participant)
+      MeetingMembersChannel.broadcast_to @meeting, type: "update"
+      redirect_to new_meeting_participant_id_upload_path(@meeting, @participant)
     else
       render :new, status: :unprocessable_entity
     end
@@ -17,6 +18,12 @@ class Participants::IdUploadsController < ApplicationController
 
   # GET /users/id_upload
   def show
+  end
+
+  def destroy
+    @participant.identification.destroy
+    MeetingMembersChannel.broadcast_to @meeting, type: "update"
+    redirect_to pre_meeting_meeting_room_path(@meeting)
   end
 
   private

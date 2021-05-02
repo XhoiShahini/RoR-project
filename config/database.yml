@@ -28,7 +28,7 @@ development:
 
 test:
   <<: *default
-  database: <%= "#{ENV["DATABASE_PREFIX"] || 'agreev2'}_development" %>
+  database: <%= "#{ENV["DATABASE_PREFIX"] || 'agreev2'}_test" %>
   template: template0
 
 staging:
@@ -38,6 +38,7 @@ staging:
   pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>
 
 production:
+  <<: *default
   adapter: postgresql
   encoding: unicode
   url: <%= ENV["DATABASE_URL"] %>

@@ -13,7 +13,7 @@
     </div>
   <% end %>
 
-  <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name, invite: params[:invite])) do |f| %>
+  <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name, invite: params[:invite]), data: { controller: "phone-number", action: "submit->phone-number#beforeSubmit turbo:submit-start->phone-number#beforeSubmit"}) do |f| %>
     <%= render "shared/error_messages", resource: resource %>
 
     <%# Add any extra fields when creating an Account as part of registration %>

@@ -10,6 +10,10 @@
   }
 }
 
+.card-link {
+  height: fit-content;
+  @apply pl-0 pt-0 mt-0 leading-tight;
+}
 .document-controls {
   @apply bg-white p-1 my-2 mx-1 border rounded-lg shadow-md;
 }
@@ -28,4 +32,28 @@
 
 .pointer-events-active:hover {
   @apply cursor-pointer;
+}
+
+.success-text {
+  @apply text-secondary-700;
+
+  &:hover {
+    @apply text-secondary-600;
+  }
+
+  &:disabled {
+    @apply text-secondary-700;
+  }
+}
+
+.danger-text {
+  @apply text-red-600;
+
+  &:hover {
+    @apply text-red-500;
+  }
+
+  &:disabled {
+    @apply text-red-600;
+  }
 }

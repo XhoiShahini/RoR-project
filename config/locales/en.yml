@@ -326,6 +326,8 @@ en:
       submit: "Upload"
       skip: "Skip"
       confirm_skip: "Are you sure? Uploading your ID makes it easier for others to confirm your identity."
+      delete: "Delete"
+      confirm_delete: "Are you sure? Your ID file will be deleted."
 
   layouts:
     mailer:

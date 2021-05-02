@@ -25,13 +25,18 @@ export default class extends Controller {
       .then(response => {
         this.element.innerHTML = response.querySelector("#meeting_members").innerHTML
       })
+    let signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector('div[data-controller="signature"]'), "signature")
+    signatureController.documentIdValueChanged()
   }
 
-  _connected() {}
+  _connected() {
+    console.log('CONNECTED')
+  }
 
   _disconnected() {}
 
   _received(data) {
+    console.log(data)
     switch (data.type) {
       case "create":
         this._loadMembers()
@@ -41,6 +46,9 @@ export default class extends Controller {
         break;
       case "destroy":
         this._loadMembers()
+        break;
+      case "presence":
+        console.log(data);
         break;
     }
   }

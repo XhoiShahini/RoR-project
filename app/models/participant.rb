@@ -2,19 +2,22 @@
 #
 # Table name: participants
 #
-#  id                  :uuid             not null, primary key
-#  accepted_privacy_at :datetime
-#  accepted_terms_at   :datetime
-#  email               :string
-#  first_name          :string
-#  last_name           :string
-#  phone_number        :string
-#  state               :string
-#  verified_at         :datetime
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  account_id          :uuid             not null
-#  verifier_id         :uuid
+#  id                    :uuid             not null, primary key
+#  accepted_data_at      :datetime
+#  accepted_media_at     :datetime
+#  accepted_privacy_at   :datetime
+#  accepted_signature_at :datetime
+#  accepted_terms_at     :datetime
+#  email                 :string
+#  first_name            :string
+#  last_name             :string
+#  phone_number          :string
+#  state                 :string
+#  verified_at           :datetime
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  account_id            :uuid             not null
+#  verifier_id           :uuid
 #
 # Indexes
 #
@@ -51,6 +54,8 @@ class Participant < ApplicationRecord
   has_many :sms_verifications, as: :sms_verifiable
 
   after_create { send_invite }
+  before_destroy { send_removed_email }
+  after_update_commit { MeetingMembersChannel.broadcast_to meeting, type: "update" }
   validate :send_invite, on: :update, if: -> { email_changed? }
 
   accepts_nested_attributes_for :meeting_member
@@ -77,5 +82,9 @@ class Participant < ApplicationRecord
 
   def send_invite
     ParticipantsMailer.with(participant: self).invite.deliver_later
+  end
+
+  def send_removed_email
+    ParticipantsMailer.with(participant: self).removed.deliver_later
   end
 end

@@ -29,7 +29,9 @@
     <%= yield :head %>
   </head>
 
-  <body class="h-full font-sans antialiased font-normal leading-normal bg-gray-100">
+  <body class="h-full font-sans antialiased font-normal leading-normal bg-gray-100" <% if content_for?(:body_attributes) %>
+    <%= yield(:body_attributes) %> 
+  <% end %>>
     <div class="main">
       <%= render partial: "shared/flash" %>
       <%= render partial: "shared/navbar" %>

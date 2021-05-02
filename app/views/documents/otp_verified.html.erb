@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "new_signature" do %>
+  <div class="card">
+    <p class="card-header"><%= t(".title") %></p>
+    <div class="flex justify-between">
+      <p class="card-paragraph"><%= t(".instructions") %></p>
+      <button data-action="click->signature#sign" class="btn btn-secondary">
+        <%= fa_icon "file-signature", weight: "fas", class: "mr-2" %>
+        <%= t('.sign') %>
+      </button>
+    </div>
+  </div>
+<% end %>

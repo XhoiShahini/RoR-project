@@ -30,6 +30,7 @@ class ParticipantsController < ApplicationController
 
   # GET /meetings/:meeting_id/participants/:id
   def show
+    @host = current_account_admin?
   end
 
   # GET /meetings/:meeting_id/participants/:id/edit
@@ -49,6 +50,12 @@ class ParticipantsController < ApplicationController
   def destroy
     @participant.destroy
     redirect_to @meeting, notice: t("participants.notice.destroy")
+  end
+
+  # GET /meetings/:meeting_id/participants/:id/verify
+  def verify
+    @participant.verify! verifier: current_user
+    render plain: ""
   end
 
   private

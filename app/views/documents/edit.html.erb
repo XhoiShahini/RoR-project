@@ -1,6 +1,6 @@
 <%= turbo_frame_tag dom_id(@document) do %>
   <div class="card">
-    <%= form_with(model: @document, url: meeting_document_path(@document.meeting, @document), html: { method: :put }) do |form| %>
+    <%= form_with(model: @document, url: meeting_document_path(@document.meeting, @document), html: {id: "doc_form_#{@document.id}", method: :put}, remote: true) do |form| %>
       <%= render "shared/error_messages", resource: @document %>
 
       <div class="form-group">
@@ -23,11 +23,19 @@
           <%= form.label :read_only, class: "inline-block", checked: @document.read_only %>
         </div>
       </div>
-
-      <div class="flex">
-        <%= form.button t(".submit"), class: "btn btn-primary" %>
-        <%= link_to t(".cancel"), meeting_documents_path(@document.meeting), class: "btn btn-link" %>
-      </div>
     <% end %>
+    <div class="flex justify-between">
+      <div class="flex">
+        <button class="btn btn-primary" data-action="click->documents--document#update">
+          <%= t('.submit') %>
+        </button>
+        <button class="btn btn-link" data-action="click->documents--document#cancelEdit">
+          <%= t(".cancel") %>
+        </button>
+      </div>
+      <div class="flex">
+        <%= button_to t(".delete"), meeting_document_path(@document.meeting, @document), method: :delete, class: "btn btn-danger outline" %>
+      </div>
+    </div>
   </div>
 <% end %>

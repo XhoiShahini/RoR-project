@@ -31,15 +31,24 @@ en:
       update: "Document updated successfully"
       destroy: "Document destroyed successfully"
     edit:
-      submit: "Update Document"
+      submit: "Update"
       cancel: "Cancel"
+      delete: "Delete"
     form:
-      submit: "Create Document"
+      submit: "Create"
     controls:
       first: "First"
       previous: "Previous"
       next: "Next"
       last: "Last"
+    otp:
+      instructions: "Enter the code sent to you via SMS"
+    otp_verified:
+      title: "Verify and Sign"
+      instructions: "Thank you for verifying. Click the SIGN button now to sign!"
+    cannot_sign:
+      title: "Cannot Sign Yet"
+      cannot_sign: "All participants must first be verified before you can sign."
     
   meetings:
     errors:
@@ -107,17 +116,30 @@ en:
       success: "Signed in successfully."
       title: "Please Sign In"
       signed_out: "Signed Out."
+      must_accept_terms: "You must read and agree to all terms before signing in."
       show:
+        title: "Welcome to Agree.Live!"
+        paragraph1: "Before joining your meeting we kindly ask you to read and approve our disclaimers."
+        paragraph2: "Making you aware about our electronic signature and the processing of personal data is very important to us."
+        data_html: "​I hereby declare that I have read the %{link} and express my consent to the processing of my personal data"
+        data_processing: "data processing information"
+        media_html: "​I hereby declare that I have read the %{link} and express my consent to the use of images, video and audio shooting"
+        media_processing: "media usage information"
+        signature_html: "I hereby declare that I have read the %{link} regarding the provision of the advanced electronic signature"
+        signature_processing: "information"
+        paragraph3: "Once You’ve read and approved the previous disclaimer, click the SEND CODE button to receive the OTP code via SMS on your mobile phone"
         send_code: "Send Code"
       otp:
         instructions: "Please enter the code sent to you via SMS."
     edit:
-      submit: "Update Participant"
+      submit: "Update"
       cancel: "Cancel"
     id_form:
       submit: "Upload"
       skip: "Skip"
       confirm_skip: "Are you sure? Uploading your ID makes it easier for others to confirm your identity."
+      delete: "Delete"
+      confirm_delete: "Are you sure? Your ID file will be deleted."
 
   sms_verifications:
     template: "Agree.Live: Your code is %token"
@@ -131,6 +153,7 @@ en:
       verified: "Verified"
 
   meeting_members:
+    verify_confirmation: "Are you sure? Please make sure you have verified %{user} identity before confirming."
     notice:
       create: "Member added successfully"
       update: "Member updated successfully"
@@ -149,13 +172,21 @@ en:
       header_html: "You have been invited to <strong>%{meeting}</strong> on Agree.Live!"
       description_html: "<strong>%{host}</strong> has invited you to <strong>%{meeting}</strong> with <strong>%{account}</strong>. This meeting is scheduled to start %{time}. Sign In below to view details."
       sign_in: "Sign In"
-
+    removed:
+      subject: "Agree.Live: Removed from %{meeting}"
+      header_html: "You have been removed from <strong>%{meeting}</strong> on Agree.Live"
+      description_html: "<strong>%{host}</strong> removed you from <strong>%{meeting}</strong> with <strong>%{account}</strong>. You will no longer be able to sign in to this meeting. We apologize for any inconvenience."
   post_meeting_mailer:
     post_meeting:
       subject: "Agree.Live: %{meeting} is now complete"
       header_html: "<strong>%{meeting}</strong> is now complete!"
       description_html: "You can use the link below to access the details of your meeting at any time."
       view_meeting: "View Meeting"
+  
+  signatures:
+    otp:
+      title: "Verify and Sign"
+
 
   #ActiveStorage Validations
   errors:

@@ -38,16 +38,14 @@
         <% if (company = @meeting.meeting_members.find_by(memberable_id: @meeting.host_id).company) && company.present? %>
           <div class="mb-2 mr-8">
             <h4><%= t(".company") %></h4>
-            <%= company %>
+            <%= company.name %>
           </div>
         <% end %>
       </div>
-      <% unless @id_attached %>
-        <% if current_user %>
-          <%= turbo_frame_tag "id_upload", src: new_user_id_upload_path %>
-        <% elsif current_participant %>
-          <%= turbo_frame_tag "id_upload", src: new_meeting_participant_id_upload_path(@meeting, @meeting_member.memberable) %>
-        <% end %>
+      <% if current_user %>
+        <%= turbo_frame_tag "id_upload", src: new_user_id_upload_path %>
+      <% elsif current_participant %>
+        <%= turbo_frame_tag "id_upload", src: new_meeting_participant_id_upload_path(@meeting, @meeting_member.memberable) %>
       <% end %>
       <div class="<%= "hidden" unless @id_attached %> flex justify-center mt-4" data-pre-meeting-target="join">
         <%= link_to t('.join_meeting'), meeting_room_path(@meeting), class: "btn btn-secondary" %>

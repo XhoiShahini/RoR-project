@@ -8,7 +8,7 @@ class Users::IdUploadsController < ApplicationController
   # POST /users/id_upload
   def create
     if current_user.update(id_upload_params)
-      redirect_to user_id_upload_path
+      redirect_to new_user_id_upload_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -16,6 +16,12 @@ class Users::IdUploadsController < ApplicationController
 
   # GET /users/id_upload
   def show
+  end
+
+  def destroy
+    current_user.identification.destroy
+    MeetingMembersChannel.broadcast_to @meeting, type: "update"
+    redirect_to new_user_id_upload_path
   end
 
   private

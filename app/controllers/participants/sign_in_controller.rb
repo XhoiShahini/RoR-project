@@ -12,7 +12,7 @@ class Participants::SignInController < ApplicationController
 
     if @sms_verification.verified?
       session[:participant_id] = @participant.id
-      @participant.accept! unless @participant.accepted?
+      @participant.accept! if @participant.invited?
       redirect_to meeting_path(@meeting), notice: I18n.t("participants.sign_in.success")
     else
       redirect_to meeting_participant_sign_in_path(@meeting, @participant), notice: @sms_verification.error
@@ -22,6 +22,14 @@ class Participants::SignInController < ApplicationController
   # GET /meetings/:meeting_id/participants/:id/sign_in/otp
   def otp
     @sms_verification = @participant.sms_verifications.create(phone_number: @participant.phone_number)
+  end
+
+  def send_otp
+    if params[:data_processing] == "1" && params[:media_processing] == "1" && params[:signature_processing] == "1"
+      redirect_to otp_meeting_participant_sign_in_path(@meeting, @participant)
+    else
+      redirect_to meeting_participant_sign_in_path(@meeting, @participant), alert: t("participants.sign_in.must_accept_terms")
+    end
   end
 
   # DELETE /meetings/:meeting_id/participants/:id/sign_in

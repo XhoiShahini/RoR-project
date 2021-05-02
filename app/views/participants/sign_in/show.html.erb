@@ -1,15 +1,46 @@
-<%= turbo_frame_tag "sms_verification" do %>
-  <div class="card">
-    <p class="card-header"><%= t("participants.sign_in.title") %></p>
-    <div class="flex justify-between">
-      <div>
-        <p class="card-paragraph">
-          <%= t("sms_verifications.sms_disclaimer", phone_number: @participant.phone_number) %>
+<div class="max-w-4xl mx-auto">
+  <%= turbo_frame_tag "sms_verification" do %>
+    <%= render partial: "shared/flash" %>
+    <%= form_with(url: send_otp_meeting_participant_sign_in_path(@meeting, @participant)) do |f| %>
+      <div class="card">
+        <p class="card-header"><%= t('.title') %></p>
+        <p class="mb-4 text-gray-700 leading-normal">
+          <%= t('.paragraph1') %>
+        </p>
+        <p class="mb-4 text-gray-700 leading-normal">
+          <%= t('.paragraph2') %>
+        </p>
+        <div class="form-group">
+          <div>
+            <%= f.check_box :data_processing, id: "data-processing", class: "form-checkbox mr-2" %>
+            <label for="data-processing" class="inline text-sm"><%= t ".data_html", link: link_to(t(".data_processing"), processing_permission_path, target: "_blank", class: "btn-link") %></label>
+          </div>
+          <div>
+            <%= f.check_box :media_processing, id: "media-processing", class: "form-checkbox mr-2" %>
+            <label for="media-processing" class="inline text-sm"><%= t ".media_html", link: link_to(t(".media_processing"), media_permission_path, target: "_blank", class: "btn-link") %></label>
+          </div>
+          <div>
+            <%= f.check_box :signature_processing, id: "signature-processing", class: "form-checkbox mr-2" %>
+            <label for="signature-processing" class="inline text-sm"><%= t ".signature_html", link: link_to(t(".signature_processing"), signature_permission_path, target: "_blank", class: "btn-link") %></label>
+          </div>
+        </div>
+        <p class="mb-4 text-gray-700 leading-normal">
+          <%= t('.paragraph3') %>
         </p>
       </div>
-      <div>
-        <%= link_to t(".send_code"), otp_meeting_participant_sign_in_path(@meeting, @participant), class: "btn btn-primary", data: { turbo_frame: "_top" } %>
+      <div class="card">
+        <p class="card-header"><%= t("participants.sign_in.title") %></p>
+        <div class="flex justify-between">
+          <div>
+            <p class="card-paragraph">
+              <%= t("sms_verifications.sms_disclaimer", phone_number: @participant.phone_number) %>
+            </p>
+          </div>
+          <div>
+            <%= f.button t(".send_code"), class: "btn btn-primary" %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-<% end %>
+    <% end %>
+  <% end %>
+</div>

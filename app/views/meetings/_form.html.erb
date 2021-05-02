@@ -24,6 +24,11 @@
     ) %>
   </div>
 
+  <div class="form-group">
+    <%= check_box_tag :must_sign, "1", (@host_member&.present? ? @host_member.must_sign : true), class: "form-checkbox mr-2" %>
+    <%= label_tag :must_sign, t('.host_must_sign'), class: "inline-block" %>
+  </div>
+
   <div class="form-group flex justify-between">
     <%= form.button class: "btn btn-primary" %>
 

@@ -1,15 +1,15 @@
 class MeetingMembersController < ApplicationController
   include MeetingsHelper
   before_action :set_meeting
+  before_action :require_meeting_member!, only: [:index, :show, :identification]
+  before_action :require_current_account_admin, except: [:index, :show, :identification]
+  before_action :cannot_modify_completed!, except: [:index, :show, :identification]
   before_action :set_member, except: [:index, :new, :create]
-  before_action :require_meeting_member!, only: [:index, :show]
-  before_action :require_current_account_admin, except: [:index, :show]
-  before_action :cannot_modify_completed!, except: [:index, :show]
   before_action :set_users_for_select, only: [:new, :edit, :create, :update]
 
   # GET /meetings/:meeting_id/members
   def index
-    @host = current_account_admin?
+    @host = @meeting_member.is_moderator?
     @meeting_members = @meeting.meeting_members
   end
 
@@ -31,6 +31,11 @@ class MeetingMembersController < ApplicationController
 
   # GET /meetings/:meeting_id/members/:id
   def show
+  end
+
+  # GET /meetings/:meeting_id/members/:id/identification
+  def identification
+    stream_identification_file
   end
 
   # GET /meetings/:meeting_id/members/:id/edit
@@ -73,5 +78,17 @@ class MeetingMembersController < ApplicationController
   def set_users_for_select
     user_ids = @meeting.meeting_members.where(memberable_type: "User").map { |mm| mm.memberable_id }
     @users_for_select = @meeting.account.users.where.not(id: user_ids).collect { |u| ["#{u.name} (#{u.email})", u.id]}
+  end
+
+  def stream_identification_file
+    return unless @meeting_member.memberable.identification.attached?
+    response.headers["Content-Type"] = @meeting_member.memberable.identification.content_type
+    response.headers["Content-Disposition"] = "inline;"
+
+    @meeting_member.memberable.identification.download do |chunk|
+      response.stream.write(chunk)
+    end
+  ensure
+    response.stream.close
   end
 end

@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "new_signature" do %>
+  <div class="card">
+    <p class="card-header"><%= t("signatures.otp.title") %></p>
+    <div class="flex justify-between">
+      <div>
+        <p class="card-paragraph">
+          <%= t("sms_verifications.sms_disclaimer", phone_number: @memberable.phone_number) %>
+        </p>
+      </div>
+      <div>
+        <button class="btn btn-primary" data-action="click->signature#sendOTP">
+          <%= t(".send_code") %>
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>
