@@ -11,7 +11,7 @@
         </p>
         <div class="flex mt-1">
           <div class="">
-            <%= link_to download_meeting_document_path(document.meeting, document), class: "btn btn-small text-lg btn-primary", data: { turbo_frame: "_top" } do %>
+            <%= link_to download_meeting_document_path(document.meeting, document), class: "btn btn-small text-lg btn-primary", data: { turbo_frame: "_top" }, target: "_blank" do %>
               <%= fa_icon "download", weight: "fas" %>
             <% end %>
           </div>
