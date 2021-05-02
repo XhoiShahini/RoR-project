@@ -55,7 +55,7 @@
             <button class="btn btn-link card-link <%= meeting_member.memberable.verified? ? "success-text" : "danger-text" %>"
                      data-confirm="<%= t("meeting_members.verify_confirmation", user: meeting_member.memberable.name.possessive) %>"
                      data-action="click->meeting_members--member#verify"
-                     disabled="<%= "#{meeting_member.memberable.verified?}" %>">
+                     <%= "disabled" if meeting_member.memberable.verified? %>>
               <% if meeting_member.memberable.verified? %>
                 <%= t('.verified') %>
                 <%= fa_icon "check", weight: "fas", class: "ml-2" %>
