@@ -52,20 +52,17 @@
         <% end %>
         <% if @host && meeting_member.verifiable? %>
           <div>
-            <%= link_to verify_meeting_participant_path(meeting_member.meeting, meeting_member.memberable), {
-                  class: "btn btn-link card-link #{meeting_member.memberable.verified? ? "success-text cursor-default" : "danger-text"}", 
-                  data: {
-                    confirm: t("meeting_members.verify_confirmation", user: meeting_member.memberable.name.possessive)
-                  }, 
-                  disabled: meeting_member.memberable.verified?
-            } do %>
+            <button class="btn btn-link card-link <%= meeting_member.memberable.verified? ? "success-text" : "danger-text" %>"
+                     data-confirm="<%= t("meeting_members.verify_confirmation", user: meeting_member.memberable.name.possessive) %>"
+                     data-action="click->meeting_members--member#verify"
+                     disabled="<%= "#{meeting_member.memberable.verified?}" %>">
               <% if meeting_member.memberable.verified? %>
                 <%= t('.verified') %>
                 <%= fa_icon "check", weight: "fas", class: "ml-2" %>
               <% else %>
                 <%= t('.verify') %>
               <% end %>
-            <% end %>
+            </button>
           </div>
         <% end %>
       </div>

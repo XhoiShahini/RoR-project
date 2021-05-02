@@ -42,7 +42,7 @@
   }
 
   &:disabled {
-    @apply text-secondary-700;
+    @apply text-secondary-700 bg-white cursor-default;
   }
 }
 
@@ -54,6 +54,6 @@
   }
 
   &:disabled {
-    @apply text-red-600;
+    @apply text-red-600 bg-white cursor-default;
   }
 }

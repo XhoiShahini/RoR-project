@@ -30,6 +30,10 @@ export default class extends Controller {
       body: formData
     })
   }
+
+  verify() {
+    fetch(this.urlValue + "/verify")
+  }
   
   _fetchAndReplace(url, opts = {}) {
     fetch(url, opts)
