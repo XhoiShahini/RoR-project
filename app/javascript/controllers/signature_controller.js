@@ -2,7 +2,7 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
   static values = { documentId: String, meetingId: String, signed: Boolean }
-  static targets = ["modal", "modalButton"]
+  static targets = ["modal", "modalButton", "commit"]
   
   connect() {
   }
@@ -46,6 +46,10 @@ export default class extends Controller {
   sign() {
     let signUrl = "/meetings/"+ this.meetingIdValue + "/documents/" + this.documentIdValue + "/sign"
     this._fetchAndReplace(signUrl)
+  }
+
+  participantVerifyId(event) {
+    this.commitTarget.classList.toggle("hidden", !event.target.checked)
   }
 
   _fetchAndReplace(url) {

@@ -188,6 +188,7 @@ en:
   signatures:
     otp:
       title: "Verify and Sign"
+    verified_id: "I have viewed and verified the other participants' identities and they are correct to my knowledge."
 
 
   #ActiveStorage Validations

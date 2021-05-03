@@ -1,12 +1,25 @@
+<% content_for :body_attributes do %>
+  data-turbo="false"
+<% end %>
 <%= turbo_frame_tag "new_signature" do %>
   <div class="card">
     <p class="card-header"><%= t(".title") %></p>
     <div class="flex justify-between">
-      <p class="card-paragraph"><%= t(".instructions") %></p>
-      <button data-action="click->signature#sign" class="btn btn-secondary">
-        <%= fa_icon "file-signature", weight: "fas", class: "mr-2" %>
-        <%= t('.sign') %>
-      </button>
+      <p class="card-paragraph">
+        <input type="checkbox" class="form-checkbox mr-1" id="id_verified" name="id_verified" data-action="change->signature#participantVerifyId">
+        <label for="id_verified" class="inline w-32">
+          <%= t("signatures.verified_id") %>
+        </label>
+      </p>
+
+      <div>
+        <div class="hidden" data-signature-target="commit">
+          <button data-action="click->signature#sign" class="btn btn-secondary">
+            <%= fa_icon "file-signature", weight: "fas", class: "mr-2" %>
+            <%= t('.sign') %>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>

@@ -85,7 +85,7 @@ module ApplicationHelper
         class: "phone-input form-control",
         data: {
           phone_number_target: "input",
-          action: "blur->phone-number#update keyup->phone-number#reset change->phone-number#reset"
+          action: "keyup->phone-number#update change->phone-number#update"
         }
       ) + \
       content_tag(
