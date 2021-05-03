@@ -54,7 +54,7 @@ class Meeting < ApplicationRecord
     state :completed, display: I18n.t("meetings.state.completed")
 
     event :start do
-      transitions from: :created, to: :incomplete, after_commit: :broadcast_start
+      transitions from: :created, to: :incomplete
     end
 
     event :pause do
@@ -62,7 +62,7 @@ class Meeting < ApplicationRecord
     end
 
     event :complete do
-      transitions from: :incomplete, to: :completed, after_commit: :complete_meeting
+      transitions from: :incomplete, to: :completed, after: :complete_meeting
     end
   end
 
