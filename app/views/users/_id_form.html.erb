@@ -17,10 +17,10 @@
         <%= fa_icon "upload", weight: "fas", class: "mr-2" %>
         <%= t('.submit') %>
       <% end %>
+<% end %>
       <% if user.identification.attached? %>
         <%= button_to t('.delete'), user_id_upload_path(meeting_id: @meeting_id), class: "btn btn-link danger-text", method: :delete, data: { confirm: t('.confirm_delete') } %>
       <% end %>
       <%= link_to t('.skip'), user_id_upload_path, class: "btn btn-link", data: { confirm: t('.confirm_skip') } %>
     </div>
   </div>
-<% end %>
