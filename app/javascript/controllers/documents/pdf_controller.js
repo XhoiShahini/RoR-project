@@ -2,7 +2,7 @@ import { Controller } from "stimulus"
 import consumer from "channels/consumer"
 
 export default class extends Controller {
-  static targets = ["canvas", "pageNum", "pageCount"]
+  static targets = ["canvas", "pageNum", "pageCount", "progress", "bar"]
   static values = { id: String, meetingId: String }
 
   connect() {
@@ -115,9 +115,19 @@ export default class extends Controller {
 
   _initPdf() {
     if (this.idValue === undefined) { return }
+    this.progressTarget.classList.remove("hidden")
+    this.canvasTarget.classList.add("hidden")
     var _self = this
     const url = "/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/pdf" 
-    this.pdfjsLib.getDocument(url).promise.then(pdfDoc => {
+    var loadingTask = this.pdfjsLib.getDocument(url)
+    loadingTask.onProgress = (progressData) => {
+      var percentLoaded = progressData.loaded * 100 / progressData.total
+      this.barTarget.style.width = percentLoaded + "%"
+    }
+    loadingTask.promise.then(pdfDoc => {
+      this.progressTarget.classList.add("hidden")
+      this.canvasTarget.classList.remove("hidden")
+      this.barTarget.style.width = "0%"
       _self.pdf = pdfDoc
       if (_self.hasPageCountTarget) {
         _self.pageCountTarget.textContent = _self.pdf.numPages
