@@ -1,4 +1,10 @@
-<%= form_with(model: participant, url: meeting_participant_id_upload_path(@meeting, participant), html: { method: :post }, data: { turbo_frame: "_top" }) do |form| %>
+<% participant_form_data = {
+  turbo_frame: "_top",
+  controller: "form-loading",
+  action: "submit->form-loading#loading",
+  form_loading_load_with_value: fa_icon("upload", weight: "fas", class: "mr-2") + t(".uploading")
+} %>
+<%= form_with(model: participant, url: meeting_participant_id_upload_path(@meeting, participant), html: { method: :post }, data: participant_form_data) do |form| %>
   <div class="flex justify-between">
     <div class="flex">
       <div class="relative">

@@ -1,4 +1,10 @@
-<%= form_with(model: user, url: user_id_upload_path, html: { method: :post }, data: { turbo_frame: "_top" }) do |form| %>
+<% user_form_data = {
+  turbo_frame: "_top",
+  controller: "form-loading",
+  action: "submit->form-loading#loading",
+  form_loading_load_with_value: fa_icon("upload", weight: "fas", class: "mr-2") + t(".uploading")
+} %>
+<%= form_with(model: user, url: user_id_upload_path, html: { method: :post }, data: user_form_data) do |form| %>
   <%= hidden_field_tag :meeting_id, @meeting_id %>
   <div class="flex justify-between">
     <div class="flex">
@@ -13,7 +19,7 @@
       </div>
     </div>
     <div class="flex">
-      <%= form.button class: "btn btn-primary" do %>
+      <%= form.button class: "btn btn-primary", data: { form_loading_target: "button" } do %>
         <%= fa_icon "upload", weight: "fas", class: "mr-2" %>
         <%= t('.submit') %>
       <% end %>

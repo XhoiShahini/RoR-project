@@ -26,7 +26,11 @@
     <% end %>
     <div class="flex justify-between">
       <div class="flex">
-        <button class="btn btn-primary" data-action="click->documents--document#update">
+        <button class="btn btn-primary" 
+                data-controller="form-loading"
+                data-action="click->form-loading#loading click->documents--document#update"
+                data-form-loading-load-with-value="<%= t(".uploading") %>"
+                data-form-loading-target="button">
           <%= t('.submit') %>
         </button>
         <button class="btn btn-link" data-action="click->documents--document#cancelEdit">

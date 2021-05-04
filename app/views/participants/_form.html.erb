@@ -1,4 +1,9 @@
-<%= form_with(model: participant, url: meeting_participants_path(meeting), data: { controller: "phone-number", action: "submit->phone-number#beforeSubmit turbo:submit-start->phone-number#beforeSubmit"}) do |form| %>
+<% participant_form_data = {
+  controller: "form-loading phone-number",
+  action: "submit->form-loading#loading turbo:submit-start->form-loading#loading submit->phone-number#beforeSubmit turbo:submit-start->phone-number#beforeSubmit",
+  form_loading_load_with_value: t(".working")
+} %>
+<%= form_with(model: participant, url: meeting_participants_path(meeting), data: participant_form_data) do |form| %>
   <%= render "shared/error_messages", resource: participant %>
   <div class="form-group">
     <%= form.label :first_name %>
@@ -22,5 +27,5 @@
     </div>
   <% end %>
 
-  <%= form.button t('participants.submit'), class: "btn btn-primary" %>
+  <%= form.button t('participants.submit'), class: "btn btn-primary", data: { form_loading_target: "button" } %>
 <% end %>

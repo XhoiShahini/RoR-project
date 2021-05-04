@@ -1,4 +1,9 @@
-<%= form_with(model: document, url: meeting_documents_path(document.meeting)) do |form| %>
+<% document_form_data = {
+  controller: "form-loading",
+  action: "submit->form-loading#loading",
+  form_loading_load_with_value: t(".uploading")
+} %>
+<%= form_with(model: document, url: meeting_documents_path(document.meeting), data: document_form_data) do |form| %>
   <%= render "shared/error_messages", resource: document %>
 
   <div class="form-group">
@@ -22,5 +27,5 @@
     </div>
   </div>
 
-  <%= form.button t(".submit"), class: "btn btn-primary" %>
+  <%= form.button t(".submit"), class: "btn btn-primary", data: { form_loading_target: "button" } %>
 <% end %>

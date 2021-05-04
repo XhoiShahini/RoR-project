@@ -34,6 +34,7 @@ en:
       submit: "Update"
       cancel: "Cancel"
       delete: "Delete"
+      uploading: "Uploading..."
     form:
       submit: "Create"
     controls:
