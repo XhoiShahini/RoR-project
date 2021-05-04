@@ -121,8 +121,6 @@ export default class extends Controller {
     const url = "/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/pdf" 
     var loadingTask = this.pdfjsLib.getDocument(url)
     loadingTask.onProgress = (progressData) => {
-      console.log("PROGRESS: " + progressData.loaded + "/" + progressData.total + " ")
-      console.log(progressData)
       var percentLoaded = progressData.loaded * 100 / progressData.total
       this.barTarget.style.width = percentLoaded + "%"
     }
