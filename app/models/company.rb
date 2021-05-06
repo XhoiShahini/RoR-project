@@ -23,4 +23,8 @@ class Company < ApplicationRecord
   def members
     meeting_members.map { |mm| mm.memberable }.uniq
   end
+
+  def meetings
+    meeting_members.map { |mm| mm.meeting }.uniq
+  end
 end

@@ -14,7 +14,7 @@
           <tr>
             <th class="p-3 uppercase text-left text-xs"><%= sortable @companies, :name, "Name", class: "text-gray-700" %></th>
             <th class="p-3 uppercase text-left text-xs text-gray-700"><%= t('companies.members') %></th>
-            <th class="p-3 uppercase text-left text-xs text-gray-700 w-20"><%= t("shared.scaffold.actions") %></th>
+            <th class="p-3 uppercase text-left text-xs text-gray-700"><%= t("companies.meetings") %></th>
           </tr>
         </thead>
 
@@ -23,9 +23,7 @@
           <tr class="group border-t border-gray-400 hover:bg-gray-100">
             <td class="p-3"><%= company.name %></td>
             <td class="p-3"><%= company.members.size %></td>
-            <td>
-              <%= link_to t("shared.scaffold.view"), company, class: "btn btn-link no-underline" %>
-            </td>
+            <td class="p-3"><%= company.meetings.size %></td>
           </tr>
         <% end %>
         </tbody>
