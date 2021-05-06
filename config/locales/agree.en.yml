@@ -21,10 +21,6 @@ en:
     otp: "One-Time Password"
 
   documents:
-    state:
-      created: "No Signatures"
-      incomplete: "1+ Signatures"
-      finalized: "Finalized"
     notice:
       cannot_be_modified: "This document has been signed at least once and cannot be modified"
       create: "Document created successfully"
@@ -55,10 +51,6 @@ en:
     errors:
       maximum_members: "can only have %{maximum} members"
       maximum_documents: "can only have %{maximum} documents"
-    state:
-      created: "Not Started"
-      incomplete: "Started"
-      completed: "Completed"
     notice:
       not_authorized: "You are not authorized to view that meeting"
       cannot_be_modified: "This meeting has been completed and cannot be modified"
@@ -77,6 +69,7 @@ en:
       members: "Members"
       starts_or_completed_at: "Starts/Completed At"
       actions: "Actions"
+      state: "Status"
     new:
       title: "New Meeting"
     edit:
@@ -105,11 +98,6 @@ en:
 
   participants:
     submit: "Invite Participant"
-    state:
-      invited: "Invited"
-      accepted: "Accepted Invitation"
-      verified: "Verified"
-      finalized: "Signed"
     notice:
       create: "Participant created successfully"
       update: "Participant updated successfully"

@@ -49,9 +49,9 @@ class Meeting < ApplicationRecord
   end
 
   aasm(column: :state, logger: Rails.logger, timestamps: true) do
-    state :created, initial: true, display: I18n.t("meetings.state.created")
-    state :incomplete, display: I18n.t("meetings.state.incomplete")
-    state :completed, display: I18n.t("meetings.state.completed")
+    state :created, initial: true
+    state :incomplete
+    state :completed
 
     event :start do
       transitions from: :created, to: :incomplete

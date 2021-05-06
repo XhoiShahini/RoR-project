@@ -28,7 +28,7 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :state_eq %>
+        <%= f.label :state_eq, t(".state") %>
         <%= f.select :state_eq, Meeting.aasm.states_for_select.unshift(["Any", ""]), class: "select" %>
       </div>
 

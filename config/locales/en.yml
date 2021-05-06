@@ -352,7 +352,22 @@ en:
         created_at: "Created"
       account:
         name_on_card: "Name on Card"
-
+      meeting:
+        state:
+          created: "Not Started"
+          incomplete: "Started"
+          completed: "Completed"
+      document:
+        state:
+          created: "No Signatures"
+          incomplete: "1+ Signatures"
+          finalized: "Finalized"
+      participant:
+        state:
+          invited: "Invited"
+          accepted: "Accepted Invitation"
+          verified: "Verified"
+          finalized: "Signed"
     errors:
       models:
         account:
