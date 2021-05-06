@@ -81,6 +81,8 @@ en:
       title: "New Meeting"
     edit:
       title: "Edit Meeting"
+    form:
+      company_instructions: "Companies are here to help you organize your meetings. Create one by clicking on Companies in the navbar, then you can add it to this meeting. You will then be able to search for your meeting by Company."
     partials:
       member_heads:
         host: "Host"
@@ -168,6 +170,9 @@ en:
 
   companies:
     members: "Members"
+    meetings: "Meetings"
+    form:
+      instructions: "Companies are here to help you organize your meetings. Create one here, then add it to a meeting. You will then be able to search for your meeting by Company."
 
   participants_mailer:
     invite:
