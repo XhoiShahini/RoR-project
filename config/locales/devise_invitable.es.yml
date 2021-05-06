@@ -1,4 +1,4 @@
-es-co:
+es:
   devise:
     failure:
       invited: "Tienes una invitación pendiente. Acéptala para terminar de crear tu cuenta."

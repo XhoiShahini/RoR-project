@@ -1,0 +1,199 @@
+---
+it:
+  welcome: "Benvenuto, %{user}."
+
+  dashboard:
+    show:
+      meetings: "Riunioni"
+      legend: "Legenda"
+
+  simple_calendar:
+    previous: "<"
+    next: ">"
+
+  phone_number:
+    invalid_number: "Numero di telefono non valido"
+
+  pdf_gen:
+    signatures: "Firme"
+    signed_at: "Data e ora"
+    ip: "Indirizzo IP"
+    otp: "One-Time Password"
+
+  documents:
+    state:
+      created: "Nessuna firma"
+      incomplete: "Firmato parzialmente"
+      finalized: "Completato"
+    notice:
+      cannot_be_modified: "Questo documento è stato firmato da almeno un partecipante e non può essere modificato"
+      create: "Documento creato con successo"
+      update: "Documento aggiornato con successo"
+      destroy: "Documento rimosso con successo"
+    edit:
+      submit: "Aggiorna"
+      cancel: "Annulla"
+      delete: "Rimuovi"
+      uploading: "Caricamento in corso..."
+    form:
+      submit: "Crea"
+    controls:
+      first: "Primo"
+      previous: "Precedente"
+      next: "Prossimo"
+      last: "Ultimo"
+    otp:
+      instructions: "Inserire il codice inviato via SMS"
+    otp_verified:
+      title: "Verifica e firma"
+      instructions: "Grazie per la verifica. Clicca sul bottone FIRMA per confermare la tua firma."
+    cannot_sign:
+      title: "Non è ancora possibile firmare"
+      cannot_sign: "Tutti i partecipanti devono essere verificati prima che si possa firmare.."
+    
+  meetings:
+    errors:
+      maximum_members: "ha un numero massimo di %{maximum} partecipanti"
+      maximum_documents: "ha un numero massimo di %{maximum} documenti"
+    state:
+      created: "Non avviato"
+      incomplete: "Avviato"
+      completed: "Completato"
+    notice:
+      not_authorized: "Non sei autorizzato ad accedere alla riunione"
+      cannot_be_modified: "La riunione è completata e non può essere modificata"
+      create: "Riunione creata con successo"
+      update: "Riunione aggiornata con successo"
+      destroy: "Riunione rimossa con successo"
+    show:
+      starts_at: "Data e ora di inizio"
+      completed: "Completata"
+      state: "Stato"
+    index:
+      title: "Titolo"
+      account: "Account"
+      host: "Gestore"
+      state: "Stato"
+      members: "Partecipanti"
+      starts_or_completed_at: "Inizio/Fine"
+      actions: "Azioni"
+    new:
+      title: "Nuova Riunione"
+    edit:
+      title: "Modifica Riunione"
+    partials:
+      member_heads:
+        host: "Gestore"
+    room:
+      pre_meeting: 
+        title: "%{meeting} è pronto per iniziare!"
+        info_title: "Pronto ad iniziare?"
+        info_body: "Si prega di rivedere e completare le informazioni indicate sotto."
+        starts_at: "Data e ora di inizio"
+        host: "Gestore"
+        company: "Azienda"
+        upload_id:
+          title: "Carica il tuo documento"
+          description: "Carica un'immagine o un PDF del tuo documento identificativo"
+          require_same_participant: "Puoi solo caricare un documento per te stesso."
+        join_meeting: "Entra nella riunione"
+      show:
+        meetings: "Riunioni"
+
+
+  participants:
+    submit: "Invita Partecipante"
+    state:
+      invited: "Invitato"
+      accepted: "Invito accettato"
+      verified: "Verificato"
+      finalized: "Firmato"
+    notice:
+      create: "Partecipante creato con successo"
+      update: "Partecipante aggiornato con successo"
+      destroy: "Partecipante rimosso con successo"
+    new:
+      new_participant: "Aggiungi Partecipante"
+    sign_in:
+      success: "Ingresso effettuato."
+      title: "Si prega di effettuare l'accesso"
+      signed_out: "Uscita effettuata."
+      must_accept_terms: "È necessario accettare tutti i termini prima di entrare."
+      show:
+        title: "Benvenuti su Agree.Live!"
+        paragraph1: "Prima di entrare nella riunione vi chiediamo di leggere ed approvare i nostri disclaimer."
+        paragraph2: "Fornirvi tutte le informazioni sul processo di firma elettronica e sulla gestione dei dati personali è molto importante per noi."
+        data_html: "​Dichiaro di aver letto le %{link} ed esprimo il mio consenso alla gestione dei dati personali"
+        data_processing: "informazioni sulla gestione dei dati"
+        media_html: "​Dichiaro di aver consultato le %{link} ed esprimo il mio consenso all'utilizzo di audio, video ed immagini raccolte"
+        media_processing: "informazioni sull'utilizzo dei media raccolti"
+        signature_html: "Dichiaro di aver consultato le %{link} riguardo la fornitura del servizio di Firma Elettronica Avanzata"
+        signature_processing: "informazioni"
+        paragraph3: "Una volta lette ed approvate le precedenti condizioni, clicca su Invia Codice per ricevere la OTP necessaria per l'accesso sul numero di cellulare inserito per te dal gestore del meeting"
+        send_code: "Invia Codice"
+      otp:
+        instructions: "Si prega di inserire il codice ricevuto via SMS."
+    edit:
+      submit: "Aggiorna"
+      cancel: "Annulla"
+    id_form:
+      submit: "Carica"
+      skip: "Salta"
+      confirm_skip: "Sei certo di voler proseguire? Il caricamento di un documento aiuta nel processo di riconoscimento."
+      delete: "Cancella"
+      confirm_delete: "Ne sei certo? Il tuo documento verrà cancellato."
+
+  sms_verifications:
+    template: "Agree.Live: Il tuo codice è %token"
+    verify: "Verifica"
+    invalid_code: "Il codice inserito non è valido, si prega di riprovare."
+    sms_disclaimer: "Questa azione invierà un codice di verifica via SMS al numero: %{phone_number}."
+    state:
+      created: "Creato"
+      sent: "Inviato"
+      failed: "Fallito"
+      verified: "Verificato"
+
+  meeting_members:
+    verify_confirmation: "Sei sicuro? Si prega di verificare l'identità di %{user} prima di proseguire."
+    notice:
+      create: "Partecipante aggiunto con successo"
+      update: "Partecipante aggiornato con successo"
+      destroy: "Partecipante rimosso con successo"
+    meeting_member:
+      email: "Email"
+      phone_number: "Telefono"
+      status: "Stato"
+      verify: "Verifica"
+
+  companies:
+    members: "Autorizzati"
+
+  participants_mailer:
+    invite:
+      subject: "Agree.Live: Invito per %{meeting}"
+      header_html: "Sei stato invitato/a alla riunione <strong>%{meeting}</strong> su Agree.Live!"
+      description_html: "<strong>%{host}</strong> ti ha invitato alla riunione <strong>%{meeting}</strong> con <strong>%{account}</strong>. La riunione inizierà alle %{time}. Esegui l'accesso sotto per vedere i dettagli."
+      sign_in: "Accedi"
+    removed:
+      subject: "Agree.Live: Rimosso da %{meeting}"
+      header_html: "Sei stato rimosso da <strong>%{meeting}</strong> su Agree.Live"
+      description_html: "<strong>%{host}</strong> ti ha rimosso dalla riunione <strong>%{meeting}</strong> con <strong>%{account}</strong>. Non potrai più accedere alla riunione ed ai documenti. Ci scusiamo per l'inconveniente."
+  post_meeting_mailer:
+    post_meeting:
+      subject: "Agree.Live: la riunione %{meeting} è stata completata"
+      header_html: "<strong>%{meeting}</strong> è stata completata!"
+      description_html: "Puoi usare il link sottostante per accedere alla riunione ed ai documenti."
+      view_meeting: "Vedi Riunione"
+  
+  signatures:
+    otp:
+      title: "Verifica e Firma"
+    verified_id: "Confermo di aver verificato l'identità degli altri partecipanti prima della firma."
+
+
+  #ActiveStorage Validations
+  errors:
+    messages:
+      content_type_invalid: "Il tipo di file: %{content_type} non è valido. I formati accettati sono: %{authorized_types}"
+  

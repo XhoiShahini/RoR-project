@@ -1,5 +1,5 @@
 # Taken from https://gist.github.com/pzin/5864124 as suggested by heartcombo's wiki at https://github.com/heartcombo/devise/wiki/I18n
-es-co:
+es:
   devise:
     confirmations:
       confirmed: "Tu cuenta ya ha sido confirmada. Has sido indentificado."

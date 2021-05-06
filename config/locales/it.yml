@@ -1,0 +1,388 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+#
+# https://mikerogers.io/2016/01/10/i18n-rails-internationalisation-i18n-cheatsheet.html
+
+it:
+  hello: "Hello world"
+
+  something_went_wrong: "Qualcosa è andato storto"
+  create_an_account_first: "Per favore crea prima un account"
+  must_be_an_admin: "Devi essere amministratore per fare questo"
+  are_you_sure: "Sei certo?"
+  delete: "Cancella"
+  back: "Indietro"
+  cancel: "Cancella"
+  edit: "Scrivi"
+
+  account_invitations_mailer:
+    invite:
+      subject: "%{inviter} ti ha invitato a %{account}"
+      header_html: "%{inviter} ti ha invitato a collaborare <strong>%{account}</strong>"
+      description_html: "Puoi %{link} questo invito."
+      accept_or_decline: "accettare o declinare"
+      view_invitation: "Vedi l'invito"
+
+  account_invitations:
+    invite_user: "Invita utente"
+    authenticate: "Effettua il login o crea un account per accettare questo invito"
+    not_found: "Spiacenti, non siamo riusciti a trovare questo invito. Rivolgiti all'amministratore del tuo account per un nuovo invito."
+    show:
+      invited_you_to_join_html: "<strong>%{inviter}</strong> ti ha invitato a partecipare <strong>%{account}</strong>"
+      accept: "Accetta l'invito"
+      decline: "Rifiuta"
+
+  account_users:
+    updated: "Aggiornamento effettuato con successo."
+    destroyed: "Account rimosso con successo."
+    edit:
+      description: "Modifica delle autorizzazioni dell'account per %{user}."
+
+  accounts:
+    index:
+      title: "Account"
+      create: "Crea un Account"
+      switch: "Cambia"
+      current: "Account attuale"
+    show:
+      invite: "Invita un utente"
+      edit: "modifica"
+      edit_account: "Modifica un Account"
+      copy_link: "Copia il link"
+      switch: "Cambia"
+    new:
+      breadcrumb: "Nuovo Account"
+      title: "Nuovo Account"
+    edit:
+      breadcrumb: "Modifica"
+      title: "Modifica Account"
+    created: "Account creato con successo"
+    created_and_switch_html: "Account creato con successo. <a class=\"underline\" href=\"%{link}\">Switch account</a>"
+    updated: "Account aggiornato con successo."
+    destroyed: "Account cancellato con successo"
+    admin_required: "Solo gli amministratori dell'account possono farlo."
+    personal:
+      cannot_delete: "Solo gli amministratori dell'account possono farlo."
+    all: "Tutti gli Account"
+    users: "Utenti"
+    roles: "Ruoli"
+    account_invitations:
+      new:
+        description: "Invita un utente ad unirsi ad un account."
+        send: "Trasmetti l'invito"
+        cancel: "Cancella"
+      edit:
+        description: "Modifica o cancella l'account"
+        back: "Indietro"
+        update: "Aggiorna l'invito"
+        destroy: "Cancella l'invito"
+
+  announcements:
+    index:
+      title: "Cosa c'è di nuovo"
+      empty_placeholder: "In arrivo prossimamente!"
+
+  api_tokens:
+    created: "Token API creato con successo"
+    updated: "Token API creato con successo"
+    destroyed: "Il tuo Token API è stato revocato"
+    all: "Tutti i Token API"
+
+    index:
+      title: "API Token"
+      create: "Crea un Token API"
+      revoke: "Revoca"
+    new:
+      breadcrumb: "Nuovo"
+      title: "Nuovo Token API"
+    edit:
+      breadcrumb: "Modifica"
+      title: "Modifica il Token API"
+    show:
+      edit: "Modifica il Token"
+      revoke: "Revoca il Token"
+      confirm: "Sei sicuro di voler revocare questo token API?"
+      auth_header: "Autentica"
+
+  cards:
+    updated: "La tua carta è stata aggiornata con successo"
+    edit:
+      billing: "Fatturazione"
+      payment_details: "Dettagli di pagamento"
+    forms:
+      braintree:
+        button: "Aggiorna la carta"
+        processing: "in lavorazione..."
+      stripe:
+        credit_or_debit_card: "Carta di credito o bancomat"
+        button: "Aggiorna la carta"
+        processing: "In lavorazione..."
+
+  payments:
+    success: "Grazie per esserti registrato!"
+    show:
+      successful: "Pagamento concluso con successo"
+      successful_description: "Questo pagamento è già stato confermato con successo."
+      cancelled: "Pagamento cancellato"
+      cancelled_description: "Questo pagamento è stato cancellato."
+      confirm: "Conferma il seguente ammontare di pagamento %{amount}"
+      confirm_description: "È necessaria una conferma aggiuntiva per elaborare il pagamento. Si prega di confermare il pagamento compilando i dettagli di pagamento di seguito."
+      back: "Torna indietro"
+      confirm_button: "Conferma il pagamento"
+
+  static:
+    no_plans: "Non ci sono piani tariffari configurati."
+    pricing:
+      heading: "Prezzo"
+      subhead: "Prezzi semplici e chiari per far funzionare il tuo business online"
+      monthly: "Mensilmente"
+      yearly: "Annualmente"
+      get_started: "Inizia"
+
+    about:
+      title: "Chi siamo"
+    privacy:
+      title: "Privacy Policy"
+    terms:
+      title: "Condizioni di utilizzo"
+
+  shared:
+    footer:
+      about: "Chi siamo"
+      privacy: "Privacy Policy"
+      terms: "Condizioni di utilizzo"
+    account_navbar:
+      profile: "Profilo"
+      password: "Password"
+      connected_accounts: "Connetti gli Account"
+      billing: "Fatturazione"
+      accounts: "Account"
+      api_tokens: "API"
+    flash:
+      confirm_payment: "Conferma il tuo ultimo pagamento"
+    navbar:
+      signed_in_as_html: "Firmato come <strong>%{user}</strong>"
+      profile: "Profilo"
+      password: "Password"
+      connected_accounts: "Connetti gli Account"
+      billing: "Fatturazione"
+      api_tokens: "API"
+      accounts: "Account"
+      admin: "Admin"
+      dashboard: "Dashboard"
+      sign_out: "Abbandona"
+      log_in: "Accedi"
+      sign_up: "Iscriviti"
+    oauth:
+      apple: "Apple"
+      facebook: "Facebook"
+      github: "GitHub"
+      google_oauth2: "Google"
+      stripe: "Stripe"
+      twitter: "Twitter"
+    right_nav:
+      pricing: "Fatturazione"
+      announcements: "Cosa c'è di nuovo"
+    scaffold:
+      edit:
+        title: "Modifica %{model}"
+      new:
+        title: "Nuovo %{model}"
+      actions: "Azioni"
+      view: "Controlla"
+
+  subscriptions:
+    created: "Grazie per esserti iscritto!"
+    resumed: "Il tuo abbonamento è stato ripristinato."
+    info_updated: "Informazioni di fatturazione aggiuntive salvate correttamente."
+
+    new:
+      title: "Checkout"
+      payment_method: "Metodo di pagamento"
+      change: "Cambia"
+      subscribe: "Abbonati"
+      processing: "In lavorazione..."
+      help: "Bisogno di aiuto?"
+      contact_html: "Non esitare a %{link}."
+      renews_html: "Rinnovo automatico <br/>after 1 %{interval}"
+      contact_support: "Contatta il supporto"
+      contact_subject: "Ho una domanda da porre riguardo a %{product}"
+      testimonial: "Non ho mai trovato niente di più facile da usare di %{product}!"
+
+    edit:
+      trial_ends: "Il tuo periodo di prova si concluderà in %{days}."
+      title: "Cambia il tuo piano tariffario"
+      description: "Prezzi semplici e chiari per far funzionare il tuo business online"
+      monthly: "Mensilmente"
+      yearly: "Annualmente"
+      current_plan: "Attuale Piano Tariffario"
+      change_plan: "Cambia Piano Tariffario"
+      processing: "In lavorazione..."
+
+    show:
+      title: "Fatturazione"
+      contact_admin: "Contatta un amministratore per modificare il file %{account} subscription."
+
+    current_plan:
+      title: "Attuale Piano Tariffario"
+      trial_ends: "Il tuo periodo di prova si concluderà in %{days}."
+      subscription_ends_html: "La tua iscrizione si concluderà in <strong>%{date}</strong>"
+      subscription_pauses_html: "Il tuo abbonamento viene messo in pausa <strong>%{date}</strong>"
+      subscription_paused_html: "Il tuo abbonamento è <strong>paused</strong>"
+      resume: "Riprendi l'abbonamento"
+      resuming: "Riprendo..."
+      resubscribe_html: "Il tuo abbonamento è concluso. Vorresti %{link}?"
+      resubscribe: "re-iscriverti"
+      current_plan_html: "Sei attualmente iscritto a <strong>%{plan}</strong> plan."
+      change_plan: "Cambio piano"
+      not_subscribed: "Non sei attualmente iscritto"
+      choose_plan: "Scegli un piano tariffario"
+      payment_method: "Metodo di pagamento"
+      no_card: "Nessuna carta registrata"
+      update_payment_method: "Aggiorna il metodo di pagamento"
+      extra_billing_info: "Ulteriori informazioni di fatturazione"
+      additional_information: "Aggiungi qualsiasi informazione aggiuntiva a tutte le tue ricevute come la tua partita IVA, la ragione sociale completa e l'indirizzo."
+      save_info: "Salva le informazioni"
+      saving: "Salvataggio in corso..."
+      add_info: "Aggiungi informazioni"
+      invoices: "Fatture"
+      invoices_description: "La tua cronologia di transazioni e pagamenti."
+      date: "Data"
+      amount: "Ammontare"
+      receipt: "Ricevuta"
+      view: "Vedi"
+      pause:
+        title: "Interrompi la tua iscrizione"
+        description: "Puoi mettere in pausa l'abbonamento e riprenderlo in un secondo momento."
+        note: "La pausa ha effetto il primo giorno del successivo ciclo di fatturazione. Non ti verrà addebitato alcun importo mentre il tuo account è in pausa."
+        button: "Interrompi la registrazione"
+        pausing: "In pausa..."
+      cancel:
+        title: "Cancella la tua registrazione"
+        description: "Puoi annullare in qualsiasi momento, ma perderai l'accesso a %{product}."
+        help_html: "Hai bisogno di aiuto? %{link} -- Saremmo felici di aiutarti"
+        contact_us: "Contattaci"
+        subject: "Domanda riguardo %{product}"
+        button: "Cancella registrazione"
+        cancelling: "Cancellazione..."
+
+    forms:
+      stripe:
+        credit_or_debit_card: "Carta di credito o bancomat"
+
+  account:
+    passwords:
+      updated: "La tua password è stata cambiata con successo."
+      edit:
+        update_password: "Aggiorna la password"
+        update: "Aggiorna"
+
+  users:
+    avatar:
+      upload: "Aggiorna Avatar"
+    connected_accounts:
+      index:
+        title: "Connetti gli account"
+        description: "Il collegamento dei tuoi account sui social media semplifica l'accesso."
+        remove: "Rimuovi"
+        redirecting: "Reindirizzamento..."
+        none: "Non hai account collegati."
+    omniauth_callbacks:
+      account_exists: "Abbiamo già un account con questa email. Accedi con il tuo account precedente prima di connetterti a questo."
+    sudo:
+      header: "Conferma la password per continuare"
+      submit: "Conferma la password"
+      forgot_password: "Password dimenticata?"
+      invalid_password: "Password invalida"
+    id_form:
+      submit: "Upload"
+      skip: "Salta"
+      confirm_skip: "Sei sicuro? Caricare il tuo ID rende più facile per gli altri confermare la tua identità."
+
+  layouts:
+    mailer:
+      copyright_html: "Copyright &copy; %{year}, All rights reserved."
+      mailing_address: "Il nostro indirizzo mail è:"
+      view_in_browser: "Visualizza questo sul tuo browser"
+      unsubscribe: "Cancella da questa lista"
+      preferences: "Aggiorna le preferenze di sottoscrizione"
+
+  notifications:
+    index:
+      title: "Notifiche"
+      empty_placeholder: "Nulla da vedere qui"
+    invite_accepted: "%{user} ha accettato il tuo invito"
+    empty: "Nulla da vedere qui"
+    empty_description: "Ti faremo sapere quando avrai nuove notifiche"
+
+  activerecord:
+    attributes:
+      api_token:
+        last_used_at: "Ultimo utilizzo"
+        created_at: "Creato"
+      account:
+        name_on_card: "Nome sulla carta"
+
+    errors:
+      models:
+        account:
+          attributes:
+            domain:
+              reserved: "%{value} è riservato."
+            subdomain:
+              reserved: "%{value} è riservato."
+              format: "deve contenere almeno 2 caratteri e alfanumerico"
+        account_invitation:
+          attributes:
+            email:
+              invited: "è già stato invitato"
+        account_user:
+          attributes:
+            admin:
+              cannot_be_removed: "il ruolo non può essere rimosso per il proprietario dell'account"
+
+  helpers:
+    placeholder:
+      account_invitation:
+        name: "Nome e Cognome"
+        email: "example@domain.com"
+      account:
+        name: "Nome dell'account"
+        domain: "example.com"
+        subdomain: "example"
+        name_on_card: "Nome e Cognome"
+        extra_billing_info: "Partita IVA, Codice fiscale, indirizzo ..."
+      api_token:
+        name: "Token Name"
+      user:
+        name: "Steve Jobs"
+        email: "you@example.com"
+        password: "password"

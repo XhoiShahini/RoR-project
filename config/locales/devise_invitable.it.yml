@@ -1,0 +1,31 @@
+it:
+  devise:
+    failure:
+      invited: "Hai un invito in sospeso, accettalo per completare la registrazione del tuo account."
+    invitations:
+      send_instructions: "È stata inviata un'e-mail di invito a %{email}."
+      invitation_token_invalid: "Il token di invito fornito non è valido!"
+      updated: "Your password was set successfully. You are now signed in."
+      updated_not_active: "La tua password è stata impostata correttamente. Ora sei connesso."
+      no_invitations_remaining: "Nessun invito rimanente"
+      invitation_removed: "Il tuo invito è stato rimosso"
+      new:
+        header: "Spedisci l'invito"
+        submit_button: "Spedisci un inviton"
+      edit:
+        header: "Accetta il tuo invito"
+        submit_button: "Accetta l'invito"
+    mailer:
+      invitation_instructions:
+        subject: "Istruzioni di invito"
+        hello: "Ciao %{email}"
+        someone_invited_you: "Qualcuno ti ha invitato %{url}, puoi accettare cliccando il bottone sottostante"
+        accept: "Accetta l'invito"
+        accept_until: "Questo invito scadrà tra %{due_date}."
+        ignore: "Se non vuoi accettare questo invito. Cancella la presente comunicazione.<br />\nIl tuo account non verrà creato finché non accedi al link sopra e imposti la tua password."
+  time:
+    formats:
+      devise:
+        mailer:
+          invitation_instructions:
+            accept_until_format: "%B %d, %Y %I:%M %p"
