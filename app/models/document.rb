@@ -43,9 +43,9 @@ class Document < ApplicationRecord
   has_one_attached :file
 
   aasm(column: :state, logger: Rails.logger) do
-    state :created, initial: true, display: I18n.t("documents.state.created")
-    state :incomplete, display: I18n.t("documents.state.incomplete")
-    state :finalized, display: I18n.t("documents.state.finalized")
+    state :created, initial: true
+    state :incomplete
+    state :finalized
 
     event :sign, after: :broadcast_update do
       transitions from: [:created, :incomplete], to: :finalized, if: :signing_complete?, after: :add_signature_page

@@ -28,10 +28,10 @@ class SmsVerification < ApplicationRecord
   after_create_commit { send_code! }
 
   aasm(column: :state, logger: Rails.logger) do
-    state :created, initial: true, display: I18n.t("sms_verifications.state.created")
-    state :sent, display: I18n.t("sms_verifications.state.sent")
-    state :failed, display: I18n.t("sms_verifications.state.failed")
-    state :verified, display: I18n.t("sms_verifications.state.verified")
+    state :created, initial: true
+    state :sent
+    state :failed
+    state :verified
 
     event :send_code do
       transitions from: :created, to: :sent do

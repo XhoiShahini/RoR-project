@@ -61,10 +61,10 @@ class Participant < ApplicationRecord
   accepts_nested_attributes_for :meeting_member
 
   aasm(column: :state, logger: Rails.logger) do
-    state :invited, initial: true, display: I18n.t("participants.state.invited")
-    state :accepted, display: I18n.t("participants.state.accepted")
-    state :verified, display: I18n.t("participants.state.verified")
-    state :finalized, display: I18n.t("participants.state.finalized")
+    state :invited, initial: true
+    state :accepted
+    state :verified
+    state :finalized
 
     event :accept do
       transitions from: :invited, to: :accepted
