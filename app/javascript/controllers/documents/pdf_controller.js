@@ -133,6 +133,8 @@ export default class extends Controller {
         _self.pageCountTarget.textContent = _self.pdf.numPages
       }
       _self._queueRenderPage(_self.currentPage)
+    }).catch(error => {
+      this._initTabs()
     })
   }
 
