@@ -4,5 +4,28 @@
     <% @documents.each do |document| %>
       <%= render "documents/tab", document: document %>
     <% end %>
+    <% if @host %>
+      <div data-controller="modal" class="card flex justify-center">
+        <button class="btn btn-secondary" data-action="click->modal#open">
+          <%= fa_icon "plus", weight: "fas", class: "mr-2" %>
+          <%= t(".new_document") %>
+        </button>
+        <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+          <!-- Modal Inner Container -->
+          <div class="max-h-screen w-full max-w-2xl relative">
+            <div class="m-1 bg-white rounded shadow">
+              <div class="p-8">
+                <%= turbo_frame_tag "new_document" do %>
+                  <div class="card">
+                    <p class="card-header"><%= t(".new_document") %></p>
+                    <%= render "form", document: @meeting.documents.new %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 <% end %>

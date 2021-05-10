@@ -34,6 +34,34 @@
 it:
   hello: "Hello world"
 
+  time:
+    formats:
+      long: "%d/%m/%Y %H:%M"
+
+  date:
+    month_names:
+      - Month Zero
+      - gennaio
+      - febbraio
+      - marzo
+      - aprile
+      - maggio
+      - giugno
+      - luglio
+      - agosto
+      - settembre
+      - ottobre
+      - novembre
+      - dicembre
+    abbr_day_names:
+      - sab.
+      - do.
+      - lun.
+      - mar.
+      - mer.
+      - gio.
+      - ven.
+
   something_went_wrong: "Qualcosa è andato storto"
   create_an_account_first: "Per favore crea prima un account"
   must_be_an_admin: "Devi essere amministratore per fare questo"
