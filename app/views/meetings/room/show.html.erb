@@ -64,27 +64,27 @@
           <%= t('.video') %>
         </h1>
         <div class="w-100 rounded bg-white">
-          <h4>My video</h4>
           <div id="localvideo">
             <video class="rounded centered" id="myvideo" width="100%" height="100%" autoplay playsinline />
           </div>
           <div>
-            <p>Audio input</p>
-            <select id="audioInput"></select>
-            <p>Video input</p>
-            <select id="videoInput"></select>
-            <button type="button" id="changeInput" class="btn btn-small btn-primary mt-2 mr-2">Change input devices</button>
-            <p>Audio output</p>
-            <select id="audioOutput"></select>
-            <button type="button" id="changeOutput" class="btn btn-small btn-primary mt-2 mr-2">Change output devices</button>
+            <button type="button" id="displayControls" class="btn btn-small btn-primary mt-2">Show Video Options</button>
+            <div class="card" style="display: none;" id="videoControls">
+              <p>Audio input</p>
+              <select id="audioInput"></select>
+              <p>Video input</p>
+              <select id="videoInput"></select>
+              <button type="button" id="changeInput" class="btn btn-small btn-primary mt-2 mr-2">Change input devices</button>
+              <p>Audio output</p>
+              <select id="audioOutput"></select>
+              <button type="button" id="changeOutput" class="btn btn-small btn-primary mt-2 mr-2">Change output devices</button>
+            </div>
           </div>
           <div id="<%= @meeting_member.signed_member_id %>">
             <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myAudio"><i class="fas fa-microphone"></i></button>
             <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myVideo"><i class="fas fa-video"></i></button>
-
           </div>
 
-          <h4>Remote video</h4>
           <div id="remotevideo">
           </div>
         </div>
@@ -445,6 +445,16 @@ ready(async function() {
 
   document.getElementById('myVideo').addEventListener('click', function(e){
     toggleVideo(e);
+  });
+
+  document.getElementById('displayControls').addEventListener('click', function(e){
+    if (document.getElementById('videoControls').style.display == "none") {
+      e.target.innerText = "Hide Video Options";
+      document.getElementById('videoControls').style.display = "block";
+    } else {
+      e.target.innerText = "Show Video Options";
+      document.getElementById('videoControls').style.display = "none";
+    }
   });
 
   document.getElementById('myAudio').addEventListener('click', function(e){
