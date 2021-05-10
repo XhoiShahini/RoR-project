@@ -34,6 +34,10 @@
 it:
   hello: "Hello world"
 
+  time:
+    formats:
+      long: "%d/%m/%Y %H:%M"
+
   date:
     month_names:
       - Month Zero
