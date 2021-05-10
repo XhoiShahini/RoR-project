@@ -67,7 +67,7 @@ class DocumentsController < ApplicationController
 
   # GET /meetings/:meeting_id/documents/:id/new_signature
   def new_signature
-    redirect_to cannot_sign_meeting_document_path(@meeting, @document) and return unless @meeting.all_participants_verified?
+    redirect_to cannot_sign_meeting_document_path(@meeting, @document) and return unless !@meeting_member.verifiable? || @meeting_member.memberable.verified_at.present?
     redirect_to sign_meeting_document_path(@meeting, @document) and return if @signature.signed_at.present?
     @memberable = current_user || current_participant
     render layout: false

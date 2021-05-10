@@ -45,7 +45,7 @@ en:
       instructions: "Thank you for verifying. Click the SIGN button now to sign!"
     cannot_sign:
       title: "Cannot Sign Yet"
-      cannot_sign: "All participants must first be verified before you can sign."
+      cannot_sign: "The host must verify your identity before you can sign."
     
   meetings:
     errors:
