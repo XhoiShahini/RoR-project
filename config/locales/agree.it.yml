@@ -21,10 +21,6 @@ it:
     otp: "One-Time Password"
 
   documents:
-    state:
-      created: "Nessuna firma"
-      incomplete: "Firmato parzialmente"
-      finalized: "Completato"
     notice:
       cannot_be_modified: "Questo documento è stato firmato da almeno un partecipante e non può essere modificato"
       create: "Documento creato con successo"
@@ -55,10 +51,6 @@ it:
     errors:
       maximum_members: "ha un numero massimo di %{maximum} partecipanti"
       maximum_documents: "ha un numero massimo di %{maximum} documenti"
-    state:
-      created: "Non avviato"
-      incomplete: "Avviato"
-      completed: "Completato"
     notice:
       not_authorized: "Non sei autorizzato ad accedere alla riunione"
       cannot_be_modified: "La riunione è completata e non può essere modificata"
@@ -94,6 +86,10 @@ it:
         host: "Gestore"
       search_form:
         state: Stato
+        starts_at_gt: Inizia Dopo
+        starts_at_lt: Inizia Prima
+        company: "Azienda"
+        any: Qualunque
     room:
       pre_meeting: 
         title: "%{meeting} è pronto per iniziare!"
@@ -113,11 +109,6 @@ it:
 
   participants:
     submit: "Invita Partecipante"
-    state:
-      invited: "Invitato"
-      accepted: "Invito accettato"
-      verified: "Verificato"
-      finalized: "Firmato"
     notice:
       create: "Partecipante creato con successo"
       update: "Partecipante aggiornato con successo"

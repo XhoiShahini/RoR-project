@@ -79,6 +79,9 @@ en:
     partials:
       member_heads:
         host: "Host"
+      search_form:
+        starts_at_gt: "Starts After"
+        starts_at_lt: "Starts Before"
     room:
       pre_meeting: 
         title: "%{meeting} is ready to join!"

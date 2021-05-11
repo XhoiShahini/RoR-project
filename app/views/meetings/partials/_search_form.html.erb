@@ -23,22 +23,22 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :meeting_members_company_name_cont, "Company" %>
+        <%= f.label :meeting_members_company_name_cont, t(".company") %>
         <%= f.search_field :meeting_members_company_name_cont, class: "rounded" %>
       </div>
 
       <div class="form-group">
         <%= f.label :state_eq, t(".state") %>
-        <%= f.select :state_eq, Meeting.aasm.states_for_select.unshift(["Any", ""]), class: "select" %>
+        <%= f.select :state_eq, Meeting.aasm.states_for_select.unshift([t(".any"), ""]), class: "select" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :starts_at_gt, "Starts At From" %>
+        <%= f.label :starts_at_gt, t(".starts_at_gt") %>
         <%= f.text_field :starts_at_gt, class: "rounded", data: { controller: :flatpickr, flatpickr_enable_time: true, flatpickr_alt_input: true, flatpickr_alt_format: t("time.formats.long") } %>
       </div>
 
       <div class="form-group">
-        <%= f.label :starts_at_lt, "Starts At To" %>
+        <%= f.label :starts_at_lt, t(".starts_at_lt") %>
         <%= f.text_field :starts_at_lt, class: "rounded", data: { controller: :flatpickr, flatpickr_enable_time: true, flatpickr_alt_input: true, flatpickr_alt_format: t("time.formats.long") } %>
       </div>
 
