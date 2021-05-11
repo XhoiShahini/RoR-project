@@ -52,7 +52,7 @@ class MeetingMember < ApplicationRecord
   delegate :server, to: :meeting
 
   def set_signed_member_id
-    self.signed_member_id = Digest::SHA1.hexdigest "#{self.id}#{ENV.fetch('SIGNATURE_SALT', 'salt is bad for you')}"
+    self.signed_member_id = Digest::SHA1.hexdigest "#{self.id}#{rand()}#{ENV.fetch('SIGNATURE_SALT', 'salt is bad for you')}"
   end
 
   def full_name

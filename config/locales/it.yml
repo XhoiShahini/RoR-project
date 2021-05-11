@@ -354,6 +354,7 @@ it:
       submit: "Upload"
       skip: "Salta"
       confirm_skip: "Sei sicuro? Caricare il tuo ID rende più facile per gli altri confermare la tua identità."
+      delete: "Elimina"
 
   layouts:
     mailer:
@@ -414,3 +415,12 @@ it:
         name: "Steve Jobs"
         email: "you@example.com"
         password: "password"
+
+  video:
+    show_options: "Mostra Opzioni"
+    hide_options: "Nascondi Opzioni"
+    change_input: "Aggiorna dispositivi di input"
+    change_output: "Aggiorna dispositivi di output"
+    audio_input: "Input Audio"
+    audio_output: "Output Audio"
+    video_input: "Input Video"
