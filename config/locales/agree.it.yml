@@ -69,6 +69,11 @@ it:
       starts_at: "Data e ora di inizio"
       completed: "Completata"
       state: "Stato"
+      company: "Azienda"
+      account: "Account"
+      details: "Dettagli"
+      documents: "Documenti"
+      members: "Partecipanti"
     index:
       title: "Titolo"
       account: "Account"
@@ -81,9 +86,14 @@ it:
       title: "Nuova Riunione"
     edit:
       title: "Modifica Riunione"
+    form:
+      host_must_sign: "Gestore deve firmare"
+      company_instructions: "Le Aziende sono qui per aiutarti a organizzare le tue riunioni. Creane una facendo clic su Aziende nella barra di navigazione, quindi puoi aggiungerla a questa riunione. Potrai quindi cercare la tua riunione per Azienda"
     partials:
       member_heads:
         host: "Gestore"
+      search_form:
+        state: Stato
     room:
       pre_meeting: 
         title: "%{meeting} è pronto per iniziare!"
@@ -165,9 +175,15 @@ it:
       phone_number: "Telefono"
       status: "Stato"
       verify: "Verifica"
+      host: "Gestore"
+      edit: "Modificare"
+      copy_link: Copia il link
+      identification: Documento Identificativo
 
   companies:
     members: "Autorizzati"
+    form:
+      instructions: Le Aziende sono qui per aiutarti a organizzare le tue riunioni. Creane una qui, quindi puoi aggiungerla a questa riunione. Potrai quindi cercare la tua riunione per Azienda
 
   participants_mailer:
     invite:

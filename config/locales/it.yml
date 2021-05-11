@@ -239,6 +239,10 @@ it:
     right_nav:
       pricing: "Fatturazione"
       announcements: "Cosa c'è di nuovo"
+    left_nav:
+      meetings: "Riunione"
+      companies: "Aziende"
+      new_meeting: "Nuovo Riunione"
     scaffold:
       edit:
         title: "Modifica %{model}"
