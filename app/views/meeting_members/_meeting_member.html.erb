@@ -13,7 +13,7 @@
           <%= meeting_member.memberable.name %>
         </p>
         <p class="card-paragraph">
-          <%= meeting_member.memberable == meeting_member.meeting.host ? t(".host") : meeting_member.memberable_type %>
+          <%= meeting_member.memberable == meeting_member.meeting.host ? t(".host") : t("activerecord.models.#{meeting_member.memberable_type.downcase}") %>
           <%= meeting_member.must_sign ? "" : "(Spectator)" %>
         </p>
         <% if meeting_member.memberable.identification&.attached? %>

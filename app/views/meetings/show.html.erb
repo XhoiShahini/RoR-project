@@ -6,7 +6,7 @@
           <%= link_to 'Meetings', meetings_path %> > <%= @meeting.title %> 
         </h1>
       </div>
-      <%= link_to 'Edit', edit_meeting_path(@meeting), class: "btn btn-link" %>
+      <%= link_to t("edit"), edit_meeting_path(@meeting), class: "btn btn-link" %>
     </div>
 
     <div class="bg-white rounded shadow p-8">

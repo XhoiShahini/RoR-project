@@ -38,7 +38,7 @@
         </button>
       </div>
       <div class="flex">
-        <%= button_to t(".delete"), meeting_document_path(@document.meeting, @document), method: :delete, class: "btn btn-danger outline" %>
+        <%= button_to t(".delete"), meeting_document_path(@document.meeting, @document), method: :delete, class: "btn btn-danger outline", data: { confirm: t("are_you_sure") } %>
       </div>
     </div>
   </div>

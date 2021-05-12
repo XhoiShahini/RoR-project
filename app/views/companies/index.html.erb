@@ -1,6 +1,6 @@
 <div class="container mx-auto my-8 px-4">
   <div class="flex justify-between items-center mb-4">
-    <h1 class="h3"><%= t("activerecord.models.company").pluralize(2, I18n.locale) %></h1>
+    <h1 class="h3"><%= t(".companies") %></h1>
 
     <% if @companies.any? %>
       <%= link_to t("shared.scaffold.new.title", model: t("activerecord.models.company")), new_company_path, class: "btn btn-primary" %>
@@ -12,7 +12,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th class="p-3 uppercase text-left text-xs"><%= sortable @companies, :name, "Name", class: "text-gray-700" %></th>
+            <th class="p-3 uppercase text-left text-xs"><%= sortable @companies, :name, t("activerecord.attributes.company.name"), class: "text-gray-700" %></th>
             <th class="p-3 uppercase text-left text-xs text-gray-700"><%= t('companies.members') %></th>
             <th class="p-3 uppercase text-left text-xs text-gray-700"><%= t("companies.meetings") %></th>
           </tr>
