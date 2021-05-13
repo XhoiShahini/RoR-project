@@ -50,7 +50,8 @@ it:
       send_code: "Invia Codice"
     cannot_sign:
       title: "Non è ancora possibile firmare"
-      cannot_sign: "Tutti i partecipanti devono essere verificati prima che si possa firmare.."
+      not_yet_verified: "Tutti i partecipanti devono essere verificati prima che si possa firmare.."
+      require_read: "Deve leggere l'intero documento"
     tabs:
       new_document: "Nuovo Documento"
     

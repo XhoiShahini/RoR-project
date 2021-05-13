@@ -1,7 +1,8 @@
 <% if @meeting_member.must_sign %>
   <div data-controller="signature" 
       data-signature-document-id-value="" 
-      data-signature-signed-value="false" 
+      data-signature-signed-value="false"
+      data-signature-readonly-value="false"
       id="signature-controller"
       data-signature-meeting-id-value="<%= @meeting.id %>">
 

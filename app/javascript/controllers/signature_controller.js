@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static values = { documentId: String, meetingId: String, signed: Boolean }
+  static values = { documentId: String, meetingId: String, signed: Boolean, readonly: Boolean }
   static targets = ["modal", "modalButton", "commit"]
   
   connect() {
@@ -17,6 +17,10 @@ export default class extends Controller {
 
   signedValueChanged() {
     this.modalButtonTarget.disabled = this.signedValue
+  }
+
+  readonlyValueChanged() {
+    this.modalButtonTarget.classList.toggle("hidden", this.readonlyValue)
   }
 
   sendOTP() {

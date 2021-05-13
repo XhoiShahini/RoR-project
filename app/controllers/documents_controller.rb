@@ -2,7 +2,7 @@ class DocumentsController < ApplicationController
   include MeetingsHelper
   before_action :set_meeting
   before_action :set_document, except: [:index, :tabs, :new, :create]
-  before_action :set_signature, only: [:new_signature, :sign, :otp, :verify_otp, :otp_verified]
+  before_action :set_signature, only: [:new_signature, :sign, :otp, :verify_otp, :otp_verified, :mark_as_read]
   before_action :require_meeting_member!
   before_action :cannot_modify_signed!, only: [:edit, :update, :destroy]
   before_action :require_current_account_admin, only: [:new, :create, :edit, :update, :destroy]
@@ -67,7 +67,8 @@ class DocumentsController < ApplicationController
 
   # GET /meetings/:meeting_id/documents/:id/new_signature
   def new_signature
-    redirect_to cannot_sign_meeting_document_path(@meeting, @document) and return unless !@meeting_member.verifiable? || @meeting_member.memberable.verified_at.present?
+    redirect_to cannot_sign_meeting_document_path(@meeting, @document, reason: "not_yet_verified") and return unless !@meeting_member.verifiable? || @meeting_member.memberable.verified_at.present?
+    redirect_to cannot_sign_meeting_document_path(@meeting, @document, reason: "require_read") and return unless @signature.signable?
     redirect_to sign_meeting_document_path(@meeting, @document) and return if @signature.signed_at.present?
     @memberable = current_user || current_participant
     render layout: false
@@ -82,6 +83,7 @@ class DocumentsController < ApplicationController
   end
 
   def cannot_sign
+    @reason = params[:reason]
     render layout: false
   end
 
@@ -104,6 +106,11 @@ class DocumentsController < ApplicationController
 
   # GET /meetings/:meeting_id/documents/:id/otp_verified
   def otp_verified
+  end
+
+  def mark_as_read
+    @signature.update(document_read: true)
+    render plain: ""
   end
 
   # DELETE /meetings/meeting_:id/documents/:id
