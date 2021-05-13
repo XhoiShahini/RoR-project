@@ -416,7 +416,7 @@ it:
         name: Nome
       document:
         title: Titolo
-        require_read: Debe leggere l'intero documento
+        require_read: Deve leggere l'intero documento
         read_only: Non può firmare
         state:
           created: "Nessuna firma"
