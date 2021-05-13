@@ -1,5 +1,6 @@
 <div data-controller="documents--tab" 
      data-action="click->documents--tab#switch"
-     data-documents--tab-id-value="<%= document.id %>">
+     data-documents--tab-id-value="<%= document.id %>"
+     data-documents--tab-signed-value="<%= "#{document.signed_by?(current_user || current_participant)}" %>">
   <%= render document %>
 </div>

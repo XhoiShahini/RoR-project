@@ -53,6 +53,11 @@ class Document < ApplicationRecord
     end
   end
 
+  def signed_by?(memberable)
+    signature = signatures.includes(:meeting_member).find_by(meeting_member: { memberable: memberable })
+    signature.signed?
+  end
+
   private
 
   def broadcast_to_meeting(type)

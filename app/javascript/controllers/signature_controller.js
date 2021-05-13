@@ -25,6 +25,7 @@ export default class extends Controller {
   }
 
   verifyOTP(event) {
+    event.stopPropagation()
     event.preventDefault()
     let form = event.target
     let formData = new FormData(form)
@@ -41,6 +42,7 @@ export default class extends Controller {
       .then(response => {
         this.modalTarget.innerHTML = response.querySelector("#new_signature").innerHTML
       })
+    return false
   }
 
   sign() {
