@@ -15,7 +15,7 @@
   </div>
 
   <div class="form-group">
-    <%= label_tag :company_id %>
+    <%= label_tag :company_id, t("activerecord.models.company") %>
     <%= select_tag(
       :company_id,
       options_from_collection_for_select(@companies, "id", "name"),
@@ -36,7 +36,7 @@
     <%= form.button class: "btn btn-primary" %>
 
     <% if form.object.persisted? %>
-      <%= link_to 'Delete', form.object, class: "btn btn-danger outline", method: :delete, data: { confirm: "Are you sure?" } %>
+      <%= link_to t("delete"), form.object, class: "btn btn-danger outline", method: :delete, data: { confirm: t("are_you_sure") } %>
     <% end %>
   </div>
 <% end %>

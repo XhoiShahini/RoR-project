@@ -211,6 +211,10 @@ en:
     right_nav:
       pricing: "Pricing"
       announcements: "What's New"
+    left_nav:
+      meetings: Meetings
+      companies: Companies
+      new_meeting: New Meeting
     scaffold:
       edit:
         title: "Edit %{model}"
@@ -346,6 +350,12 @@ en:
     empty_description: "We'll let you know when you have new notifications."
 
   activerecord:
+    models:
+      participant: Participant
+      user: User
+      meeting: Meeting
+      company: Company
+      document: Document
     attributes:
       api_token:
         last_used_at: "Last Used"
@@ -353,21 +363,42 @@ en:
       account:
         name_on_card: "Name on Card"
       meeting:
+        starts_at: Starts at
+        title: Title
         state:
           created: "Not Started"
           incomplete: "Started"
           completed: "Completed"
       document:
+        title: Title
+        require_read: Require read
+        read_only: Read only (No Signatures)
         state:
           created: "No Signatures"
           incomplete: "1+ Signatures"
           finalized: "Finalized"
       participant:
-        state:
-          invited: "Invited"
-          accepted: "Accepted Invitation"
-          verified: "Verified"
-          finalized: "Signed"
+        first_name: First Name
+        last_name: Last Name
+        email: Email
+        phone_number: Phone Number
+        state: Status
+        state/invited: "Invited"
+        state/accepted: "Accepted Invitation"
+        state/verified: "Verified"
+        state/finalized: "Signed"
+      user:
+        first_name: First Name
+        last_name: Last Name
+        email: Email
+        phone_number: Phone Number
+        time_zone: Time Zone
+      company:
+        name: Name
+      meeting_member:
+        must_sign: Must sign
+      account:
+        name: Name
     errors:
       models:
         account:

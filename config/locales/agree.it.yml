@@ -21,10 +21,6 @@ it:
     otp: "One-Time Password"
 
   documents:
-    state:
-      created: "Nessuna firma"
-      incomplete: "Firmato parzialmente"
-      finalized: "Completato"
     notice:
       cannot_be_modified: "Questo documento è stato firmato da almeno un partecipante e non può essere modificato"
       create: "Documento creato con successo"
@@ -35,6 +31,8 @@ it:
       cancel: "Annulla"
       delete: "Rimuovi"
       uploading: "Caricamento in corso..."
+    new:
+      new_document: "Nuovo Documento"
     form:
       submit: "Crea"
     controls:
@@ -47,18 +45,19 @@ it:
     otp_verified:
       title: "Verifica e firma"
       instructions: "Grazie per la verifica. Clicca sul bottone FIRMA per confermare la tua firma."
+      sign: Firmare
+    new_signature:
+      send_code: "Invia Codice"
     cannot_sign:
       title: "Non è ancora possibile firmare"
       cannot_sign: "Tutti i partecipanti devono essere verificati prima che si possa firmare.."
+    tabs:
+      new_document: "Nuovo Documento"
     
   meetings:
     errors:
       maximum_members: "ha un numero massimo di %{maximum} partecipanti"
       maximum_documents: "ha un numero massimo di %{maximum} documenti"
-    state:
-      created: "Non avviato"
-      incomplete: "Avviato"
-      completed: "Completato"
     notice:
       not_authorized: "Non sei autorizzato ad accedere alla riunione"
       cannot_be_modified: "La riunione è completata e non può essere modificata"
@@ -69,6 +68,12 @@ it:
       starts_at: "Data e ora di inizio"
       completed: "Completata"
       state: "Stato"
+      company: "Azienda"
+      account: "Account"
+      details: "Dettagli"
+      documents: "Documenti"
+      members: "Partecipanti"
+      join_meeting: "Entra nella riunione"
     index:
       title: "Titolo"
       account: "Account"
@@ -77,13 +82,25 @@ it:
       members: "Partecipanti"
       starts_or_completed_at: "Inizio/Fine"
       actions: "Azioni"
+      meetings: "Riunioni"
     new:
       title: "Nuova Riunione"
     edit:
       title: "Modifica Riunione"
+    form:
+      host_must_sign: "Gestore deve firmare"
+      company_instructions: "Le Aziende sono qui per aiutarti a organizzare le tue riunioni. Creane una facendo clic su Aziende nella barra di navigazione, quindi puoi aggiungerla a questa riunione. Potrai quindi cercare la tua riunione per Azienda"
     partials:
       member_heads:
         host: "Gestore"
+      search_form:
+        state: Stato
+        starts_at_gt: Inizia Dopo
+        starts_at_lt: Inizia Prima
+        company: "Azienda"
+        any: Qualunque
+      sign:
+        sign: "Firmare"
     room:
       pre_meeting: 
         title: "%{meeting} è pronto per iniziare!"
@@ -103,11 +120,6 @@ it:
 
   participants:
     submit: "Invita Partecipante"
-    state:
-      invited: "Invitato"
-      accepted: "Invito accettato"
-      verified: "Verificato"
-      finalized: "Firmato"
     notice:
       create: "Partecipante creato con successo"
       update: "Partecipante aggiornato con successo"
@@ -165,9 +177,18 @@ it:
       phone_number: "Telefono"
       status: "Stato"
       verify: "Verifica"
+      host: "Gestore"
+      edit: "Modificare"
+      copy_link: Copia il link
+      identification: Documento Identificativo
 
   companies:
     members: "Autorizzati"
+    meetings: "Riunioni"
+    form:
+      instructions: Le Aziende sono qui per aiutarti a organizzare le tue riunioni. Creane una qui, quindi puoi aggiungerla a questa riunione. Potrai quindi cercare la tua riunione per Azienda
+    index:
+      companies: "Aziende"
 
   participants_mailer:
     invite:

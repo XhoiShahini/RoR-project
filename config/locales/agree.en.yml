@@ -31,6 +31,8 @@ en:
       cancel: "Cancel"
       delete: "Delete"
       uploading: "Uploading..."
+    new:
+      new_document: "New Document"
     form:
       submit: "Create"
     controls:
@@ -43,9 +45,14 @@ en:
     otp_verified:
       title: "Verify and Sign"
       instructions: "Thank you for verifying. Click the SIGN button now to sign!"
+      sign: Sign
+    new_signature:
+      send_code: Send Code
     cannot_sign:
       title: "Cannot Sign Yet"
       cannot_sign: "The host must verify your identity before you can sign."
+    tabs:
+      new_document: New Document
     
   meetings:
     errors:
@@ -61,6 +68,12 @@ en:
       starts_at: "Start Time"
       completed: "Completed"
       state: "Status"
+      company: Company
+      account: Account
+      details: Details
+      documents: Documents
+      members: Members
+      join_meeting: Join Meeting
     index:
       title: "Title"
       account: "Account"
@@ -70,6 +83,7 @@ en:
       starts_or_completed_at: "Starts/Completed At"
       actions: "Actions"
       state: "Status"
+      meetings: Meetings
     new:
       title: "New Meeting"
     edit:
@@ -79,6 +93,14 @@ en:
     partials:
       member_heads:
         host: "Host"
+      search_form:
+        starts_at_gt: "Starts After"
+        starts_at_lt: "Starts Before"
+        state: State
+        company: Company
+        any: Any
+      sign:
+        sign: Sign
     room:
       pre_meeting: 
         title: "%{meeting} is ready to join!"
@@ -155,12 +177,18 @@ en:
       phone_number: "Phone"
       status: "Status"
       verify: "Verify"
+      host: Host
+      identification: Identification
+      edit: Edit
+      copy_link: Copy Link
 
   companies:
     members: "Members"
     meetings: "Meetings"
     form:
       instructions: "Companies are here to help you organize your meetings. Create one here, then add it to a meeting. You will then be able to search for your meeting by Company."
+    index:
+      companies: Companies
 
   participants_mailer:
     invite:

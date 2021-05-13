@@ -66,7 +66,7 @@ it:
   create_an_account_first: "Per favore crea prima un account"
   must_be_an_admin: "Devi essere amministratore per fare questo"
   are_you_sure: "Sei certo?"
-  delete: "Cancella"
+  delete: "Rimuovi"
   back: "Indietro"
   cancel: "Cancella"
   edit: "Scrivi"
@@ -239,6 +239,10 @@ it:
     right_nav:
       pricing: "Fatturazione"
       announcements: "Cosa c'è di nuovo"
+    left_nav:
+      meetings: "Riunioni"
+      companies: "Aziende"
+      new_meeting: "Nuovo Riunione"
     scaffold:
       edit:
         title: "Modifica %{model}"
@@ -373,12 +377,55 @@ it:
     empty_description: "Ti faremo sapere quando avrai nuove notifiche"
 
   activerecord:
+    models:
+      participant: Partecipante
+      user: Utente
+      meeting: Riunione
+      company: Azienda
+      document: Documente
     attributes:
       api_token:
         last_used_at: "Ultimo utilizzo"
         created_at: "Creato"
       account:
         name_on_card: "Nome sulla carta"
+      participant:
+        first_name: "Nome"
+        last_name: "Cognome"
+        email: "Email"
+        phone_number: "Telefono"
+        state: "Stato"
+        state/invited: "Invitato"
+        state/accepted: "Invito accettato"
+        state/verified: "Verificato"
+        state/finalized: "Firmato"
+      user:
+        first_name: "Nome"
+        last_name: "Cognome"
+        email: "Email"
+        phone_number: "Telefono"
+        time_zone: "Fuso orario"
+      meeting:
+        state:
+          created: "Non avviato"
+          incomplete: "Avviato"
+          completed: "Completato"
+        starts_at: Inizio
+        title: Titolo
+      company:
+        name: Nome
+      document:
+        title: Titolo
+        require_read: Debe leggere l'intero documento
+        read_only: Non può firmare
+        state:
+          created: "Nessuna firma"
+          incomplete: "Firmato parzialmente"
+          finalized: "Completato"
+      meeting_member:
+        must_sign: Deve firmare
+      account:
+        name: "Nome"
 
     errors:
       models:
