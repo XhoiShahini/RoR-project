@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static values = { id: String, signed: Boolean }
+  static values = { id: String, signed: Boolean, readonly: Boolean }
   switch() {
     console.log("switch")
     Promise.resolve().then(() => {
@@ -12,7 +12,8 @@ export default class extends Controller {
       const pdfController = this.application.getControllerForElementAndIdentifier(document.querySelector("#pdf-controller"), "documents--pdf")
       pdfController.idValue = this.idValue
       const signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector("#signature-controller"), "signature")
-      //signatureController.signedValue = this.signedValue
+      signatureController.signedValue = this.signedValue
+      signatureController.readonlyValue = this.readonlyValue
       signatureController.documentIdValue = this.idValue
     })
   }

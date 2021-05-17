@@ -160,7 +160,11 @@ export default class extends Controller {
           _self.pendingPage = null
         } else if (_self.currentPage == _self.pdf.numPages && !_self.documentRead) {
           _self.documentRead = true
-          fetch("/documents/" + this.idValue + "/mark_as_read")
+          fetch("/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/mark_as_read")
+            .then(() => {
+              const signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector("#signature-controller"), "signature")
+              signatureController.documentIdValueChanged()
+            })
         }
       })
     })
