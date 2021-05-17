@@ -161,6 +161,10 @@ export default class extends Controller {
         } else if (_self.currentPage == _self.pdf.numPages && !_self.documentRead) {
           _self.documentRead = true
           fetch("/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/mark_as_read")
+            .then(() => {
+              const signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector("#signature-controller"), "signature")
+              signatureController.documentIdValueChanged()
+            })
         }
       })
     })
