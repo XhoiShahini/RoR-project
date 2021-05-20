@@ -1,0 +1,18 @@
+<% content_for :body_attributes do %>
+  data-turbo="false"
+<% end %>
+<%= turbo_frame_tag "new_signature" do %>
+  <div class="card">
+    <p class="card-header"><%= t("signatures.otp.title") %></p>
+    <div class="flex justify-between">
+      <p class="card-paragraph">
+        <%= t("sms_verifications.invalid_code") %>
+      </p>
+      <div>
+        <button class="btn btn-primary" data-action="click->signature#reset">
+          <%= t("sms_verifications.try_again") %>
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>

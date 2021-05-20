@@ -27,6 +27,7 @@ Rails.application.routes.draw do
         get :cannot_sign
         get :otp
         get :otp_verified
+        get :otp_failed
         get :mark_as_read
         post :verify_otp
       end

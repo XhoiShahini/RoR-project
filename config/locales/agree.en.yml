@@ -160,6 +160,7 @@ en:
     template: "Agree.Live: Your code is %token"
     verify: "Verify"
     invalid_code: "The code you have provided is invalid, please try again."
+    try_again: Try again
     sms_disclaimer: "This will send an SMS to the phone number: %{phone_number}. Messaging and Data rates may apply."
     state:
       created: "Created"

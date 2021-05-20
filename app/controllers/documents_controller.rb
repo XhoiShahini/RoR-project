@@ -2,7 +2,7 @@ class DocumentsController < ApplicationController
   include MeetingsHelper
   before_action :set_meeting
   before_action :set_document, except: [:index, :tabs, :new, :create]
-  before_action :set_signature, only: [:new_signature, :sign, :otp, :verify_otp, :otp_verified, :mark_as_read]
+  before_action :set_signature, only: [:new_signature, :sign, :otp, :verify_otp, :otp_verified, :otp_failed, :mark_as_read]
   before_action :require_meeting_member!
   before_action :cannot_modify_signed!, only: [:edit, :update, :destroy]
   before_action :require_current_account_admin, only: [:new, :create, :edit, :update, :destroy]
@@ -100,12 +100,15 @@ class DocumentsController < ApplicationController
     if @signature.sms_verification.verified?
       redirect_to otp_verified_meeting_document_path(@meeting, @document)
     else
-      redirect_to meeting_room_path(@meeting), notice: @signature.sms_verification.error
+      redirect_to otp_failed_meeting_document_path(@meeting, @document), notice: @signature.sms_verification.error
     end
   end
 
   # GET /meetings/:meeting_id/documents/:id/otp_verified
   def otp_verified
+  end
+
+  def otp_failed
   end
 
   def mark_as_read

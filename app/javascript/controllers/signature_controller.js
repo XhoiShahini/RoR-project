@@ -28,6 +28,10 @@ export default class extends Controller {
     this._fetchAndReplace(otpUrl)
   }
 
+  reset() {
+    this.documentIdValueChanged()
+  }
+
   verifyOTP(event) {
     event.stopPropagation()
     event.preventDefault()

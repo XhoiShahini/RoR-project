@@ -161,6 +161,7 @@ it:
     verify: "Verifica"
     invalid_code: "Il codice inserito non è valido, si prega di riprovare."
     sms_disclaimer: "Questa azione invierà un codice di verifica via SMS al numero: %{phone_number}."
+    try_again: Riprova
     state:
       created: "Creato"
       sent: "Inviato"
