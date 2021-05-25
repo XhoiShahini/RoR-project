@@ -44,6 +44,10 @@ Rails.application.routes.draw do
       get :post_meeting
       post :perform_action
     end
+
+    member do
+      get :allow_signatures
+    end
   end
     
   # Jumpstart views

@@ -15,6 +15,16 @@ export default class extends Controller {
     this.subscription.unsubscribe()
   }
 
+  startSigning() {
+    let signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector("#signature-controller"), "signature")
+    signatureController.signaturesReady()
+  }
+
+  allParticipantsVerified() {
+    let signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector("#signature-controller"), "signature")
+    signatureController.allParticipantsVerified()
+  }
+
   _connected() {}
 
   _disconnected() {}
@@ -23,6 +33,12 @@ export default class extends Controller {
     switch (data.type) {
       case "start":
         //TODO: Don't let participants in before host
+        break;
+      case "start_signing":
+        this.startSigning()
+        break;
+      case "participants_verified":
+        this.allParticipantsVerified()
         break;
       case "end":
         window.location.reload()

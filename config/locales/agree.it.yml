@@ -102,6 +102,7 @@ it:
         any: Qualunque
       sign:
         sign: "Firmare"
+        must_verify_participants: "Tutti i partecipanti devono essere verificati prima che si possa firmare.."
     room:
       pre_meeting: 
         title: "%{meeting} è pronto per iniziare!"

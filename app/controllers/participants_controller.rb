@@ -55,6 +55,9 @@ class ParticipantsController < ApplicationController
   # GET /meetings/:meeting_id/participants/:id/verify
   def verify
     @participant.verify! verifier: current_user
+    if @meeting.all_participants_verified?
+      MeetingEventsChannel.broadcast_to @meeting, type: "participants_verified"
+    end
     render plain: ""
   end
 

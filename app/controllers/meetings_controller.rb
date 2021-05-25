@@ -58,6 +58,11 @@ class MeetingsController < ApplicationController
     end
   end
 
+  def allow_signatures
+    @meeting.allow_signatures!
+    MeetingEventsChannel.broadcast_to @meeting, type: "start_signing"
+  end
+
   # DELETE /meetings/:id
   def destroy
     @meeting.destroy

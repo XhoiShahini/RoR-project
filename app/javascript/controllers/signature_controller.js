@@ -2,9 +2,12 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
   static values = { documentId: String, meetingId: String, signed: Boolean, readonly: Boolean }
-  static targets = ["modal", "modalButton", "commit"]
+  static targets = ["modal", "modalButton", "commit", "startSigning"]
   
   connect() {
+    if(this.hasStartSigningTarget) {
+      this.modalButtonTarget.classList.add("hidden")
+    }
   }
 
   documentIdValueChanged() {
@@ -26,6 +29,24 @@ export default class extends Controller {
   sendOTP() {
     let otpUrl = "/meetings/" + this.meetingIdValue + "/documents/" + this.documentIdValue + "/otp"
     this._fetchAndReplace(otpUrl)
+  }
+
+  allowSignatures() {
+    let url = "/meetings/" + this.meetingIdValue + "/allow_signatures"
+    fetch(url)
+  }
+
+  signaturesReady() {
+    if(this.hasStartSigningTarget) {
+      this.startSigningTarget.classList.add("hidden")
+      this.modalButtonTarget.classList.remove("hidden")
+    }
+    this.reset()
+  }
+
+  allParticipantsVerified() {
+    this.startSigningTarget.disabled = false
+    this.tooltipTarget.disabled = true
   }
 
   reset() {

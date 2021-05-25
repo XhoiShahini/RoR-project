@@ -61,6 +61,18 @@ class Account < ApplicationRecord
     personal? && owner_id == user.id
   end
 
+  def used_meetings_count
+    meetings.where(state: [:signing, :completed]).where("starts_at >= ?", DateTime.current.beginning_of_month).count
+  end
+
+  def maximum_meetings
+    3
+  end
+
+  def meeting_usable?
+    used_meetings_count < maximum_meetings
+  end
+
   # Uncomment this to add generic trials (without a card or plan)
   #
   # before_create do

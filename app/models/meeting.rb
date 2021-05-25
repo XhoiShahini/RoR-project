@@ -51,18 +51,19 @@ class Meeting < ApplicationRecord
   aasm(column: :state, logger: Rails.logger, timestamps: true) do
     state :created, initial: true
     state :incomplete
+    state :signing
     state :completed
 
     event :start do
       transitions from: :created, to: :incomplete
     end
 
-    event :pause do
-      transitions from: :incomplete, to: :created
+    event :allow_signatures do
+      transitions from: :incomplete, to: :signing, after: :freeze_meeting, guard: :all_participants_verified?
     end
 
     event :complete do
-      transitions from: :incomplete, to: :completed, after: :complete_meeting
+      transitions from: :signing, to: :completed, after: :complete_meeting
     end
   end
 
@@ -78,10 +79,25 @@ class Meeting < ApplicationRecord
     !participants.find_by(state: [:invited, :accepted]).present?
   end
 
+  def unverified_participants
+    participants.where(state: [:invited, :accepted])
+  end
+
   private
 
   def broadcast_start
     MeetingEventsChannel.broadcast_to self, type: "start"
+  end
+
+  def freeze_meeting
+    participants.each do |participant|
+      participant.finalize!
+    end
+    documents.each do |document|
+      # Finalizes the document
+      document.sign!
+    end
+    MeetingEventsChannel.broadcast_to self, type: "start_signing"
   end
 
   def complete_meeting
