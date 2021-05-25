@@ -55,6 +55,13 @@
     }
   }
 
+  &.status-signing {
+    @apply bg-indigo-600;
+    &:hover {
+      @apply text-white bg-indigo-500 cursor-pointer;
+    }
+  }
+
   &.status-completed {
     @apply bg-tertiary-600;
     &:hover {

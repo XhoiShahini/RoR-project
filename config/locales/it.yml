@@ -409,6 +409,7 @@ it:
         state:
           created: "Non avviato"
           incomplete: "Avviato"
+          signing: Firmando
           completed: "Completato"
         starts_at: Inizio
         title: Titolo
