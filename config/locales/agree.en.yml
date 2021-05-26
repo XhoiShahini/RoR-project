@@ -59,6 +59,7 @@ en:
     errors:
       maximum_members: "can only have %{maximum} members"
       maximum_documents: "can only have %{maximum} documents"
+      too_many_meetings: "You have reached your cap of %{count} meetings. This cap resets at the beginning of every month."
     notice:
       not_authorized: "You are not authorized to view that meeting"
       cannot_be_modified: "This meeting has been completed and cannot be modified"

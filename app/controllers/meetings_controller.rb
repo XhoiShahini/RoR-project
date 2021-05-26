@@ -29,6 +29,7 @@ class MeetingsController < ApplicationController
     if @meeting.save && @meeting.meeting_members.create(meeting_member_params.merge({ memberable: current_user }))
       redirect_to @meeting, notice: t("meetings.notice.create")
     else
+      @companies = current_account.companies
       render :new, status: :unprocessable_entity
     end
   end

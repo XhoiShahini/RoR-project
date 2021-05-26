@@ -39,6 +39,7 @@ class Meeting < ApplicationRecord
   has_many :participants, through: :meeting_members, source: :memberable, source_type: "Participant"
   has_many :documents
   has_many :signatures, through: :documents
+  validate :meeting_credits_available, on: [:create, :update]
 
   before_create do |meeting|
     self.janus_secret = SecureRandom.hex(16)
@@ -84,6 +85,10 @@ class Meeting < ApplicationRecord
   end
 
   private
+
+  def meeting_credits_available
+    errors.add(:meeting, I18n.t("meetings.errors.too_many_meetings", count: account.maximum_meetings)) unless account.meeting_usable?
+  end
 
   def broadcast_start
     MeetingEventsChannel.broadcast_to self, type: "start"
