@@ -1,8 +1,12 @@
 module MeetingsHelper
   def require_meeting_member!
-    @meeting_member = @meeting.meeting_members.find_by(memberable: current_user || current_participant)
-    unless @meeting_member.present? || current_account_admin?
-      redirect_to meetings_path, alert: I18n.t("meetings.notice.not_authorized")
+    if memberable = current_user || current_participant
+      @meeting_member = @meeting.meeting_members.find_by(memberable: memberable)
+      unless @meeting_member.present? || (current_account.present? && current_account_admin?)
+        redirect_to meetings_path, alert: I18n.t("meetings.notice.not_authorized")
+      end
+    else
+      authenticate_user!
     end
   end
 
