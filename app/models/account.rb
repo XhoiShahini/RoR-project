@@ -66,7 +66,16 @@ class Account < ApplicationRecord
   end
 
   def maximum_meetings
-    3
+    case subscription.plan.name
+    when /entry/i
+      30
+    when /evo/i
+      70
+    when /pro/i
+      160
+    else
+      3
+    end
   end
 
   def meeting_usable?

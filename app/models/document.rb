@@ -104,7 +104,16 @@ class Document < ApplicationRecord
 
   def enforce_maximum_documents
     # STRIPE FOR LUCA
-    max_documents = 2
+    max_documents = case meeting.account.subscription.plan.name
+    when /entry/i
+      5
+    when /evo/i
+      5
+    when /pro/i
+      5
+    else
+      2
+    end
     if meeting.documents.count >= max_documents
       errors.add(:meeting, I18n.t("meetings.errors.maximum_documents", maximum: max_documents))
     end
