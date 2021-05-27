@@ -75,7 +75,7 @@ class Document < ApplicationRecord
   end
 
   def signing_complete?
-    !signatures.find_by(signed_at: nil).present?
+    !signatures.includes(:meeting_member).find_by(signed_at: nil, meeting_member: { must_sign: true}).present?
   end
 
   def generate_signatures
