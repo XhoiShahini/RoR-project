@@ -69,7 +69,8 @@ it:
   delete: "Rimuovi"
   back: "Indietro"
   cancel: "Cancella"
-  edit: "Scrivi"
+  edit: Modifica
+  download: Download
 
   account_invitations_mailer:
     invite:
@@ -417,7 +418,7 @@ it:
       document:
         title: Titolo
         require_read: Deve leggere l'intero documento
-        read_only: Non può firmare
+        read_only: File che non è oggetto di firma
         state:
           created: "Nessuna firma"
           incomplete: "Firmato parzialmente"

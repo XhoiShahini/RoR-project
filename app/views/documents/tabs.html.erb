@@ -4,7 +4,7 @@
     <% @documents.each do |document| %>
       <%= render "documents/tab", document: document %>
     <% end %>
-    <% if @host %>
+    <% if @host && (@meeting.created? || @meeting.incomplete?) %>
       <div data-controller="modal" class="card flex justify-center">
         <button class="btn btn-secondary" data-action="click->modal#open">
           <%= fa_icon "plus", weight: "fas", class: "mr-2" %>
