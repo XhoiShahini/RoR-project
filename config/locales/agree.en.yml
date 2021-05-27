@@ -143,7 +143,7 @@ en:
         media_html: "​I hereby declare that I have read the %{link} and express my consent to the use of images, video and audio shooting"
         media_processing: "media usage information"
         signature_html: "I hereby declare that I have read the %{link} regarding the provision of the advanced electronic signature"
-        signature_processing: "information"
+        signature_processing: "Signature Processing Information"
         paragraph3: "Once You’ve read and approved the previous disclaimer, click the SEND CODE button to receive the OTP code via SMS on your mobile phone"
         send_code: "Send Code"
       otp:

@@ -1,7 +1,83 @@
 <div class="container mx-auto mt-8">
-  <h1 class="mb-4"><%= t(".electronic_signatures") %></h1>
+  <h1 class="mb-4"><%= t("participants.sign_in.show.signature_processing") %></h1>
 
+  <%- if I18n.locale == :it %>
+  <p class="mb-4 text-xl text-gray-700 leading-normal"><pre style="white-space: pre-wrap">
+    IL SERVIZIO DI FIRMA ELETTRONICA AVANZATA EROGATO DA LAWING S.r.l.
+
+NOTA INFORMATIVA ED ACCETTAZIONE DEL SERVIZIO E DELLE SUE MODALITA’ DI EROGAZIONE
+
+1.	Informazioni Generali
+1.1	LAWING S.r.l., con sede in Milano, Piazza San Marco n. 1, iscritta al Registro Imprese di Milano, C.F. e P.IVA 10628920968, in persona del legale rappresentante pro tempore, (di seguito “Lawing”), è proprietaria della piattaforma on line denominata AGREE.LIVE (di seguito, “Piattaforma” e/o “AGREE.LIVE”), che consente di effettuare video-meeting on line e di sottoscrivere elettronicamente documenti informatici.
+1.2	Il servizio fornito attraverso AGREE.LIVE ha ad oggetto la messa a disposizione di una “stanza virtuale”, cd. Video-room, all’interno della quale coloro che accedono alla Piattaforma (di seguito, “Utenti”) si incontrano virtualmente per sottoscrivere documenti contrattuali e più in generale accordi, mediante l’utilizzo di una firma elettronica, come disciplinata dagli artt. 55 e seguenti del DPCM n. 82 del 22 febbraio 2013 (Regole tecniche in materia di generazione, apposizione e verifica delle firme elettroniche avanzate, qualificate e digitali) e comunque conforme ai requisiti previsti dall’art. 20 del D. Lgs n. 82 del 2005 (Codice dell’Amministrazione Digitale), parimenti erogata da LAWING attraverso la Piattaforma (di seguito, “Servizio”);
+1.3	Gli Utenti della piattaforma AGREE.LIVE, vale a dire colui che acquista l’utilizzo della piattaforma mediante licenza (di seguito, “Licenziatario”) e coloro che vengono invitati dal medesimo per la partecipazione ai processi di apposizione della firma elettronica (di seguito, “Ospiti”) sono tenuti a seguire i medesimi adempimenti per portare correttamente a termine i processi di firma dei documenti informatici.
+1.4	La sottoscrizione dei documenti avviene mediante l’utilizzo di un dispositivo di firma elettronica avanzata impostata sulla base dei requisiti giuridici e informatici previsti dal Decreto Legislativo n. 82/2005 (Codice dell’Amministrazione Digitale) e dal DPCM del 22.2.13 (Regole tecniche in materia di generazione, apposizione e verifica delle firme elettroniche avanzate, qualificate e digitali).
+1.5	Nel presente ambito, Lawing S.r.l. – per il tramite dalla piattaforma web AGREE.LIVE – opera come soggetto realizzatore e fornitore della soluzione di firma elettronica avanzata, così come previsto dall’art. 55, comma 2, lett. b, DPCM 22.2.13. Il processo per l’apposizione della firma elettronica a cui prendono parte gli Utenti non implica alcun rapporto contrattuale con Lawing S.r.l. Ciascun Utente è quindi tenuto ad accertare di volta in volta l’identità degli altri partecipanti ai video-meeting ed ai relativi processi di firma, in modo tale da conoscere esattamente ciascun firmatario. 
+1.6	La piattaforma AGREE.LIVE consente a ciascun Utente di verificare ed attestare l’identità degli altri partecipanti, sia per il tramite del riconoscimento de visu svolto nel corso dei video-meeting, sia mediante il controllo dei documenti di identità mostrabili e verificabili on line direttamente sulla piattaforma.
+1.7	Le soluzioni tecnologiche di AGREE.LIVE fanno riferimento ai requisiti elencati dall’art. 56, comma 2, lettere da a) ad h), previsti per la firma elettronica avanzata (di seguito, “FEA”) realizzata tramite One Time Password (di seguito, “OTP”), vale a dire un codice random trasmesso al telefono cellulare di ciascun Utente. La OTP generata dalla piattaforma AGREE.LIVE è univocamente associata alla transazione di firma e così pure all’Utente sul cui telefono cellulare è stata recapitata mediante SMS.
+1.8	Il processo di firma elettronica svolto su AGREE.LIVE tiene anche conto del dettato normativo previsto dall’art. 20, comma 1bis, DPCM 22.2.13, relativo al “documento informatico … formato, previa identificazione informatica del suo autore, attraverso un processo avente i requisiti fissati dall’Agid ai sensi dell’art. 71 con modalità tali da garantire la sicurezza, integrità e immodificabilità del documento e, in maniera manifesta ed inequivoca, la sua riconducibilità all’autore” con il proposito di soddisfare comunque il requisito della forma scritta e l’efficacia prevista dall’art. 2702 c.c.
+
+2.	Adesione ai servizi di firma elettronica offerti su AGREE.LIVE
+2.1	La digitazione dei pulsanti di accettazione posti in calce alla presente informativa esprime e formalizza il consenso dell’Utente all’utilizzo delle soluzioni di firma elettronica avanzata, offerte da AGREE.LIVE.
+La presente informativa si considera così compresa ed accettata sin dal momento stesso in cui l’Utente abbia premuto i pulsanti digitali per l’accettazione dell’uso dei dispositivi di firma elettronica implementati da AGREE.LIVE.
+2.2	Con la compilazione telematica della registrazione e la digitazione del pulsante di accettazione, il contenuto della presente informativa si considera letto e compreso in ogni suo punto dall’Utente e di conseguenza irrevocabile per lo stesso, ai sensi dell’art. 1329 c.c.
+2.3	La copia del documento che attesta l’adesione, sarà conservata, secondo quanto previsto dalla vigente normativa. L’Utente potrà chiedere, in ogni momento e gratuitamente, la copia degli accordi mediante richiesta scritta.
+Resta inteso che, in qualunque momento, l’Utente può revocare il consenso all'utilizzo del servizio.
+
+3.	Caratteristiche della soluzione di Firma Elettronica Avanzata di AGREE.LIVE
+3.1	Il processo di firma elettronica avanzata predisposto da AGREE.LIVE si propone di corrispondere a quanto previsto dall’art. 56, comma 1, DPCM 22.2.13, nelle seguenti modalità:
+a)	l’identificazione del firmatario del documento:
+	a.1	ciascun Utente viene identificato con la registrazione di nome, cognome, utenza telefonica mobile ed indirizzo mail, che sono i dati personali indispensabili per l’accesso alla piattaforma AGREE.LIVE;
+a.2	dopo aver effettuato l’accesso sulla area riservata della piattaforma, ciascun Utente è tenuto ad uplodare il proprio documento di identità;
+a.3	lo stesso documento di identità viene poi messo a disposizione degli altri Utenti, che possono così dar luogo ad un riconoscimento de visu;
+a.4	la apposizione della firma elettronica avanzata avviene mediante OTP recapitata al numero della utenza telefonica appartenente a ciascun Utente;
+a.5	con la apposizione della firma elettronica avanzata, la piattaforma rileva anche l’indirizzo IP di ciascun Utente.
+b)	la connessione univoca della firma al firmatario:
+	la Firma Elettronica Avanzata apposta dall’Utente viene associata in maniera sicura e univoca al medesimo per il tramite di un processo per il quale la One Time Password, necessaria alla apposizione della firma elettronica, è conosciuta in via esclusiva in quanto ricevuta sul numero di utenza del dispositivo mobile da lui stesso indicato. Inoltre, viene anche garantita la conservazione digitale del documento informatico oggetto della sottoscrizione.
+c)	il controllo esclusivo del firmatario del sistema di generazione della firma:
+il solo modo per apporre la firma elettronica avanzata su AGREE.LIVE è dato dalla partecipazione al video-meeting, durante il quale gli Utenti effettuano il reciproco riconoscimento, unitamente all’utilizzo della OTP associata al dispositivo mobile in uso.
+d)	la possibilità di verificare che il documento informatico sottoscritto non abbia subito modifiche dopo l’apposizione della firma:
+la marca temporale applicata al file oggetto di Firma Elettronica Avanzata cristallizza incontrovertibilmente il momento di avvenuta sottoscrizione dell’accordo. Il controllo della corrispondenza tra un’impronta ricalcolata e quella “sigillata” all’interno delle firme consente in ogni momento di verificare che il documento informatico sottoscritto non abbia subito modifiche dopo l’apposizione della firma.
+e)	la possibilità per il firmatario di ottenere evidenza di quanto sottoscritto:
+ciascun Utente firmatario può prendere visione del documento prima della sua sottoscrizione e riceverne copia richiedendolo a Lawing S.r.l.
+f)	l’individuazione del soggetto che eroga la presente soluzione di firma elettronica avanzata:
+Lawing S.r.l. – Piazza San Marco n. 1 – 20121 Milano
+g)	l’assenza di qualunque elemento nell’oggetto della sottoscrizione atto a modificarne gli atti, fatti o dati nello stesso rappresentati:
+la soluzione di FEA scelta da Lawing S.r.l. utilizza solo documenti informatici in formati atti a garantire l’assenza, nell’oggetto della sottoscrizione, di qualunque elemento idoneo a modificare gli atti, i fatti e i dati in essi rappresentati.
+h)	la connessione univoca della firma al documento sottoscritto:
+	la marca temporale applicata al documento originale firmato con FEA certifica che la firma è stata utilizzata unicamente per tale documento.
+
+4.	Modalità di funzionamento del servizio di Firma Elettronica Avanzata
+4.1	Il servizio di FEA adottato da Lawing S.r.l. su AGREE.LIVE consente le seguenti modalità di utilizzo.
+	Licenziatario: controllo dei dati personali dell’Ospite dal medesimo invitato; verifica della identità dell’Ospite mediante riconoscimento de visu e confronto durante il video-meeting dell’ID caricato dal medesimo; lettura ed eventuale modifica del contenuto contrattuale; apposizione della firma elettronica avanzata mediante OTP recata sul proprio telefono cellulare; eventuale annullamento della operazione mediante click sul tasto Abbandona o Concludi Meeting.
+	Ospite:	 controllo dei dati personali del Licenziatario da cui ha ricevuto l’invito; verifica della identità del Licenziatario mediante riconoscimento de visu e confronto durante il video-meeting dell’ID caricato dal medesimo; lettura ed eventuale modifica del contenuto contrattuale; apposizione della firma elettronica avanzata mediante OTP recata sul proprio telefono cellulare; eventuale annullamento della operazione mediante click sul tasto Abbandona o Concludi Meeting.
+4.2	Al termine delle operazioni di firma il documento assume caratteristiche tecniche ed informatiche che ne garantiscono integrità e non modificabilità. I documenti firmati saranno disponibili e scaricabili nell’area privata del portale. In ogni caso, potrà essere richiesta a Lawing S.r.l. una copia cartacea della documentazione già sottoscritta con la firma elettronica avanzata al seguente indirizzo mail: info@agree.live.
+
+5.	Caratteristiche delle tecnologie utilizzate
+5.1	AGREE.LIVE è progettato utilizzando i più moderni standard dell'informatica, che consente la comunicazione video ed audio, la firma digitale e la conservazione dei documenti firmati.
+La piattaforma è utilizzabile in modalità web application e non necessita di alcuna installazione.
+Il modulo video utilizza una SFU con standard DTLS e SRTP per la comunicazione sicura, con la possibilità di utilizzare la crittografia end-to-end per la massima sicurezza.
+La piattaforma di firma eroga il servizio di Firma Elettronica Certificata con OTP, ai sensi di legge, garantendo i requisiti di riconoscimento, immutabilità e conservazione secondo lo standard ISO 19005:4-2020.
+Tutti i dati sono conservati secondo la modalità "encryption at rest" per impedire ogni accesso non autorizzato.
+
+6.	Modalità di trattamento dei dati
+6.1	I dati personali degli Utenti, sono trattati ai sensi del General Data Protection Regulation 679/2016 (GDPR). Le categorie di dati trattati sono: quelli della documentazione di riferimento del contratto che si intende associare al servizio firma elettronica (avanzata e non), quelli trattati in fase di adesione alle presenti condizioni incluso il numero dell’utenza telefonica mobile associato ai predetti contratti. Sotto il profilo della sicurezza dei dati trattati, Lawing S.r.l. garantisce l’adozione di misure tecniche e organizzative adeguate per garantire un livello di sicurezza adeguato al rischio ai sensi dell’art. 32 GDPR. Lawing S.r.l. garantisce, inoltre, che i dati saranno conservati in un database dedicato contro il rischio di eventuali operazioni indebite sui dati personali degli interessati Lawing S.r.l.
+Per maggiori informazioni su modalità e finalità del trattamento dei dati può consultare l’informativa unita al presente documento.
+
+7.	Limitazioni di responsabilità
+7.1	Lawing S.r.l. non sarà mai responsabile in tutti i casi in cui il mancato o non corretto adempimento sia dovuto a cause ad essa non ascrivibili quali, a titolo meramente esemplificativo: caso fortuito, forza maggiore, calamità naturali, eventi bellici, furti del dispositivo mobile, interventi dell'autorità.
+7.2	Lawing S.r.l. non assume alcuna responsabilità in merito ai dati ed ai file che sono adoperati ed inseriti liberamente sulla piattaforma AGREE.LIVE dagli Utenti. I modelli, i contenuti ed il software di AGREE.LIVE sono stati realizzati utilizzando le discipline normative e contrattuali in vigore alla data del 31.12.2020. Lawing S.r.l. non assume alcuna responsabilità in merito ai risultati ottenuti dalle immissioni di dati da parte degli Utenti, poiché soggetti ad una loro valutazione personale.
+7.2	Allo stesso modo, Lawing S.r.l. non assume alcuna responsabilità per danni di qualunque tipo, ivi inclusi i danni connessi ad un temporaneo malfunzionamento del software ovvero dei relativi sistemi informatici ed elettrici oppure disservizi sulle linee telefoniche.
+7.3	Lawing S.r.l. non assume alcuna obbligazione né presta alcuna garanzia che non sia espressamente prevista nel presente contratto. Essa non assume alcuna responsabilità per i danni di qualsivoglia natura subiti dagli Utenti o dai loro aventi causa, in relazione al presente contratto o alle prestazioni rese da Lawing S.r.l., compresi i danni che fossero derivati dall’uso che l’Utente abbia fatto dei prodotti e/o servizi forniti per il tramite del software e del gestionale di AGREE.LIVE.
+
+8.	Informazioni riguardanti la copertura assicurativa
+8.1	Lawing S.r.l. ha stipulato in ottemperanza alle previsioni legislative contenute nel DPCM 22.2.13, art. 57, comma 2, una polizza assicurativa i cui estremi sono riportati internamente al sito web www.agree.live.
+    </pre></p>
+  <% end %>
+
+  <%- if I18n.locale == :en %>
   <p class="mb-4 text-xl text-gray-700 leading-normal">
-    This application uses Advanced Electronic Signatures. By using this application, you are using Advanced Electroic Signatures.
+    Dear user, the legislation in question currently takes into account the requirements of Italian legislation for transactions concluded on Italian territory or in any case by natural or legal persons subject to Italian and European regulations.
   </p>
+  <% end %>
 </div>
