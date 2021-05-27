@@ -66,7 +66,7 @@ class Account < ApplicationRecord
   end
 
   def maximum_meetings
-    case subscription.plan.name
+    case subscription&.plan&.name
     when /entry/i
       30
     when /evo/i

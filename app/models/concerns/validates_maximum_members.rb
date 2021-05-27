@@ -7,7 +7,7 @@ module ValidatesMaximumMembers
 
   def enforce_maximum_members
     # STRIPE FOR LUCA
-    max_members = case meeting.account.subscription.plan.name
+    max_members = case meeting.account.subscription&.plan&.name
     when /entry/i
       5
     when /evo/i

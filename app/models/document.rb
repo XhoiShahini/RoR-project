@@ -104,7 +104,7 @@ class Document < ApplicationRecord
 
   def enforce_maximum_documents
     # STRIPE FOR LUCA
-    max_documents = case meeting.account.subscription.plan.name
+    max_documents = case meeting.account.subscription&.plan&.name
     when /entry/i
       5
     when /evo/i

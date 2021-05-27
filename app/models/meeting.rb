@@ -39,7 +39,7 @@ class Meeting < ApplicationRecord
   has_many :participants, through: :meeting_members, source: :memberable, source_type: "Participant"
   has_many :documents
   has_many :signatures, through: :documents
-  validate :meeting_credits_available, on: [:create, :update]
+  validate :meeting_modifiable, on: [:update]
 
   before_create do |meeting|
     self.janus_secret = SecureRandom.hex(16)
@@ -60,7 +60,7 @@ class Meeting < ApplicationRecord
     end
 
     event :allow_signatures do
-      transitions from: :incomplete, to: :signing, after: :freeze_meeting, guard: :all_participants_verified?
+      transitions from: :incomplete, to: :signing, after: :freeze_meeting, guards: [:all_participants_verified?, :meeting_credits_available?]
     end
 
     event :complete do
@@ -84,10 +84,14 @@ class Meeting < ApplicationRecord
     participants.where(state: [:invited, :accepted])
   end
 
+  def meeting_credits_available?
+    account.meeting_usable?
+  end
+
   private
 
-  def meeting_credits_available
-    errors.add(:meeting, I18n.t("meetings.errors.too_many_meetings", count: account.maximum_meetings)) unless account.meeting_usable?
+  def meeting_modifiable
+    errors.add(:meeting, I18n.t("meetings.notice.cannot_be_modified")) unless created? || incomplete? || state_changed?
   end
 
   def broadcast_start
