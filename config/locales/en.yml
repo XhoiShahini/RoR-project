@@ -43,6 +43,7 @@ en:
   back: "Back"
   cancel: "Cancel"
   edit: "Edit"
+  download: Download
 
   account_invitations_mailer:
     invite:

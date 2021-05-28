@@ -70,7 +70,8 @@ it:
   delete: "Rimuovi"
   back: "Indietro"
   cancel: "Cancella"
-  edit: "Scrivi"
+  edit: Modifica
+  download: Download
 
   account_invitations_mailer:
     invite:
