@@ -33,6 +33,7 @@
 
 it:
   hello: "Hello world"
+  chrome: "Video room ottimizzata per Google Chrome."
 
   time:
     formats:
@@ -242,7 +243,7 @@ it:
     left_nav:
       meetings: "Riunioni"
       companies: "Aziende"
-      new_meeting: "Nuovo Riunione"
+      new_meeting: "Nuova Riunione"
     scaffold:
       edit:
         title: "Modifica %{model}"
@@ -416,14 +417,14 @@ it:
         name: Nome
       document:
         title: Titolo
-        require_read: Deve leggere l'intero documento
-        read_only: Non può firmare
+        require_read: "È richiesta intera lettura del documento"
+        read_only: Allegato (firma non richiesta)
         state:
           created: "Nessuna firma"
           incomplete: "Firmato parzialmente"
           finalized: "Completato"
       meeting_member:
-        must_sign: Deve firmare
+        must_sign: Partecipante firmatario
       account:
         name: "Nome"
 

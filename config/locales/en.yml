@@ -33,6 +33,7 @@
 
 en:
   hello: "Hello world"
+  chrome: "The current version is optimized for Google Chrome."
 
   something_went_wrong: "Something went wrong"
   create_an_account_first: "Please create an account first."

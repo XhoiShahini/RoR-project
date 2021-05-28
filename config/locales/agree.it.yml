@@ -51,7 +51,7 @@ it:
     cannot_sign:
       title: "Non è ancora possibile firmare"
       not_yet_verified: "Tutti i partecipanti devono essere verificati prima che si possa firmare.."
-      require_read: "Deve leggere l'intero documento"
+      require_read: "È richiesta intera lettura del documento"
     tabs:
       new_document: "Nuovo Documento"
     
@@ -89,7 +89,7 @@ it:
     edit:
       title: "Modifica Riunione"
     form:
-      host_must_sign: "Gestore deve firmare"
+      host_must_sign: "L'amministratore fa parte dei firmatari?"
       company_instructions: "Le Aziende sono qui per aiutarti a organizzare le tue riunioni. Creane una facendo clic su Aziende nella barra di navigazione, quindi puoi aggiungerla a questa riunione. Potrai quindi cercare la tua riunione per Azienda"
     partials:
       member_heads:
@@ -101,7 +101,7 @@ it:
         company: "Azienda"
         any: Qualunque
       sign:
-        sign: "Firmare"
+        sign: "Firma elettronica"
     room:
       pre_meeting: 
         title: "%{meeting} è pronto per iniziare!"
