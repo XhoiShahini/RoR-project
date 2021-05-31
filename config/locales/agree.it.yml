@@ -2,6 +2,12 @@
 it:
   welcome: "Benvenuto, %{user}."
 
+  agreements:
+    terms: Termini e condizioni di utilizzo
+    privacy: Consenso alla raccolta ed utilizzo di audio, video ed immagini
+    signature: Nota informativa ed accettazione del servizio e delle modalità di erogazione della Firma Elettronica Avanzata
+    agree_html: "Ho letto e accetto %{link}"
+
   dashboard:
     show:
       meetings: "Riunioni"
