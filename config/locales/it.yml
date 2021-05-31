@@ -72,6 +72,8 @@ it:
   cancel: "Cancella"
   edit: Modifica
   download: Download
+  loading: Caricamento in corso
+  confirm: Confermare
 
   account_invitations_mailer:
     invite:
@@ -361,6 +363,7 @@ it:
       skip: "Salta"
       confirm_skip: "Sei sicuro? Caricare il tuo ID rende più facile per gli altri confermare la tua identità."
       delete: "Elimina"
+      select_file: Seleziona il file
 
   layouts:
     mailer:

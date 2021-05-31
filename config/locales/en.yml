@@ -44,6 +44,8 @@ en:
   cancel: "Cancel"
   edit: "Edit"
   download: Download
+  loading: Loading
+  confirm: Confirm
 
   account_invitations_mailer:
     invite:
@@ -334,6 +336,7 @@ en:
       confirm_skip: "Are you sure? Uploading your ID makes it easier for others to confirm your identity."
       delete: "Delete"
       confirm_delete: "Are you sure? Your ID file will be deleted."
+      select_file: Select file
 
   layouts:
     mailer:

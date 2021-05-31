@@ -117,6 +117,9 @@ it:
         join_meeting: "Entra nella riunione"
       show:
         meetings: "Riunioni"
+        documents: "Documenti"
+        members: "Partecipanti"
+        complete_meeting: Completare la riunione
 
 
   participants:
