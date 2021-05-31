@@ -24,6 +24,7 @@
 require 'aasm'
 require 'prawn'
 class Document < ApplicationRecord
+  has_paper_trail
   include AASM
   belongs_to :meeting
   belongs_to :created_by, class_name: "User"

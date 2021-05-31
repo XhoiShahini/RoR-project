@@ -17,6 +17,7 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class Company < ApplicationRecord
+  has_paper_trail
   acts_as_tenant :account
   has_many :meeting_members
 

@@ -92,6 +92,7 @@ gem "ruby-oembed", "~> 0.14.0", require: "oembed"
 gem "omniauth", "~> 1.9", ">= 1.9.1"
 gem "strong_migrations", "~> 0.7.6"
 gem "whenever", require: false
+gem "paper_trail"
 
 # Jumpstart manages a few gems for us, so install them from the extra Gemfile
 if File.exist?("config/jumpstart/Gemfile")
