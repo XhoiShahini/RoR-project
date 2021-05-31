@@ -60,6 +60,7 @@ en:
       require_read: You must read the whole document before signing.
     tabs:
       new_document: New Document
+    placeholder: Select a document from the left or create a new one
     
   meetings:
     errors:

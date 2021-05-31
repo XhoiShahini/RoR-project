@@ -45,7 +45,7 @@
       <div class="col-span-7 bg-white rounded shadow-md">
         <div data-controller="documents--pdf" data-scale="1.25" id="pdf-controller" data-meeting-id="<%= @meeting.id %>">
           <div id="pdf-container" class="max-h-128 overflow-y-scroll overflow-auto">
-            <div data-documents--pdf-target="progress" class="mx-auto py-10" style="height: 550px">
+            <div data-documents--pdf-target="progress" class="mx-auto p-10 hidden" style="height: 550px">
               <p class="text-lg">
                 <%= t("loading") %>...
               </p>
@@ -54,6 +54,9 @@
                   <div data-documents--pdf-target="bar" class="h-full bg-primary-500 relative w-0"></div>
               </div>
             </div>
+            <p data-documents--pdf-target="placeholder" class="mx-auto p-10 text-gray-700">
+              <%= t("documents.placeholder") %>
+            </p>
             <canvas data-documents--pdf-target="canvas" class="hidden"></canvas>
           </div>
           <%= render "meetings/partials/document_controls" %>

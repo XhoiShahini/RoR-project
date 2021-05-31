@@ -60,6 +60,7 @@ it:
       require_read: "È richiesta intera lettura del documento"
     tabs:
       new_document: "Nuovo Documento"
+    placeholder: Seleziona un documento da sinistra o creane uno nuovo
     
   meetings:
     errors:
