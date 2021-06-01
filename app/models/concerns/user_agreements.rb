@@ -9,8 +9,12 @@ module UserAgreements
     attribute :privacy_policy
     validates :privacy_policy, presence: true, acceptance: true, on: [:create, :invitation_accepted]
 
+    attribute :signature_agreement
+    validates :signature_agreement, presence: true, acceptance: true, on: [:create, :invitation_accepted]
+
     after_validation :accept_terms, on: [:create, :invitation_accepted]
     after_validation :accept_privacy, on: [:create, :invitation_accepted]
+    after_validation :accept_signature_agreement, on: [:create, :invitation_accepted]
   end
 
   def accept_terms
@@ -19,5 +23,9 @@ module UserAgreements
 
   def accept_privacy
     self.accepted_privacy_at = Time.zone.now
+  end
+
+  def accept_signature_agreement
+    self.accepted_signature_agreement_at = Time.zone.now
   end
 end

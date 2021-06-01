@@ -2,6 +2,12 @@
 it:
   welcome: "Benvenuto, %{user}."
 
+  agreements:
+    terms: Termini e condizioni di utilizzo
+    privacy: Consenso alla raccolta ed utilizzo di audio, video ed immagini
+    signature: Nota informativa ed accettazione del servizio e delle modalità di erogazione della Firma Elettronica Avanzata
+    agree_html: "Ho letto e accetto %{link}"
+
   dashboard:
     show:
       meetings: "Riunioni"
@@ -54,6 +60,7 @@ it:
       require_read: "È richiesta intera lettura del documento"
     tabs:
       new_document: "Nuovo Documento"
+    placeholder: Seleziona un documento da sinistra o creane uno nuovo
     
   meetings:
     errors:
@@ -117,6 +124,9 @@ it:
         join_meeting: "Entra nella riunione"
       show:
         meetings: "Riunioni"
+        documents: "Documenti"
+        members: "Partecipanti"
+        complete_meeting: Completare la riunione
 
 
   participants:

@@ -2,7 +2,7 @@ import { Controller } from "stimulus"
 import consumer from "channels/consumer"
 
 export default class extends Controller {
-  static targets = ["canvas", "pageNum", "pageCount", "progress", "bar"]
+  static targets = ["canvas", "pageNum", "pageCount", "progress", "bar", "placeholder", "controls"]
   static values = { id: String, meetingId: String }
 
   connect() {
@@ -116,7 +116,9 @@ export default class extends Controller {
   _initPdf() {
     if (this.idValue === undefined) { return }
     this.progressTarget.classList.remove("hidden")
+    this.placeholderTarget.classList.add("hidden")
     this.canvasTarget.classList.add("hidden")
+    this.controlsTarget.classList.add("hidden")
     var _self = this
     const url = "/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/pdf" 
     var loadingTask = this.pdfjsLib.getDocument(url)
@@ -124,9 +126,16 @@ export default class extends Controller {
       var percentLoaded = progressData.loaded * 100 / progressData.total
       this.barTarget.style.width = percentLoaded + "%"
     }
+    loadingTask.onFailure = () => {
+      this.placeholderTarget.classList.remove("hidden")
+      this.progressTarget.classList.add("hidden")
+      this.canvasTarget.classList.add("hidden")
+      this._initTabs()
+    }
     loadingTask.promise.then(pdfDoc => {
       this.progressTarget.classList.add("hidden")
       this.canvasTarget.classList.remove("hidden")
+      this.controlsTarget.classList.remove("hidden")
       this.barTarget.style.width = "0%"
       _self.pdf = pdfDoc
       if (_self.hasPageCountTarget) {

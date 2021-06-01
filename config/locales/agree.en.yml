@@ -2,6 +2,12 @@
 en:
   welcome: "Welcome, %{user}."
 
+  agreements:
+    terms: terms of use
+    privacy: privacy policy
+    signature: signature agreement
+    agree_html: "I have read and agree to the %{link}"
+
   dashboard:
     show:
       meetings: "Meetings"
@@ -54,6 +60,7 @@ en:
       require_read: You must read the whole document before signing.
     tabs:
       new_document: New Document
+    placeholder: Select a document from the left or create a new one
     
   meetings:
     errors:
