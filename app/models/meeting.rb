@@ -29,6 +29,7 @@ require 'aasm'
 require 'securerandom'
 
 class Meeting < ApplicationRecord
+  has_paper_trail
   include AASM
   acts_as_tenant :account
   belongs_to :host, class_name: "User"

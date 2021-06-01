@@ -26,6 +26,7 @@
 #  fk_rails_...  (meeting_id => meetings.id)
 #
 class MeetingMember < ApplicationRecord
+  has_paper_trail
   belongs_to :meeting
   belongs_to :memberable, polymorphic: true
   belongs_to :company, optional: true
