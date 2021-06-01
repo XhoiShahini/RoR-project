@@ -130,6 +130,7 @@ export default class extends Controller {
       this.placeholderTarget.classList.remove("hidden")
       this.progressTarget.classList.add("hidden")
       this.canvasTarget.classList.add("hidden")
+      this._initTabs()
     }
     loadingTask.promise.then(pdfDoc => {
       this.progressTarget.classList.add("hidden")
