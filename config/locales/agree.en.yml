@@ -25,6 +25,7 @@ en:
     signed_at: "Signed At"
     ip: "IP Address"
     otp: "One-Time Password"
+    watermark: "Signed by %{signed_by}, on %{signed_at}"
 
   documents:
     notice:
