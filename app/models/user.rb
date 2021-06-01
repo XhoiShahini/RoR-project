@@ -43,6 +43,7 @@
 #
 
 class User < ApplicationRecord
+  has_paper_trail
   include ActionText::Attachable
 
   # Include default devise modules. Others available are:

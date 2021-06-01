@@ -24,6 +24,7 @@
 #  fk_rails_...  (meeting_member_id => meeting_members.id)
 #
 class Signature < ApplicationRecord
+  has_paper_trail
   belongs_to :document
   belongs_to :meeting_member
 
