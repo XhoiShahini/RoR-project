@@ -58,6 +58,12 @@ class ParticipantsController < ApplicationController
     render plain: ""
   end
 
+  def resend_invite
+    @participant.send_invite
+
+    redirect_to @meeting, notice: t("participants.notice.resend_invite")
+  end
+
   private
 
   def set_meeting

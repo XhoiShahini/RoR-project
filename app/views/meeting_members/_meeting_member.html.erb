@@ -104,6 +104,9 @@
               </button>
             </p>
             <p class="col-span-4">
+              <%= link_to "Resend invite", resend_invite_meeting_participant_path(meeting_member.meeting, meeting_member.memberable.id), class: "btn btn-link card-link" %>
+            </p>
+            <p class="col-span-4">
               <%= tag.button t(".copy_link"), class: "btn btn-link card-link", data: { controller: "clipboard", clipboard_text: meeting_participant_sign_in_url(meeting_member.meeting, meeting_member.memberable) } %>
             </p>
           <% end %>
