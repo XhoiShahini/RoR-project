@@ -23,6 +23,7 @@
 #  fk_rails_...  (document_id => documents.id)
 #  fk_rails_...  (meeting_member_id => meeting_members.id)
 #
+require 'digest/sha1'
 class Signature < ApplicationRecord
   has_paper_trail
   belongs_to :document
@@ -47,6 +48,18 @@ class Signature < ApplicationRecord
       [{ content: I18n.t("pdf_gen.signed_at"), size: 10, font_style: :bold }, { content: signed_at.to_s, size: 10 }],
       [{ content: I18n.t("pdf_gen.ip"), size: 10, font_style: :bold }, { content: ip, size: 10 }],
       [{ content: I18n.t("pdf_gen.otp"), size: 10, font_style: :bold }, { content: otp, size: 10 }]
+    ]
+    pdf.make_table(data, cell_style: { borders: [] })
+  end
+
+  def watermark(pdf)
+    otp_sha = Digest::SHA1.hexdigest otp
+
+    data = [
+      # Make it all one "row", since we are going vertical
+      [
+        { content: I18n.t("pdf_gen.watermark", signed_at: signed_at.strftime("%d/%m/%Y"), signed_by: meeting_member.memberable.name) + "\n#{otp_sha}", size: 8, rotate: -90 }
+      ]
     ]
     pdf.make_table(data, cell_style: { borders: [] })
   end

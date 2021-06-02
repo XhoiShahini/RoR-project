@@ -73,6 +73,10 @@
         <%= f.check_box :signature_agreement, id: "signature", class: "form-checkbox mr-1" %>
         <label for="signature" class="inline text-sm"><%= t "agreements.agree_html", link: link_to(t("agreements.signature"), signature_info_path, target: "_blank", class: "btn-link") %></label>
       </div>
+      <div>
+        <%= f.check_box :marketing_agreement, id: "marketing", class: "form-checkbox mr-1" %>
+        <label for="marketing" class="inline text-sm"><%= t "agreements.agree_html", link: link_to(t("agreements.marketing"), marketing_path, target: "_blank", class: "btn-link") %></label>
+      </div>
     </div>
 
     <div class="form-group">

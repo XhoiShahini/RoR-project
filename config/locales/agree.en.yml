@@ -6,6 +6,7 @@ en:
     terms: terms of use
     privacy: privacy policy
     signature: signature agreement
+    marketing: marketing agreement
     agree_html: "I have read and agree to the %{link}"
 
   dashboard:
@@ -25,6 +26,7 @@ en:
     signed_at: "Signed At"
     ip: "IP Address"
     otp: "One-Time Password"
+    watermark: "Signed by %{signed_by}, on %{signed_at}"
 
   documents:
     notice:

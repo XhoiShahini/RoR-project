@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                              :uuid             not null, primary key
+#  accepted_marketing_at           :datetime
 #  accepted_privacy_at             :datetime
 #  accepted_signature_agreement_at :datetime
 #  accepted_terms_at               :datetime

@@ -30,4 +30,7 @@ class StaticController < ApplicationController
 
   def signature_info
   end
+
+  def marketing
+  end
 end
