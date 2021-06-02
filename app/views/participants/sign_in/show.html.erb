@@ -12,16 +12,20 @@
         </p>
         <div class="form-group">
           <div>
-            <%= f.check_box :data_processing, id: "data-processing", class: "form-checkbox mr-2" %>
-            <label for="data-processing" class="inline text-sm"><%= t ".data_html", link: link_to(t(".data_processing"), processing_permission_path, target: "_blank", class: "btn-link") %></label>
+            <%= f.check_box :terms_of_service, id: "tos", class: "form-checkbox mr-1" %>
+            <label for="tos" class="inline-block text-sm"><%= t "agreements.agree_html", link: link_to(t("agreements.terms"), terms_path, target: "_blank", class: "btn-link") %></label>
           </div>
           <div>
-            <%= f.check_box :media_processing, id: "media-processing", class: "form-checkbox mr-2" %>
-            <label for="media-processing" class="inline text-sm"><%= t ".media_html", link: link_to(t(".media_processing"), media_permission_path, target: "_blank", class: "btn-link") %></label>
+            <%= f.check_box :privacy_policy, id: "privacy", class: "form-checkbox mr-1" %>
+            <label for="privacy" class="inline-block text-sm"><%= t "agreements.agree_html", link: link_to(t("agreements.privacy"), privacy_path, target: "_blank", class: "btn-link") %></label>
           </div>
           <div>
-            <%= f.check_box :signature_processing, id: "signature-processing", class: "form-checkbox mr-2" %>
-            <label for="signature-processing" class="inline text-sm"><%= t ".signature_html", link: link_to(t(".signature_processing"), signature_permission_path, target: "_blank", class: "btn-link") %></label>
+            <%= f.check_box :signature_agreement, id: "signature", class: "form-checkbox mr-1" %>
+            <label for="signature" class="inline text-sm"><%= t "agreements.agree_html", link: link_to(t("agreements.signature"), signature_info_path, target: "_blank", class: "btn-link") %></label>
+          </div>
+          <div>
+            <%= f.check_box :marketing_agreement, id: "marketing", class: "form-checkbox mr-1" %>
+            <label for="marketing" class="inline text-sm"><%= t "agreements.agree_html", link: link_to(t("agreements.marketing"), marketing_path, target: "_blank", class: "btn-link") %></label>
           </div>
         </div>
         <p class="mb-4 text-gray-700 leading-normal">
