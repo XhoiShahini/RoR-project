@@ -12,10 +12,6 @@
         </p>
         <div class="form-group">
           <div>
-            <%= f.check_box :terms_of_service, id: "tos", class: "form-checkbox mr-1" %>
-            <label for="tos" class="inline-block text-sm"><%= t "agreements.agree_html", link: link_to(t("agreements.terms"), terms_path, target: "_blank", class: "btn-link") %></label>
-          </div>
-          <div>
             <%= f.check_box :privacy_policy, id: "privacy", class: "form-checkbox mr-1" %>
             <label for="privacy" class="inline-block text-sm"><%= t "agreements.agree_html", link: link_to(t("agreements.privacy"), privacy_path, target: "_blank", class: "btn-link") %></label>
           </div>
