@@ -27,4 +27,10 @@ class StaticController < ApplicationController
 
   def signature_permission
   end
+
+  def signature_info
+  end
+
+  def marketing
+  end
 end

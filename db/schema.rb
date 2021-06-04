@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_29_114458) do
+ActiveRecord::Schema.define(version: 2021_06_02_160201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -360,12 +360,25 @@ ActiveRecord::Schema.define(version: 2021_04_29_114458) do
     t.integer "invitations_count", default: 0
     t.string "preferred_language"
     t.string "phone_number"
+    t.datetime "accepted_signature_agreement_at"
+    t.datetime "accepted_marketing_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
     t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type"
+    t.string "{:null=>false}"
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "account_invitations", "accounts"

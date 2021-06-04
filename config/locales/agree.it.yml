@@ -2,6 +2,13 @@
 it:
   welcome: "Benvenuto, %{user}."
 
+  agreements:
+    terms: Termini e condizioni di utilizzo
+    privacy: Informativa privacy
+    signature: Nota informativa ed accettazione del servizio e delle modalità di erogazione della Firma Elettronica Avanzata
+    marketing: Liberatoria utilizzo immagini e informativa
+    agree_html: "Ho letto e accetto %{link}"
+
   dashboard:
     show:
       meetings: "Riunioni"
@@ -19,6 +26,7 @@ it:
     signed_at: "Data e ora"
     ip: "Indirizzo IP"
     otp: "One-Time Password"
+    watermark: "Signed by %{signed_by}, on %{signed_at}"
 
   documents:
     notice:
@@ -51,9 +59,10 @@ it:
     cannot_sign:
       title: "Non è ancora possibile firmare"
       not_yet_verified: "Tutti i partecipanti devono essere verificati prima che si possa firmare.."
-      require_read: "Deve leggere l'intero documento"
+      require_read: "È richiesta intera lettura del documento"
     tabs:
       new_document: "Nuovo Documento"
+    placeholder: Seleziona un documento da sinistra o creane uno nuovo
     
   meetings:
     errors:
@@ -90,7 +99,7 @@ it:
     edit:
       title: "Modifica Riunione"
     form:
-      host_must_sign: "Gestore deve firmare"
+      host_must_sign: "L'amministratore fa parte dei firmatari?"
       company_instructions: "Le Aziende sono qui per aiutarti a organizzare le tue riunioni. Creane una facendo clic su Aziende nella barra di navigazione, quindi puoi aggiungerla a questa riunione. Potrai quindi cercare la tua riunione per Azienda"
     partials:
       member_heads:
@@ -102,8 +111,8 @@ it:
         company: "Azienda"
         any: Qualunque
       sign:
-        sign: "Firmare"
         must_verify_participants: "Tutti i partecipanti devono essere verificati prima che si possa firmare.."
+        sign: "Firma elettronica"
     room:
       pre_meeting: 
         title: "%{meeting} è pronto per iniziare!"
@@ -119,6 +128,9 @@ it:
         join_meeting: "Entra nella riunione"
       show:
         meetings: "Riunioni"
+        documents: "Documenti"
+        members: "Partecipanti"
+        complete_meeting: Completare la riunione
 
 
   participants:

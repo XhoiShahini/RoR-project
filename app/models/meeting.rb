@@ -29,6 +29,7 @@ require 'aasm'
 require 'securerandom'
 
 class Meeting < ApplicationRecord
+  has_paper_trail
   include AASM
   acts_as_tenant :account
   belongs_to :host, class_name: "User"
@@ -77,7 +78,7 @@ class Meeting < ApplicationRecord
   end
 
   def all_participants_verified?
-    !participants.find_by(state: [:invited, :accepted]).present?
+    !participants.includes(:meeting_members).where(meeting_member: { must_sign: true }).find_by(state: [:invited, :accepted]).present?
   end
 
   def unverified_participants

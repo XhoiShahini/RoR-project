@@ -29,6 +29,7 @@
 #
 
 class Account < ApplicationRecord
+  has_paper_trail
   include Pay::Billable
 
   RESERVED_DOMAINS = [Jumpstart.config.domain]

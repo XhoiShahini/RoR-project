@@ -46,6 +46,8 @@ it:
       signed_up_but_unconfirmed: "Ti sei registrato correttamente. Un messaggio con il link per confermare il tuo account è stato inviato al tuo indirizzo email."
       update_needs_confirmation: "Il tuo account è stato aggiornato, tuttavia è necessario verificare il tuo nuovo indirizzo email. Entro qualche minuto riceverai un messaggio email con le istruzioni per confermare il tuo nuovo indirizzo email."
       updated: "Il tuo account è stato aggiornato."
+      new:
+        login_html: "O %{link}"
     sessions:
       signed_in: "Accesso effettuato con successo."
       signed_out: "Sei uscito correttamente."

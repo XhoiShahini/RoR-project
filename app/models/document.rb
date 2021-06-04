@@ -24,6 +24,7 @@
 require 'aasm'
 require 'prawn'
 class Document < ApplicationRecord
+  has_paper_trail
   include AASM
   belongs_to :meeting
   belongs_to :created_by, class_name: "User"
@@ -75,14 +76,14 @@ class Document < ApplicationRecord
   end
 
   def signing_complete?
-    !signatures.find_by(signed_at: nil).present?
+    !signatures.includes(:meeting_member).find_by(signed_at: nil, meeting_member: { must_sign: true}).present?
   end
 
   def generate_signatures
     pdf = Prawn::Document.new
     pdf.formatted_text([{ text: I18n.t("pdf_gen.signatures"), size: 24 }])
     cells = []
-    signatures.each_with_index do |signature, i|
+    signatures.where.not(signed_at: nil).each_with_index do |signature, i|
       cell = signature.render(pdf)
       if i % 2 == 0
         cells.push [cell]
@@ -94,10 +95,23 @@ class Document < ApplicationRecord
     pdf.render
   end
 
+  def generate_watermark
+    pdf = Prawn::Document.new
+    cells = []
+    signatures.where.not(signed_at: nil).each do |signature|
+      # Wrap in an array so each one is a row
+      cells << [signature.watermark(pdf)]
+    end
+    pdf.table(cells, cell_style: { borders: [], height: 200 })
+    pdf.render
+  end
+
   def add_signature_page
     pdf = CombinePDF.new
     pdf << CombinePDF.parse(file.download)
     pdf << CombinePDF.parse(generate_signatures)
+    watermark = CombinePDF.parse(generate_watermark).pages[0]
+    pdf.pages.each { |page| page << watermark }
     file.attach(io: StringIO.new(pdf.to_pdf), filename: "#{id}.pdf")
     broadcast_to_meeting("update")
   end

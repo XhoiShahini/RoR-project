@@ -22,6 +22,7 @@
 require 'aasm'
 require 'messagebird'
 class SmsVerification < ApplicationRecord
+  has_paper_trail
   include AASM
   belongs_to :sms_verifiable, polymorphic: true
 

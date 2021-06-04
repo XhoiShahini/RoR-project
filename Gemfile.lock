@@ -313,6 +313,9 @@ GEM
       rack (>= 1.6.2, < 3)
     orm_adapter (0.5.0)
     pagy (4.1.0)
+    paper_trail (12.0.0)
+      activerecord (>= 5.2)
+      request_store (~> 1.1)
     parallel (1.20.1)
     parser (3.0.0.0)
       ast (~> 2.4.1)
@@ -551,6 +554,7 @@ DEPENDENCIES
   oj (~> 3.8, >= 3.8.1)
   omniauth (~> 1.9, >= 1.9.1)
   pagy (~> 4.1)
+  paper_trail
   pay (~> 2.6.0)
   pg
   pg_search (~> 2.3)

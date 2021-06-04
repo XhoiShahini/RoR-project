@@ -33,6 +33,7 @@
 
 it:
   hello: "Hello world"
+  chrome: "Video room ottimizzata per Google Chrome."
 
   time:
     formats:
@@ -69,7 +70,10 @@ it:
   delete: "Rimuovi"
   back: "Indietro"
   cancel: "Cancella"
-  edit: "Scrivi"
+  edit: Modifica
+  download: Download
+  loading: Caricamento in corso
+  confirm: Confermare
 
   account_invitations_mailer:
     invite:
@@ -242,7 +246,7 @@ it:
     left_nav:
       meetings: "Riunioni"
       companies: "Aziende"
-      new_meeting: "Nuovo Riunione"
+      new_meeting: "Nuova Riunione"
     scaffold:
       edit:
         title: "Modifica %{model}"
@@ -359,6 +363,7 @@ it:
       skip: "Salta"
       confirm_skip: "Sei sicuro? Caricare il tuo ID rende più facile per gli altri confermare la tua identità."
       delete: "Elimina"
+      select_file: Seleziona il file
 
   layouts:
     mailer:
@@ -417,14 +422,14 @@ it:
         name: Nome
       document:
         title: Titolo
-        require_read: Deve leggere l'intero documento
-        read_only: Non può firmare
+        require_read: "È richiesta intera lettura del documento"
+        read_only: Allegato (firma non richiesta)
         state:
           created: "Nessuna firma"
           incomplete: "Firmato parzialmente"
           finalized: "Completato"
       meeting_member:
-        must_sign: Deve firmare
+        must_sign: Partecipante firmatario
       account:
         name: "Nome"
 

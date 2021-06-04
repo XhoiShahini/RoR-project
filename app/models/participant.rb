@@ -41,6 +41,7 @@ class Participant < ApplicationRecord
       @participant.update(verified_at: @verified_at, verifier: @verifier)
     end
   end
+  has_paper_trail
   include AASM
   include IdentificationAttached
   has_person_name

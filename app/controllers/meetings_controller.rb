@@ -6,6 +6,9 @@ class MeetingsController < ApplicationController
 
   # GET /meetings
   def index
+    if !current_user && current_participant
+      redirect_to current_participant.meeting and return
+    end
     @q = current_account.meetings.ransack(params[:q])
     @meetings = @q.result(distinct: true)
     @pagy, @meetings = pagy(@meetings.sort_by_params(params[:sort], sort_direction))
