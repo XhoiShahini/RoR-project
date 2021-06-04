@@ -77,7 +77,7 @@ class Participant < ApplicationRecord
     end
 
     event :finalize do
-      transitions from: :joined, to: :finalized
+      transitions from: :verified, to: :finalized
     end
   end
 

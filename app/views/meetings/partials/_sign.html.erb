@@ -5,6 +5,23 @@
       data-signature-readonly-value="false"
       id="signature-controller"
       data-signature-meeting-id-value="<%= @meeting.id %>">
+    
+    <% if @meeting_member.memberable == @meeting.host && !@meeting.signing? %>
+      <% if !@meeting.all_participants_verified? %>
+        <span data-controller="tooltip" data-signature-target="tooltip" data-tippy-content="<%= t(".must_verify_participants") %>">
+      <% end %>
+        <button data-action="click->signature#allowSignatures"
+                data-signature-target="startSigning"
+                class="btn btn-primary"
+                <% if !@meeting.all_participants_verified? %>
+                  disabled
+                <% end %>>
+          <%= t(".allow_signatures") %>
+        </button>
+      <% if !@meeting.all_participants_verified? %>
+        </span>
+      <% end %>
+    <% end %>
 
     <div data-controller="modal" id="signature_modal">
 

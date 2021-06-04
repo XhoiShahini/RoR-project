@@ -68,6 +68,7 @@ it:
     errors:
       maximum_members: "ha un numero massimo di %{maximum} partecipanti"
       maximum_documents: "ha un numero massimo di %{maximum} documenti"
+      too_many_meetings: "You have reached your cap of %{count} meetings. This cap resets at the beginning of every month."
     notice:
       not_authorized: "Non sei autorizzato ad accedere alla riunione"
       cannot_be_modified: "La riunione è completata e non può essere modificata"
@@ -110,6 +111,7 @@ it:
         company: "Azienda"
         any: Qualunque
       sign:
+        must_verify_participants: "Tutti i partecipanti devono essere verificati prima che si possa firmare.."
         sign: "Firma elettronica"
     room:
       pre_meeting: 

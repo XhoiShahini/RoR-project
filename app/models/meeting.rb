@@ -40,6 +40,7 @@ class Meeting < ApplicationRecord
   has_many :participants, through: :meeting_members, source: :memberable, source_type: "Participant"
   has_many :documents
   has_many :signatures, through: :documents
+  validate :meeting_modifiable, on: [:update]
 
   before_create do |meeting|
     self.janus_secret = SecureRandom.hex(16)
@@ -52,18 +53,19 @@ class Meeting < ApplicationRecord
   aasm(column: :state, logger: Rails.logger, timestamps: true) do
     state :created, initial: true
     state :incomplete
+    state :signing
     state :completed
 
     event :start do
       transitions from: :created, to: :incomplete
     end
 
-    event :pause do
-      transitions from: :incomplete, to: :created
+    event :allow_signatures do
+      transitions from: :incomplete, to: :signing, after: :freeze_meeting, guards: [:all_participants_verified?, :meeting_credits_available?]
     end
 
     event :complete do
-      transitions from: :incomplete, to: :completed, after: :complete_meeting
+      transitions from: :signing, to: :completed, after: :complete_meeting
     end
   end
 
@@ -79,10 +81,33 @@ class Meeting < ApplicationRecord
     !participants.includes(:meeting_members).where(meeting_member: { must_sign: true }).find_by(state: [:invited, :accepted]).present?
   end
 
+  def unverified_participants
+    participants.where(state: [:invited, :accepted])
+  end
+
+  def meeting_credits_available?
+    account.meeting_usable?
+  end
+
   private
+
+  def meeting_modifiable
+    errors.add(:meeting, I18n.t("meetings.notice.cannot_be_modified")) unless created? || incomplete? || state_changed?
+  end
 
   def broadcast_start
     MeetingEventsChannel.broadcast_to self, type: "start"
+  end
+
+  def freeze_meeting
+    participants.each do |participant|
+      participant.finalize!
+    end
+    documents.each do |document|
+      # Finalizes the document
+      document.sign!
+    end
+    MeetingEventsChannel.broadcast_to self, type: "start_signing"
   end
 
   def complete_meeting

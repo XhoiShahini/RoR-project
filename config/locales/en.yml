@@ -373,6 +373,7 @@ en:
         state:
           created: "Not Started"
           incomplete: "Started"
+          signing: "Signing"
           completed: "Completed"
       document:
         title: Title

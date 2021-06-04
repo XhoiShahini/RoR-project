@@ -32,6 +32,7 @@ class MeetingsController < ApplicationController
     if @meeting.save && @meeting.meeting_members.create(meeting_member_params.merge({ memberable: current_user }))
       redirect_to @meeting, notice: t("meetings.notice.create")
     else
+      @companies = current_account.companies
       render :new, status: :unprocessable_entity
     end
   end
@@ -59,6 +60,11 @@ class MeetingsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def allow_signatures
+    @meeting.allow_signatures!
+    MeetingEventsChannel.broadcast_to @meeting, type: "start_signing"
   end
 
   # DELETE /meetings/:id

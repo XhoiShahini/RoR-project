@@ -12,7 +12,7 @@ class Meetings::RoomController < ApplicationController
   # PATCH/PUT /meetings/:meeting_id/room
   def update
     redirect_to post_meeting_meeting_room_path(@meeting) and return if @meeting.completed?
-    if @meeting_member.is_moderator? && !@meeting.incomplete?
+    if @meeting_member.is_moderator? && @meeting.created?
       @meeting.start!
     end
     render "meetings/room/show"
