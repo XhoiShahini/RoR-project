@@ -138,6 +138,7 @@ en:
       create: "Participant created successfully"
       update: "Participant updated successfully"
       destroy: "Participant destroyed successfully"
+      resend_invite: "The invitation resent successfully"
     new:
       new_participant: "Add A Participant"
     sign_in:

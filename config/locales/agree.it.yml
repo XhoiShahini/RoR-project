@@ -139,6 +139,7 @@ it:
       create: "Partecipante creato con successo"
       update: "Partecipante aggiornato con successo"
       destroy: "Partecipante rimosso con successo"
+      resend_invite: "L'invito è stato reinviato con successo"
     new:
       new_participant: "Aggiungi Partecipante"
     sign_in:

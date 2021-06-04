@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       end
       member do
         get :verify
+        get :resend_invite
       end
     end
 
