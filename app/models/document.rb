@@ -111,7 +111,15 @@ class Document < ApplicationRecord
     pdf << CombinePDF.parse(file.download)
     pdf << CombinePDF.parse(generate_signatures)
     watermark = CombinePDF.parse(generate_watermark).pages[0]
-    pdf.pages.each { |page| page << watermark }
+    pdf.pages.each do |page|
+      if page.orientation == :landscape
+        watermark.rotate_right
+        page << watermark
+        watermark.rotate_left
+      else
+        page << watermark
+      end
+    end
     file.attach(io: StringIO.new(pdf.to_pdf), filename: "#{id}.pdf")
     broadcast_to_meeting("update")
   end
