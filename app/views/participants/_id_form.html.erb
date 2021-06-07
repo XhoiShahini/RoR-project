@@ -1,8 +1,8 @@
 <% participant_form_data = {
   turbo_frame: "_top",
-  controller: "form-loading",
+  controller: "form-loading meeting-members--id-upload",
   action: "submit->form-loading#loading",
-  form_loading_load_with_value: fa_icon("upload", weight: "fas", class: "mr-2") + t(".uploading")
+  form_loading_load_with_value: fa_icon("upload", weight: "fas", class: "mr-2") + t(".uploading"),
 } %>
 <%= form_with(model: participant, url: meeting_participant_id_upload_path(@meeting, participant), html: { method: :post }, data: participant_form_data) do |form| %>
   <div class="flex justify-between">
@@ -10,7 +10,7 @@
       <div class="relative">
         <%= identification_preview(participant) %>
         <div class="absolute opacity-70" style="top: 2em; right: 1em;">
-          <%= form.file_field :identification, accept: 'image/*,application/pdf', class: "input-file" %>
+          <%= form.file_field :identification, accept: 'image/*,application/pdf', class: "input-file", data: { action: "change->meeting-members--id-upload#upload" } %>
           <label for="participant_identification" class="ml-4">
             <%= render_svg "icons/photo", styles: "fill-current icon-xs mr-2" %> <span><%= t(".select_file") %></span>
           </label>
@@ -18,10 +18,6 @@
       </div>
     </div>
     <div class="flex">
-      <%= form.button class: "btn btn-primary" do %>
-        <%= fa_icon "upload", weight: "fas", class: "mr-2" %>
-        <%= t('.submit') %>
-      <% end %>
       <% if participant.identification.attached? %>
         <%= button_to t('.delete'), meeting_participant_id_upload_path(@meeting, participant), class: "btn btn-link danger-text", method: :delete, data: { confirm: t('.confirm_delete')} %>
       <% end %>
