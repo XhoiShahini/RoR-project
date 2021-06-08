@@ -78,7 +78,7 @@ class Meeting < ApplicationRecord
   end
 
   def all_participants_verified?
-    !participants.includes(:meeting_members).where(meeting_member: { must_sign: true }).find_by(state: [:invited, :accepted]).present?
+    !participants.includes(:meeting_member).where(meeting_member: { must_sign: true }).find_by(state: [:invited, :accepted]).present?
   end
 
   def unverified_participants
