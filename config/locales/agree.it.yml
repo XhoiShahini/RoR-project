@@ -113,6 +113,7 @@ it:
       sign:
         must_verify_participants: "Tutti i partecipanti devono essere verificati prima che si possa firmare.."
         sign: "Firma elettronica"
+        allow_signatures: Abilita la firma
     room:
       pre_meeting: 
         title: "%{meeting} è pronto per iniziare!"
@@ -130,8 +131,8 @@ it:
         meetings: "Riunioni"
         documents: "Documenti"
         members: "Partecipanti"
-        complete_meeting: Completare la riunione
-
+        complete_meeting: Chiudi la riunione
+        complete_meeting_warning: "Attenzione: Con la chiusura della riunione non potranno essere più svolte altre attività all'interno della video-room. Confermi la chiusura definitiva?"
 
   participants:
     submit: "Invita Partecipante"
@@ -193,11 +194,13 @@ it:
       email: "Email"
       phone_number: "Telefono"
       status: "Stato"
-      verify: "Verifica"
+      verify: "Conferma l'identità"
+      verified: "Verificato"
       host: "Gestore"
-      edit: "Modificare"
+      edit: "Modifica"
       copy_link: Copia il link
       identification: Documento Identificativo
+      resend_invite: Trasmetti invito
 
   companies:
     members: "Autorizzati"

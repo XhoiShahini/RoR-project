@@ -65,7 +65,7 @@ class Meeting < ApplicationRecord
     end
 
     event :complete do
-      transitions from: :signing, to: :completed, after: :complete_meeting
+      transitions from: [:incomplete, :signing], to: :completed, after: :complete_meeting
     end
   end
 
