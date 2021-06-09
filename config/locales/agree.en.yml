@@ -191,6 +191,8 @@ en:
       create: "Member added successfully"
       update: "Member updated successfully"
       destroy: "Member removed successfully"
+    index:
+      new_participant: New Participant
     meeting_member:
       email: "Email"
       phone_number: "Phone"

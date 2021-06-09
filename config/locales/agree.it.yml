@@ -190,6 +190,8 @@ it:
       create: "Partecipante aggiunto con successo"
       update: "Partecipante aggiornato con successo"
       destroy: "Partecipante rimosso con successo"
+    index:
+      new_participant: Nuovo Partecipante
     meeting_member:
       email: "Email"
       phone_number: "Telefono"
