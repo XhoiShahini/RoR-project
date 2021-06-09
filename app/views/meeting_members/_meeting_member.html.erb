@@ -108,7 +108,9 @@
               </button>
             </p>
             <p class="col-span-4">
-              <%= link_to t(".resend_invite"), resend_invite_meeting_participant_path(meeting_member.meeting, meeting_member.memberable.id), class: "btn btn-link card-link" %>
+              <button data-action="click->meeting-members--member#resend" class="btn btn-link card-link">
+                <%= t(".resend_invite") %>
+              </button>
             </p>
             <% if Rails.env.development? %>
               <p class="col-span-4">

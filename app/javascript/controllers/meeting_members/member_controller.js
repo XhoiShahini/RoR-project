@@ -34,6 +34,10 @@ export default class extends Controller {
   verifyMember() {
     fetch(this.urlValue + "/verify")
   }
+
+  resend() {
+    fetch(this.urlValue + "/resend_invite")
+  }
   
   _fetchAndReplace(url, opts = {}) {
     fetch(url, opts)
