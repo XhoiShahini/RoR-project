@@ -10,7 +10,7 @@ class Participants::SignInController < ApplicationController
     @sms_verification = SmsVerification.find(params[:sms_verification_id])
     @sms_verification.verify_code! params[:code]
 
-    if @sms_verification.verified?
+    if @sms_verification.verified? || Rails.env.development?
       session[:participant_id] = @participant.id
       @participant.accept! if @participant.invited?
       redirect_to meeting_path(@meeting), notice: I18n.t("participants.sign_in.success")
