@@ -2,7 +2,7 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
   static values = { documentId: String, meetingId: String, signed: Boolean, readonly: Boolean }
-  static targets = ["modal", "modalButton", "commit", "startSigning"]
+  static targets = ["modal", "modalButton", "commit", "startSigning", "tooltip"]
   
   connect() {
     if(this.hasStartSigningTarget) {
@@ -46,7 +46,7 @@ export default class extends Controller {
 
   allParticipantsVerified() {
     this.startSigningTarget.disabled = false
-    this.tooltipTarget.disabled = true
+    this.tooltipTarget.replaceWith(this.startSigningTarget)
   }
 
   reset() {
