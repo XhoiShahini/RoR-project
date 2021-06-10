@@ -67,8 +67,8 @@
           <%= t('chrome') %>
         </p>
         <div class="w-100 rounded bg-white">
-          <div id="localvideo">
-            <video class="rounded centered" id="myvideo" width="100%" height="100%" autoplay playsinline />
+          <div id="localvideo" style="background-color: #000;">
+            <video class="rounded centered" id="localVideo" width="100%" height="100%"  autoplay playsinline />
           </div>
           <div>
             <button type="button" id="displayControls" class="btn btn-small btn-primary mt-2"><%= t('video.show_options') %></button>
@@ -88,7 +88,7 @@
             <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myVideo"><i class="fas fa-video"></i></button>
           </div>
 
-          <div id="remotevideo">
+          <div id="remotevideo" style="margin-top: 10px;">
           </div>
         </div>
       </div>
@@ -116,6 +116,8 @@ var feeds = [];
 var audioDeviceId = null;
 var videoDeviceId = null;
 var isModerator = <%= @meeting_member.is_moderator? %>;
+var audioActive = true;
+var videoActive = true;
 
 function ready(callback) {
   if (document.readyState != 'loading' && typeof Janus !== "undefined") {
@@ -170,7 +172,7 @@ function unpublishOwnFeed() {
 	sfutest.send({ message: unpublish });
 }
 
-function newRemoteFeed(id, display, audio, video) {
+function newRemoteFeed(id, display, audio, video, audio_moderated, video_moderated) {
 	// A new feed has been published, create a new plugin handle and attach to it as a subscriber
 	var remoteFeed = null;
 	janus.attach(
@@ -260,6 +262,12 @@ function newRemoteFeed(id, display, audio, video) {
 			},
 			onremotestream: function(stream) {
 				createNewStream(remoteFeed, stream)
+        if (audio_moderated) {
+          toggleAudioStream(remoteFeed.rfid, false);
+        }
+        if (video_moderated) {
+          toggleVideoStream(remoteFeed.rfid, false);
+        }
 			},
 			oncleanup: function() {
 				//Janus.log(" ::: Got a cleanup notification (remote feed " + id + ") :::");
@@ -271,66 +279,132 @@ function createNewStream(remoteFeed, stream) {
   //Janus.log("Remote feed #" + remoteFeed.rfindex + " id "+ remoteFeed.rfid + ", stream:", stream);
   var existingElement = document.getElementById(remoteFeed.rfid);
   if (existingElement) {
-    console.log("Adding stream", remoteFeed.rfid);
+    console.log("Adding stream", remoteFeed, stream);
     return;
   }
 
   var videoFrame = document.createElement('div');
+  videoFrame.classList.add("videoFrame");
   videoFrame.id = remoteFeed.rfid;
 
+  var placeholder = document.createElement('div');
+  placeholder.classList.add("videoPlaceholder");
+  var icon = document.createElement('i');
+  icon.className = "fas fa-video-slash";
+  placeholder.appendChild(icon);
+  videoFrame.appendChild(placeholder);
+
+  var banner = document.createElement('div');
+  banner.className = "videoBanner";
+  banner.innerText = remoteFeed.rfdisplay;
+  videoFrame.appendChild(banner);
+
+  var videoMuted = document.createElement('div');
+  videoMuted.classList.add("videoMuted");
+  var icon = document.createElement('i');
+  icon.className = "fas fa-microphone-slash";
+  videoMuted.appendChild(icon);
+  videoFrame.appendChild(videoMuted);
+
   var videoElm = document.createElement('video');
-  videoElm.width = "300";
   videoElm.autoplay = true;
   videoElm.playsInline = true;
   videoFrame.appendChild(videoElm);
-
-  if (isModerator) {
-    var muteBtn = document.createElement('button');
-    muteBtn.type = 'button';
-    muteBtn.className = "btn btn-small btn-primary";
-    muteBtn.title = 'Toggle camera';
-    muteBtn.addEventListener('click', function(e){
-      toggleAudio(e);
-    });
-    var icon = document.createElement('i');
-    icon.className = 'fas fa-microphone';
-    // fa-microphone-slash
-    muteBtn.appendChild(icon);
-
-
-    videoFrame.appendChild(muteBtn);
-
-    var vmuteBtn = document.createElement('button');
-    vmuteBtn.type = 'button';
-    vmuteBtn.className = "btn btn-small btn-primary";
-    vmuteBtn.title = 'Toggle camera';
-    vmuteBtn.addEventListener('click', function(e){
-      toggleVideo(e);
-    });
-    var icon = document.createElement('i');
-    icon.className = 'fas fa-video';
-    // fa-video-slash
-    vmuteBtn.appendChild(icon);
-    videoFrame.appendChild(vmuteBtn);
-  }
 
   document.getElementById('remotevideo').appendChild(videoFrame)
 	Janus.attachMediaStream(videoElm, stream);
 }
 
+function handlePresence(data) {
+  console.log('presence', data);
+
+  if (typeof data.video !== "undefined") {
+    toggleVideoStream(data.id, data.video)
+  }
+
+  if (typeof data.audio !== "undefined") {
+    toggleAudioStream(data.id, data.audio)
+  }
+}
+
+function toggleVideoStream(id, visible) {
+  var elm = document.getElementById(id);
+  if (!elm) { return }
+
+  var vid = elm.querySelector('video');
+  var ph = elm.querySelector('.videoPlaceholder')
+
+  if (visible) {
+    vid.style.display = "block";
+    ph.style.display = "none";
+  } else {
+    vid.style.display = "none";
+    ph.style.display = "block";
+  }
+}
+
+function toggleAudioStream(id, visible) {
+  var elm = document.getElementById(id);
+  if (!elm) { return }
+  var ph = elm.querySelector('.videoMuted')
+
+  if (visible) {
+    ph.style.display = "none";
+  } else {
+    ph.style.display = "block";
+  }
+}
+
 function toggleVideo(e) {
-  console.log(e.target.parentNode.id);
+  var btn = document.getElementById('myVideo');
+  var icon = btn.querySelector('i');
+  var elm = document.getElementById('localVideo');
+
+  if (videoActive) {
+    // muting
+    videoActive = false;
+    icon.classList.remove('fa-video');
+    icon.classList.add('fa-video-slash');
+    elm.style.opacity = 0.2;
+  } else {
+    // unmuting
+    videoActive = true;
+    icon.classList.remove('fa-video-slash');
+    icon.classList.add('fa-video');
+    elm.style.opacity = 1;
+  }
+
+  console.log('Video is now: ', videoActive);
 
   formSubmit({
-    member_id: e.target.parentNode.id,
-    command: 'toggle_video'
+    member_id: memberId,
+    command: 'toggle_video',
+    value: videoActive
   })
 }
 
 function toggleAudio(e) {
+  var btn = document.getElementById('myAudio');
+  var icon = btn.querySelector('i');
+
+  if (audioActive) {
+    // muting
+    audioActive = false;
+    icon.classList.remove('fa-microphone');
+    icon.classList.add('fa-microphone-slash');
+  } else {
+    // unmuting
+    audioActive = true;
+    icon.classList.remove('fa-microphone-slash');
+    icon.classList.add('fa-microphone');
+  }
+
+  console.log('Audio is now: ', audioActive);
+
   formSubmit({
-    member_id: e.target.parentNode.id,
-    command: 'toggle_audio'
+    member_id: memberId,
+    command: 'toggle_audio',
+    value: audioActive
   })
 }
 
@@ -529,14 +603,16 @@ ready(async function() {
                     // Any new feed to attach to?
                     if(msg["publishers"]) {
                       var list = msg["publishers"];
-                      //Janus.log("Got a list of available publishers/fds:", list);
+                      console.log("Got a list of available publishers/fds:", list);
                       for(var f in list) {
                         var id = list[f]["id"];
                         var display = list[f]["display"];
                         var audio = list[f]["audio_codec"];
                         var video = list[f]["video_codec"];
+                        var audio_moderated = list[f]["audio_moderated"];
+                        var video_moderated = list[f]["video_moderated"];
                         //Janus.log("  >> [" + id + "] " + display + " (audio: " + audio + ", video: " + video + ")");
-                        newRemoteFeed(id, display, audio, video);
+                        newRemoteFeed(id, display, audio, video, audio_moderated, video_moderated);
                       }
                     }
                   } else if(event === "destroyed") {
@@ -547,14 +623,16 @@ ready(async function() {
                     // Any new feed to attach to?
                     if(msg["publishers"]) {
                       var list = msg["publishers"];
-                      //Janus.log("Got a list of available publishers/feeds:", list);
+                      console.log("Got a list of available publishers/feeds:", list);
                       for(var f in list) {
                         var id = list[f]["id"];
                         var display = list[f]["display"];
                         var audio = list[f]["audio_codec"];
                         var video = list[f]["video_codec"];
+                        var audio_moderated = list[f]["audio_moderated"];
+                        var video_moderated = list[f]["video_moderated"];
                         //Janus.log("  >> [" + id + "] " + display + " (audio: " + audio + ", video: " + video + ")");
-                        newRemoteFeed(id, display, audio, video);
+                        newRemoteFeed(id, display, audio, video, audio_moderated, video_moderated);
                       }
                     } else if(msg["leaving"]) {
                       // One of the publishers has gone away?
@@ -591,8 +669,8 @@ ready(async function() {
               onlocalstream: function(stream) {
                 //Janus.log(" ::: Got a local stream :::", stream);
                 mystream = stream;
-                Janus.attachMediaStream(document.getElementById('myvideo'), stream);
-                document.getElementById("myvideo").muted = "muted";
+                Janus.attachMediaStream(document.getElementById('localVideo'), stream);
+                document.getElementById("localVideo").muted = "muted";
                 if(sfutest.webrtcStuff.pc.iceConnectionState !== "completed" &&
                     sfutest.webrtcStuff.pc.iceConnectionState !== "connected") {
                   console.log("Publishing started");

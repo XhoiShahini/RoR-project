@@ -73,22 +73,26 @@ class MeetingMember < ApplicationRecord
     memberable_type == "Participant" && !memberable.invited?
   end
 
-  def toggle_audio
-    reverse = !self.audio
-    self.audio = reverse
-    JanusService.moderate_member(self, mute_audio: self.audio)
-    self.save
-    MeetingMembersChannel.broadcast_to self.meeting, type: "presence", id: self.id, audio: self.audio
+  def toggle_audio(value)
+    setting = value == 'true'
+    Rails.logger.debug value
+    Rails.logger.debug setting
+    JanusService.moderate_member(self, mute_audio: !setting)
+    MeetingMembersChannel.broadcast_to self.meeting, type: "presence", id: self.signed_member_id, audio: setting
   end
 
-  def toggle_video
-    reverse = !self.video
-    self.video = reverse
-    Rails.logger.info "video for #{self.id} is now #{self.video}"
-    Rails.logger.info "------------------------"
-    JanusService.moderate_member(self, mute_video: self.video)
+  def toggle_video(value)
+    setting = value == 'true'
+    Rails.logger.debug value
+    Rails.logger.debug setting
+    Rails.logger.info JanusService.moderate_member(self, mute_video: !setting)
+    MeetingMembersChannel.broadcast_to self.meeting, type: "presence", id: self.signed_member_id, video: setting
+  end
+
+  def reset_media!
+    self.video = true
+    self.audio = true
     self.save
-    MeetingMembersChannel.broadcast_to self.meeting, type: "presence", id: self.id, video: self.video
   end
 
   private

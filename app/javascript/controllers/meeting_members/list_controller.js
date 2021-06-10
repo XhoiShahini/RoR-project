@@ -48,7 +48,7 @@ export default class extends Controller {
         this._loadMembers()
         break;
       case "presence":
-        console.log(data);
+        handlePresence(data);
         break;
     }
   }

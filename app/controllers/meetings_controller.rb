@@ -38,7 +38,7 @@ class MeetingsController < ApplicationController
   end
 
   # GET /meetings/:id
-  def show
+  def sh
     require_meeting_member!
   end
 
@@ -49,7 +49,7 @@ class MeetingsController < ApplicationController
   end
 
   # PATCH/PUT /meetings/:id
-  def update
+  def updae
     meeting_member_params = { company_id: params[:company_id], must_sign: params[:must_sign] } rescue {}
     if meeting_member_params.present?
       host = @meeting.meeting_members.find_by(memberable: @meeting.host)

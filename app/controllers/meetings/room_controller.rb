@@ -15,6 +15,7 @@ class Meetings::RoomController < ApplicationController
     if @meeting_member.is_moderator? && @meeting.created?
       @meeting.start!
     end
+    @meeting_member.reset_media!
     render "meetings/room/show"
   end
 
@@ -34,14 +35,15 @@ class Meetings::RoomController < ApplicationController
   # POST perform_action
   def perform_action
     # for now we do not have "real" controls
-    mm = MeetingMember.where(signed_member_id: params[:member_id]).first
+    memberable = current_user || current_participant
+    mm = MeetingMember.where(signed_member_id: params[:member_id], memberable: memberable).first
 
     if mm
       case params[:command]
       when 'toggle_audio'
-        mm.toggle_audio
+        mm.toggle_audio(params[:value])
       when 'toggle_video'
-        mm.toggle_video
+        mm.toggle_video(params[:value])
       end
     end
   end
