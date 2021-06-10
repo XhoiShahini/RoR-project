@@ -10,7 +10,7 @@
         </div>
         <% if @meeting_member.is_moderator? %>
           <div>
-            <%= link_to t('.complete_meeting'), post_meeting_meeting_room_path(@meeting), class: "btn btn-small btn-danger rounded-full" %>
+            <%= link_to t('.complete_meeting'), post_meeting_meeting_room_path(@meeting), class: "btn btn-small btn-danger rounded-full", data: { confirm: t(".complete_meeting_warning") } %>
           </div>
         <% end %>
     </h1>

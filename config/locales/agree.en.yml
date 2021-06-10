@@ -112,6 +112,7 @@ en:
         any: Any
       sign:
         sign: Sign
+        allow_signatures: Allow Signatures
         must_verify_participants: You must verify all participants first
     room:
       pre_meeting: 
@@ -130,6 +131,8 @@ en:
         join_meeting: "Join Meeting"
       show:
         meetings: "Meetings"
+        complete_meeting: Complete Meeting
+        complete_meeting_warning: This will close the meeting, disabling signatures and video functionality. Proceed?
 
 
   participants:
@@ -188,6 +191,8 @@ en:
       create: "Member added successfully"
       update: "Member updated successfully"
       destroy: "Member removed successfully"
+    index:
+      new_participant: New Participant
     meeting_member:
       email: "Email"
       phone_number: "Phone"
