@@ -51,7 +51,27 @@
             }
           ) %>
           <% if current_user %>
-            <%= turbo_frame_tag "new_document", src: new_meeting_document_path(@meeting) %>
+            <div data-controller="modal" class="card flex justify-center" id="new_document_modal">
+              <button class="btn btn-secondary" data-action="click->modal#open">
+                <%= fa_icon "plus", weight: "fas", class: "mr-2" %>
+                <%= t(".new_document") %>
+              </button>
+              <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden animated fadeIn fixed inset-0 overflow-y-auto flex items-center justify-center" style="z-index: 9999;">
+                <!-- Modal Inner Container -->
+                <div class="max-h-screen w-full max-w-2xl relative">
+                  <div class="m-1 bg-white rounded shadow">
+                    <div class="p-8">
+                      <%= turbo_frame_tag "new_document", data: { action: "turbo:load->modal#close" } do %>
+                        <div class="card">
+                          <p class="card-header"><%= t(".new_document") %></p>
+                          <%= render "documents/form", document: @meeting.documents.new %>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           <% end %>
         </div>
         <div class="my-2 ml-2">

@@ -25,6 +25,10 @@ export default class extends Controller {
       .then(response => {
         this.element.innerHTML = response.querySelector("#documents").innerHTML
       })
+      .then(() => {
+        let formModal = this.application.getControllerForElementAndIdentifier(document.querySelector("#new_document_modal"), "modal")
+        formModal.close()
+      })
   }
 
   _connected() {}
