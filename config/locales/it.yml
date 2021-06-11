@@ -426,7 +426,7 @@ it:
         read_only: Allegato (firma non richiesta)
         state:
           created: "Nessuna firma"
-          incomplete: "Firmato parzialmente"
+          incomplete: "Firmando"
           finalized: "Completato"
       meeting_member:
         must_sign: Partecipante firmatario

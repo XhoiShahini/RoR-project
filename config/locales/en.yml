@@ -381,7 +381,7 @@ en:
         read_only: Read only (No Signatures)
         state:
           created: "No Signatures"
-          incomplete: "1+ Signatures"
+          incomplete: "Signing"
           finalized: "Finalized"
       participant:
         first_name: First Name
