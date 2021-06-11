@@ -55,7 +55,7 @@
           </div>
         <% end %>
       </div>
-      <% unless @meeting.meeting_credits_available? %>
+      <% if @meeting.meeting_credits_available? %>
         <% if current_user %>
           <%= turbo_frame_tag "id_upload", src: new_user_id_upload_path(meeting_id: @meeting.id) %>
         <% elsif current_participant %>
