@@ -58,7 +58,7 @@ en:
       send_code: Send Code
     cannot_sign:
       title: "Cannot Sign Yet"
-      not_yet_verified: "The host must verify your identity before you can sign."
+      not_yet_verified: "The host must allow signatures before you can sign."
       require_read: You must read the whole document before signing.
     tabs:
       new_document: New Document
