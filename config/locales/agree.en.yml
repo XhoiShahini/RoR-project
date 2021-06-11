@@ -120,7 +120,7 @@ en:
         info_title: "Ready to join?"
         info_body: "Please review the meeting information and provide any additional information required below."
         warning_title: "No Remaining Meetings"
-        warning_body: If you proceed without upgrading, documents will not be signable.
+        warning_body: The account must be upgraded in order to proceed.
         starts_at: "Start Time"
         host: "Host"
         company: "Company"
