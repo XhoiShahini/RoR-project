@@ -1,13 +1,16 @@
 ---
 it:
   welcome: "Benvenuto, %{user}."
+  
 
   agreements:
     terms: Termini e condizioni di utilizzo
-    privacy: Informativa privacy
+    privacy: Informativa privacy e Liberatoria utilizzo immagini e informativa
     signature: Nota informativa ed accettazione del servizio e delle modalità di erogazione della Firma Elettronica Avanzata
-    marketing: Liberatoria utilizzo immagini e informativa
+    marketing: Presto il consenso al trattamento dei dati per finalità informative e promozionali 
     agree_html: "Ho letto e accetto %{link}"
+    affirmative: "Sì"
+    negative: "No"
 
   dashboard:
     show:

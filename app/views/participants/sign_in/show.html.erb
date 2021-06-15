@@ -20,8 +20,10 @@
             <label for="signature" class="inline text-sm"><%= t "agreements.agree_html", link: link_to(t("agreements.signature"), signature_info_path, target: "_blank", class: "btn-link") %></label>
           </div>
           <div>
-            <%= f.check_box :marketing_agreement, id: "marketing", class: "form-checkbox mr-1" %>
-            <label for="marketing" class="inline text-sm"><%= t "agreements.agree_html", link: link_to(t("agreements.marketing"), marketing_path, target: "_blank", class: "btn-link") %></label>
+            <label for="marketing" class="inline text-sm"><%= t("agreements.marketing") %></label>
+            <br>
+            <%= f.radio_button :marketing_agreement, '1', id: "marketing", class: "form-radio mr-1" %><label class="inline text-sm"><%= t("agreements.affirmative") %></label>
+            <%= f.radio_button :marketing_agreement, '0', id: "marketing", class: "form-radio mr-1" %><label class="inline text-sm"><%= t("agreements.negative") %></label>
           </div>
         </div>
         <p class="mb-4 text-gray-700 leading-normal">

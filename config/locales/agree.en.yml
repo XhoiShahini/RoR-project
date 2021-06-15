@@ -8,6 +8,8 @@ en:
     signature: signature agreement
     marketing: marketing agreement
     agree_html: "I have read and agree to the %{link}"
+    affirmative: "Yes"
+    negative: "No"
 
   dashboard:
     show:
