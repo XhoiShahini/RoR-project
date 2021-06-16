@@ -6,8 +6,10 @@ en:
     terms: terms of use
     privacy: privacy policy
     signature: signature agreement
-    marketing: marketing agreement
+    marketing: I agree to marketing usage of my personal information
     agree_html: "I have read and agree to the %{link}"
+    affirmative: "Yes"
+    negative: "No"
 
   dashboard:
     show:

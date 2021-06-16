@@ -13,12 +13,12 @@ module UserAgreements
     validates :signature_agreement, presence: true, acceptance: true, on: [:create, :invitation_accepted]
 
     attribute :marketing_agreement
-    validates :marketing_agreement, presence: true, acceptance: true, on: [:create, :invitation_accepted]
+    validates :marketing_agreement, presence: true, acceptance: false, on: [:create, :invitation_accepted]
 
     after_validation :accept_terms, on: [:create, :invitation_accepted]
     after_validation :accept_privacy, on: [:create, :invitation_accepted]
     after_validation :accept_signature_agreement, on: [:create, :invitation_accepted]
-    after_validation :accept_marketing, on: [:create, :invitation_accepted]
+    after_validation :accept_marketing, on: [:create, :invitation_accepted], if: -> { marketing_agreement == "1" }
   end
 
   def accept_terms
