@@ -75,8 +75,12 @@ class Account < ApplicationRecord
     when /pro/i
       160
     else
-      3
+      freemium_meetings
     end
+  end
+
+  def freemium_meetings
+    Rails.env.development? ? 100 : 3
   end
 
   def meeting_usable?
