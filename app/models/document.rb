@@ -121,7 +121,6 @@ class Document < ApplicationRecord
       end
     end
     file.attach(io: StringIO.new(pdf.to_pdf), filename: "#{id}.pdf")
-    broadcast_to_meeting("update")
   end
 
   def enforce_maximum_documents
