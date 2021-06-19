@@ -80,7 +80,7 @@ class Account < ApplicationRecord
   end
 
   def freemium_meetings
-    Rails.env.development? ? 100 : 3
+    Rails.env.development? ? 100 : ENV.fetch('FREEMIUM_MEETINGS', 3).to_i
   end
 
   def meeting_usable?
