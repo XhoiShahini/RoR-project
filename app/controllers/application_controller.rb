@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :masquerade_user!
 
-  before_filter :redirect_to_example if Rails.env.production?
+  before_filter :redirect_to_example if Rails.env.production? || Rails.env.staging?
 
   protected
 
@@ -49,8 +49,6 @@ class ApplicationController < ActionController::Base
   def redirect_to_example
     domain_to_redirect_to = 'beta.agree.live'
     domain_exceptions = ['beta.agree.live']
-    Rails.logger.debug('DOMAIN IS')
-    Rails.logger.debug([request.host, domain_to_redirect_to])
     should_redirect = !(domain_exceptions.include? request.host)
     new_url = "#{request.protocol}#{domain_to_redirect_to}#{request.fullpath}"
     redirect_to new_url, status: :moved_permanently if should_redirect
