@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :masquerade_user!
 
-  before_filter :redirect_to_example if Rails.env.production? || Rails.env.staging?
+  before_action :redirect_to_example if Rails.env.production? || Rails.env.staging?
 
   protected
 
