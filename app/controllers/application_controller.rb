@@ -49,6 +49,8 @@ class ApplicationController < ActionController::Base
   def redirect_to_example
     domain_to_redirect_to = 'beta.agree.live'
     domain_exceptions = ['beta.agree.live']
+    Rails.logger.debug('DOMAIN IS')
+    Rails.logger.debug([request.host, domain_to_redirect_to])
     should_redirect = !(domain_exceptions.include? request.host)
     new_url = "#{request.protocol}#{domain_to_redirect_to}#{request.fullpath}"
     redirect_to new_url, status: :moved_permanently if should_redirect
