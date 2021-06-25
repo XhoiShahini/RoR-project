@@ -15,7 +15,7 @@ module ValidatesMaximumMembers
     when /pro/i
       5
     else
-      3
+      ENV.fetch('FREEMIUM_MAX_PARTICIPANTS', 3).to_i
     end
     if meeting&.meeting_members.count >= max_members
       errors.add(:meeting, I18n.t("meetings.maximum_members", maximum: max_members))
