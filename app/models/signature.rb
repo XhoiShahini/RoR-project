@@ -58,7 +58,7 @@ class Signature < ApplicationRecord
     data = [
       # Make it all one "row", since we are going vertical
       [
-        { content: I18n.t("pdf_gen.watermark", signed_at: signed_at.strftime("%d/%m/%Y"), signed_by: meeting_member.memberable.name) + "\n#{otp_sha}", size: 8, rotate: -90 }
+        { content: I18n.t("pdf_gen.watermark", signed_at: signed_at.strftime("%d/%m/%Y"), signed_by: meeting_member.memberable.name) + "\n#{otp_sha}", size: 5, rotate: -90 }
       ]
     ]
     pdf.make_table(data, cell_style: { borders: [] })

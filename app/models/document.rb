@@ -102,7 +102,7 @@ class Document < ApplicationRecord
       # Wrap in an array so each one is a row
       cells << [signature.watermark(pdf)]
     end
-    pdf.table(cells, cell_style: { borders: [], height: 200 })
+    pdf.table(cells, cell_style: { borders: [], height: 130 })
     pdf.render
   end
 
