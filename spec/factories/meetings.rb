@@ -4,7 +4,6 @@
 #
 #  id           :uuid             not null, primary key
 #  completed_at :datetime
-#  janus_secret :string
 #  starts_at    :datetime
 #  state        :string
 #  title        :string

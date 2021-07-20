@@ -15,7 +15,8 @@ class Meetings::RoomController < ApplicationController
     if @meeting_member.is_moderator? && @meeting.created?
       @meeting.start!
     end
-    @meeting_member.reset_media!
+    # @meeting_member.reset_media!
+    @token = SignalwireService.request_token(@meeting.signed_room_id, @meeting_member.signed_member_id)
     render "meetings/room/show"
   end
 
@@ -30,6 +31,10 @@ class Meetings::RoomController < ApplicationController
     elsif !@meeting.completed?
       redirect_to meeting_room_path(@meeting)
     end
+  end
+
+  def video_only
+    @token = SignalwireService.request_token(@meeting.signed_room_id, @meeting_member.signed_member_id)
   end
 
   # POST perform_action

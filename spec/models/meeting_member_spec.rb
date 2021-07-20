@@ -4,7 +4,6 @@
 #
 #  id               :uuid             not null, primary key
 #  audio            :boolean          default(TRUE)
-#  janus_token      :string
 #  memberable_type  :string           not null
 #  must_sign        :boolean
 #  video            :boolean          default(TRUE)

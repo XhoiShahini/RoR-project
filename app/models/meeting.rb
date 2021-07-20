@@ -4,7 +4,6 @@
 #
 #  id           :uuid             not null, primary key
 #  completed_at :datetime
-#  janus_secret :string
 #  starts_at    :datetime
 #  state        :string
 #  title        :string
@@ -41,14 +40,6 @@ class Meeting < ApplicationRecord
   has_many :documents
   has_many :signatures, through: :documents
   validate :meeting_modifiable, on: [:update]
-
-  before_create do |meeting|
-    self.janus_secret = SecureRandom.hex(16)
-  end
-
-  after_create do |meeting|
-    JanusService.create_room(meeting)
-  end
 
   aasm(column: :state, logger: Rails.logger, timestamps: true) do
     state :created, initial: true

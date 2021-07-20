@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     resource :room, controller: "meetings/room", only: [:show, :update] do
       get :pre_meeting
       get :post_meeting
+      get :video_only
       post :perform_action
     end
 
