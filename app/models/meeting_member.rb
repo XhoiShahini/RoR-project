@@ -4,7 +4,6 @@
 #
 #  id               :uuid             not null, primary key
 #  audio            :boolean          default(TRUE)
-#  janus_token      :string
 #  memberable_type  :string           not null
 #  must_sign        :boolean
 #  video            :boolean          default(TRUE)
@@ -36,12 +35,7 @@ class MeetingMember < ApplicationRecord
   has_many :meeting_accesses
 
   before_create do |meeting|
-    self.janus_token = SecureRandom.hex(16)
     self.set_signed_member_id
-  end
-
-  after_create do |meeting_member|
-    JanusService.create_and_add_token(meeting_member)
   end
 
   include ValidatesMaximumMembers
@@ -77,7 +71,6 @@ class MeetingMember < ApplicationRecord
     setting = value == 'true'
     Rails.logger.debug value
     Rails.logger.debug setting
-    JanusService.moderate_member(self, mute_audio: !setting)
     MeetingMembersChannel.broadcast_to self.meeting, type: "presence", id: self.signed_member_id, audio: setting
   end
 
@@ -85,7 +78,6 @@ class MeetingMember < ApplicationRecord
     setting = value == 'true'
     Rails.logger.debug value
     Rails.logger.debug setting
-    Rails.logger.info JanusService.moderate_member(self, mute_video: !setting)
     MeetingMembersChannel.broadcast_to self.meeting, type: "presence", id: self.signed_member_id, video: setting
   end
 

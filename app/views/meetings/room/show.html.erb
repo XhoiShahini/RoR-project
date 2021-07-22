@@ -63,32 +63,33 @@
         </div>
       </div>
       <div class="col-span-3 bg-white rounded shadow-md p-4">
-        <p>
+        <p id="chromeOnly">
           <%= t('chrome') %>
         </p>
         <div class="w-100 rounded bg-white">
-          <div id="localvideo" style="background-color: #000;">
-            <video class="rounded centered" id="localVideo" width="100%" height="100%"  autoplay playsinline />
+          <div id="videoRoot" style="width: 1px; height: 1px;"></div>
+          <div id="localvideoframe" style="background-color: #000;">
+            <video class="rounded centered" id="localVideo" width="100%" height="100%" muted  autoplay playsinline />
           </div>
           <div>
             <button type="button" id="displayControls" class="btn btn-small btn-primary mt-2"><%= t('video.show_options') %></button>
             <div class="card" style="display: none;" id="videoControls">
               <p><%= t('video.audio_input') %></p>
-              <select id="audioInput"></select>
+              <select id="audioinput"></select>
               <p><%= t('video.video_input') %></p>
-              <select id="videoInput"></select>
+              <select id="videoinput"></select>
               <button type="button" id="changeInput" class="btn btn-small btn-primary mt-2 mr-2"><%= t('video.change_input') %></button>
               <p><%= t('video.audio_output') %></p>
-              <select id="audioOutput"></select>
+              <select id="audiooutput"></select>
               <button type="button" id="changeOutput" class="btn btn-small btn-primary mt-2 mr-2"><%= t('video.change_output') %></button>
             </div>
           </div>
           <div id="<%= @meeting_member.signed_member_id %>">
-            <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myAudio"><i class="fas fa-microphone"></i></button>
-            <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myVideo"><i class="fas fa-video"></i></button>
+            <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myAudioBtn"><i class="fas fa-microphone"></i></button>
+            <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myVideoBtn"><i class="fas fa-video"></i></button>
           </div>
 
-          <div id="remotevideo" style="margin-top: 10px;">
+          <div id="sfuWrapper" style="margin-top: 10px;">
           </div>
         </div>
       </div>
@@ -96,34 +97,22 @@
   </div>
 </div>
 
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/7.4.0/adapter.min.js" ></script>
-<script src="/js/janus.js"></script>
+<script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="https://unpkg.com/@signalwire/js@beta"></script>
 <script>
-var server = "wss://<%= @meeting_member.server.domain %>/wsjanus";
-const globalSubmitUrl = '<%= perform_action_meeting_room_path(@meeting_member.meeting) %>';
-var janus = null;
-var sfutest = null;
-var opaqueId = "<%= @meeting_member.signed_member_id %>";
-var memberId = "<%= @meeting_member.signed_member_id %>";
-var username = "<%= @meeting_member.full_name %>";
-var useAudio = true;
-var myroom = "<%= @meeting_member.meeting.signed_room_id %>";
-var roomId = "<%= @meeting_member.meeting.id %>";
-var userToken = "<%= @meeting_member.janus_token %>";
-var feeds = [];
-var audioDeviceId = null;
-var videoDeviceId = null;
-var isModerator = <%= @meeting_member.is_moderator? %>;
-var audioActive = true;
-var videoActive = true;
+
+var _swToken = "<%= @token %>";
+
+var _memberNameMap = {
+  <% @meeting.meeting_members.each do |mm| %>
+  "<%= mm.signed_member_id %>": "<%= mm.full_name %>",
+  <% end %>
+};
 
 function ready(callback) {
-  if (document.readyState != 'loading' && typeof Janus !== "undefined") {
+  if (document.readyState != 'loading' && typeof SignalWire !== "undefined") {
     callback();
   } else if (document.addEventListener) {
-    document.addEventListener('janus:load', callback);
     document.addEventListener('DOMContentLoaded', callback);
   } else {
     document.attachEvent('onreadystatechange', function() {
@@ -134,257 +123,277 @@ function ready(callback) {
   }
 }
 
+let _currentRoom = null
+let myMemberId = null;
+const memberList = new Map();
+var audioActive = true;
+var videoActive = true;
+var _currentWidth = null;
 
-//call this as the entry point
+/**
+ * Connect with Relay creating a client and attaching all the event handler.
+ */
+window.connect = () => {
+  const sfuWrapper = document.getElementById('sfuWrapper')
+  const canvasMap = new Map()
+  let _allowCanvasDraw = true
 
-function joinRoom() {
-  var register = {
-    request: "join",
-    room: myroom,
-    ptype: "publisher",
-    id: memberId,
-    display: username,
-    token: userToken
-  };
-  sfutest.send({ message: register });
-}
+  const _deleteCanvas = (member_id) => {
+    // destroy canvas and context2d
+    let { canvasEl, canvasCtx } = canvasMap.get(member_id)
+    canvasCtx = undefined
+    canvasEl.parentNode.removeChild(canvasEl)
+    canvasMap.delete(member_id)
 
-function publishOwnFeed() {
-	// Publish our stream
-	sfutest.createOffer(
-		{
-			// Add data:true here if you want to publish datachannels as well
-			media: { audioRecv: false, videoRecv: false, audioSend: true, videoSend: true, data: true },	// Publishers are sendonly
-			success: function(jsep) {
-				//Janus.log("Got publisher SDP!", jsep);
-				var publish = { request: "configure", audio: true, video: true };
-				sfutest.send({ message: publish, jsep: jsep });
-			},
-			error: function(error) {
-				Janus.error("WebRTC error:", error);
-			}
-		});
-}
+    var wrapper = document.getElementById('wrapcanvas_' + member_id);
+    wrapper.parentNode.removeChild(wrapper);
+  }
 
-function unpublishOwnFeed() {
-	// Unpublish our stream
-	var unpublish = { request: "unpublish" };
-	sfutest.send({ message: unpublish });
-}
+  const _stopDrawingCanvas = function () {
+    _allowCanvasDraw = false
+    for (const member_id of canvasMap.keys()) {
+      _deleteCanvas(member_id)
+    }
+  }
+  const _startDrawingCanvas = function () {
+    const _mcu = document.querySelector('#videoRoot video')
+    function updateCanvas() {
+      canvasMap.forEach((mapValue) => {
+        const { canvasEl, canvasCtx, x, y, width, height } = mapValue
+        // calculate size of slice
+        // _mcu.videoWidth _mcu.videoHeight
+        var computedWidth = _mcu.videoWidth * width / 100;
+        var computedHeight = _mcu.videoHeight * height / 100;
+        var computedX = _mcu.videoWidth * x / 100;
+        var computedY = _mcu.videoHeight * y / 100;
 
-function newRemoteFeed(id, display, audio, video, audio_moderated, video_moderated) {
-	// A new feed has been published, create a new plugin handle and attach to it as a subscriber
-	var remoteFeed = null;
-	janus.attach(
-		{
-			plugin: "janus.plugin.videoroom",
-			opaqueId: opaqueId,
-			success: function(pluginHandle) {
-				remoteFeed = pluginHandle;
-				remoteFeed.simulcastStarted = false;
-				//Janus.log("Plugin attached! (" + remoteFeed.getPlugin() + ", id=" + remoteFeed.getId() + ")");
-				//Janus.log("  -- This is a subscriber");
-				// We wait for the plugin to send us an offer
-				var subscribe = {
-					request: "join",
-					room: myroom,
-					ptype: "subscriber",
-					feed: id,
-					private_id: mypvtid
-				};
-				// In case you don't want to receive audio, video or data, even if the
-				// publisher is sending them, set the 'offer_audio', 'offer_video' or
-				// 'offer_data' properties to false (they're true by default), e.g.:
-				// 		subscribe["offer_video"] = false;
-				// For example, if the publisher is VP8 and this is Safari, let's avoid video
-				if(Janus.webRTCAdapter.browserDetails.browser === "safari" &&
-						(video === "vp9" || (video === "vp8" && !Janus.safariVp8))) {
-					if(video)
-						video = video.toUpperCase()
-					toastr.warning("Publisher is using " + video + ", but Safari doesn't support it: disabling video");
-					subscribe["offer_video"] = false;
-				}
-				remoteFeed.videoCodec = video;
-				remoteFeed.send({ message: subscribe });
-			},
-			error: function(error) {
-				Janus.error("  -- Error attaching plugin...", error);
-				console.log("Error attaching plugin... " + error);
-			},
-      ondata: function(data) {
-				console.log("Data received: ", data);
-			},
-			onmessage: function(msg, jsep) {
-				// Janus.log(" ::: Got a message (subscriber) :::", msg);
-				var event = msg["videoroom"];
-				//Janus.log("Event: " + event);
-				if(msg["error"]) {
-					console.log(msg["error"]);
-				} else if(event) {
-					if(event === "attached") {
-						remoteFeed.rfid = msg["id"];
-						remoteFeed.rfdisplay = msg["display"];
-            feeds[msg["id"]] = remoteFeed;
-						//Janus.log("Successfully attached to feed " + remoteFeed.rfid + " (" + remoteFeed.rfdisplay + ") in room " + msg["room"]);
-					} else {
-						// What has just happened?
-					}
-				}
-				if(jsep) {
-					//Janus.log("Handling SDP as well...", jsep);
-					// Answer and attach
-					remoteFeed.createAnswer(
-						{
-							jsep: jsep,
-							// Add data:true here if you want to subscribe to datachannels as well
-							// (obviously only works if the publisher offered them in the first place)
-							media: { audioSend: false, videoSend: false, data: true },	// We want recvonly audio/video
-							success: function(jsep) {
-								//Janus.log("Got SDP!", jsep);
-								var body = { request: "start", room: myroom };
-								remoteFeed.send({ message: body, jsep: jsep });
-							},
-							error: function(error) {
-								Janus.error("WebRTC error:", error);
-								console.log("WebRTC error... " + error.message);
-							}
-						});
-				}
-			},
-			iceState: function(state) {
-				//Janus.log("ICE state of this WebRTC PeerConnection (feed #" + remoteFeed.rfindex + ") changed to " + state);
-			},
-			webrtcState: function(on) {
-				//Janus.log("Janus says this WebRTC PeerConnection (feed #" + remoteFeed.rfindex + ") is " + (on ? "up" : "down") + " now");
-			},
-			onlocalstream: function(stream) {
-				// The subscriber stream is recvonly, we don't expect anything here
-			},
-			onremotestream: function(stream) {
-				createNewStream(remoteFeed, stream)
-        if (audio_moderated) {
-          toggleAudioStream(remoteFeed.rfid, false);
+        var realWidth = _currentWidth;
+        var realHeight = Math.round((_currentWidth / computedWidth) * computedHeight)
+
+        canvasEl.width = realWidth;
+        canvasEl.height = realHeight;
+        canvasCtx.drawImage(_mcu, computedX, computedY, computedWidth, computedHeight, 0, 0, realWidth, realHeight)
+        canvasCtx.restore()
+      })
+      if (_allowCanvasDraw) {
+        setTimeout(function () {
+          requestAnimationFrame(updateCanvas)
+        }, 1000 / 15)
+      }
+    }
+    updateCanvas()
+  }
+
+  const _createCanvasWrapper = function(member_id, canvasEl) {
+    canvasEl.style.width = '100%'
+
+    var wrapperId = 'wrapcanvas_' + member_id;
+    var videoFrame = document.createElement('div');
+    videoFrame.classList.add("videoFrame");
+    videoFrame.id = wrapperId;
+
+    var memberInfo = memberList.get(member_id);
+    var memberName = _memberNameMap[memberInfo.name];
+
+    var banner = document.createElement('div');
+    banner.className = "videoBanner";
+    banner.innerText = memberName;
+    videoFrame.appendChild(banner);
+
+    var videoMuted = document.createElement('div');
+    videoMuted.classList.add("videoMuted");
+    var icon = document.createElement('i');
+    icon.className = "fas fa-microphone-slash";
+    videoMuted.appendChild(icon);
+    videoFrame.appendChild(videoMuted);
+
+    videoFrame.appendChild(canvasEl)
+    sfuWrapper.appendChild(videoFrame);
+
+    toggleAudioMuteDisplay(memberInfo.id, memberInfo.audio_muted);
+  }
+
+  SignalWire.Video.createRoomObject({
+    token: _swToken,
+    rootElementId: 'videoRoot',
+    audio: true,
+    video: true,
+  }).then((roomObject) => {
+    _currentRoom = roomObject
+    
+    console.log('Video SDK _currentRoom', _currentRoom)
+
+    _currentRoom.on('room.started', (params) =>
+      console.log('>> DEMO room.started', params)
+    )
+
+    _currentRoom.on('room.joined', async (params) => {
+      console.log('>> DEMO room.joined', params)
+      myMemberId = params.member_id;
+      _startDrawingCanvas();
+
+      const video = document.getElementById('localVideo')
+      video.srcObject = _currentRoom.localStream
+
+      params.room.members.forEach((member) => {
+        memberList.set(member.id, member);
+        toggleAudioMuteDisplay(member.id, member.audio_muted);
+      });
+    })
+
+    _currentRoom.on('room.updated', (params) =>
+      console.log('>> DEMO room.updated', params)
+    )
+    _currentRoom.on('room.ended', (params) => {
+      console.log('>> DEMO room.ended', params)
+      hangup()
+    })
+    _currentRoom.on('member.joined', (params) => {
+      console.log('>> DEMO member.joined', params);
+      memberList.set(params.member.id, params.member);
+      toggleAudioMuteDisplay(params.member.id, params.member.audio_muted);
+    })
+    _currentRoom.on('member.updated', (params) =>
+      console.log('>> DEMO global member.updated', params)
+    )
+
+    _currentRoom.on('member.updated.audio_muted', (params) => {
+      console.log('>> DEMO member.updated.audio_muted', params);
+      toggleAudioMuteDisplay(params.member.id, params.member.audio_muted);
+    })
+
+    _currentRoom.on('member.updated.video_muted', (params) =>
+      console.log('>> DEMO member.updated.video_muted', params)
+    )
+
+    _currentRoom.on('member.left', (params) => {
+      memberList.delete(params.member.id);
+      console.log('>> DEMO member.left', params);
+    })
+    _currentRoom.on('layout.changed', (params) => {
+      console.log('>> DEMO layout.changed', params)
+
+      const { layout } = params
+
+      const validmember_ids = []
+      layout.layers.forEach(({ member_id, x, y, width, height }) => {
+        if (member_id && member_id != myMemberId) {
+          validmember_ids.push(member_id)
+          if (!canvasMap.has(member_id)) {
+            // build canvas and context2d
+            const canvasEl = document.createElement('canvas')
+            canvasEl.id = 'canvas_' + member_id
+            _createCanvasWrapper(member_id, canvasEl);
+            const canvasCtx = canvasEl.getContext('2d', { alpha: false })
+            canvasMap.set(member_id, {
+              member_id,
+              canvasEl,
+              canvasCtx,
+              x,
+              y,
+              width,
+              height,
+            })
+          } else {
+            canvasMap.set(member_id, {
+              ...canvasMap.get(member_id),
+              x,
+              y,
+              width,
+              height,
+            })
+          }
         }
-        if (video_moderated) {
-          toggleVideoStream(remoteFeed.rfid, false);
+      })
+
+      Array.from(canvasMap.keys()).forEach((member_id) => {
+        if (!validmember_ids.includes(member_id)) {
+          _deleteCanvas(member_id)
         }
-			},
-			oncleanup: function() {
-				//Janus.log(" ::: Got a cleanup notification (remote feed " + id + ") :::");
-			}
-		});
+      })
+      
+    })
+    _currentRoom.on('track', (event) => console.log('>> DEMO track', event))
+    _currentRoom.on('destroy', () => {
+      _stopDrawingCanvas()
+    })
+
+    _currentRoom
+      .join()
+      .then((result) => {
+        console.log('>> Room Joined', result)
+      })
+      .catch((error) => {
+        console.error('Join error?', error)
+      })
+  })
 }
 
-function createNewStream(remoteFeed, stream) {
-  //Janus.log("Remote feed #" + remoteFeed.rfindex + " id "+ remoteFeed.rfid + ", stream:", stream);
-  var existingElement = document.getElementById(remoteFeed.rfid);
-  if (existingElement) {
-    console.log("Adding stream", remoteFeed, stream);
-    return;
-  }
-
-  var videoFrame = document.createElement('div');
-  videoFrame.classList.add("videoFrame");
-  videoFrame.id = remoteFeed.rfid;
-
-  var placeholder = document.createElement('div');
-  placeholder.classList.add("videoPlaceholder");
-  var icon = document.createElement('i');
-  icon.className = "fas fa-video-slash";
-  placeholder.appendChild(icon);
-  videoFrame.appendChild(placeholder);
-
-  var banner = document.createElement('div');
-  banner.className = "videoBanner";
-  banner.innerText = remoteFeed.rfdisplay;
-  videoFrame.appendChild(banner);
-
-  var videoMuted = document.createElement('div');
-  videoMuted.classList.add("videoMuted");
-  var icon = document.createElement('i');
-  icon.className = "fas fa-microphone-slash";
-  videoMuted.appendChild(icon);
-  videoFrame.appendChild(videoMuted);
-
-  var videoElm = document.createElement('video');
-  videoElm.autoplay = true;
-  videoElm.playsInline = true;
-  videoFrame.appendChild(videoElm);
-
-  document.getElementById('remotevideo').appendChild(videoFrame)
-	Janus.attachMediaStream(videoElm, stream);
-}
-
-function handlePresence(data) {
-  console.log('presence', data);
-
-  if (typeof data.video !== "undefined") {
-    toggleVideoStream(data.id, data.video)
-  }
-
-  if (typeof data.audio !== "undefined") {
-    toggleAudioStream(data.id, data.audio)
+/**
+ * Hangup the _currentRoom if present
+ */
+window.hangup = () => {
+  if (_currentRoom) {
+    _currentRoom.hangup()
   }
 }
 
-function toggleVideoStream(id, visible) {
-  var elm = document.getElementById(id);
-  if (!elm) { return }
 
-  var vid = elm.querySelector('video');
-  var ph = elm.querySelector('.videoPlaceholder')
-
-  if (visible) {
-    vid.style.display = "block";
-    ph.style.display = "none";
+// jQuery document.ready equivalent
+window.ready = (callback) => {
+  if (document.readyState != 'loading') {
+    callback()
+  } else if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', callback)
   } else {
-    vid.style.display = "none";
-    ph.style.display = "block";
+    document.attachEvent('onreadystatechange', function () {
+      if (document.readyState != 'loading') {
+        callback()
+      }
+    })
   }
 }
 
-function toggleAudioStream(id, visible) {
-  var elm = document.getElementById(id);
-  if (!elm) { return }
-  var ph = elm.querySelector('.videoMuted')
+window.muteSelf = () => {
+  _currentRoom.audioMute(_currentRoom.member_id)
+}
 
-  if (visible) {
-    ph.style.display = "none";
-  } else {
-    ph.style.display = "block";
-  }
+window.unmuteSelf = () => {
+  _currentRoom.audioUnmute(_currentRoom.member_id)
+}
+
+window.muteVideoSelf = () => {
+  _currentRoom.videoMute(_currentRoom.member_id)
+}
+
+window.unmuteVideoSelf = () => {
+  _currentRoom.videoUnmute(_currentRoom.member_id)
 }
 
 function toggleVideo(e) {
-  var btn = document.getElementById('myVideo');
+  var btn = document.getElementById('myVideoBtn');
   var icon = btn.querySelector('i');
-  var elm = document.getElementById('localVideo');
 
   if (videoActive) {
     // muting
     videoActive = false;
     icon.classList.remove('fa-video');
     icon.classList.add('fa-video-slash');
-    elm.style.opacity = 0.2;
+    muteVideoSelf();
   } else {
     // unmuting
     videoActive = true;
     icon.classList.remove('fa-video-slash');
     icon.classList.add('fa-video');
-    elm.style.opacity = 1;
+    unmuteVideoSelf();
   }
 
   console.log('Video is now: ', videoActive);
-
-  formSubmit({
-    member_id: memberId,
-    command: 'toggle_video',
-    value: videoActive
-  })
 }
 
 function toggleAudio(e) {
-  var btn = document.getElementById('myAudio');
+  console.log('mute unmute', audioActive)
+  var btn = document.getElementById('myAudioBtn');
   var icon = btn.querySelector('i');
 
   if (audioActive) {
@@ -392,131 +401,71 @@ function toggleAudio(e) {
     audioActive = false;
     icon.classList.remove('fa-microphone');
     icon.classList.add('fa-microphone-slash');
+    muteSelf();
   } else {
     // unmuting
     audioActive = true;
     icon.classList.remove('fa-microphone-slash');
     icon.classList.add('fa-microphone');
+    unmuteSelf();
   }
 
   console.log('Audio is now: ', audioActive);
-
-  formSubmit({
-    member_id: memberId,
-    command: 'toggle_audio',
-    value: audioActive
-  })
 }
 
-function formSubmit(body) {
-  var token = document.getElementsByName('csrf-token')[0].content
-  var formData = new FormData();
-  for (const [key, value] of Object.entries(body)) {
-    formData.append(key, value)
-  }
-
-  fetch(globalSubmitUrl, {
-    body: formData,
-    method: "post"
-  })
-  return false;
-}
-
-function destroyRemoteFeed(remoteFeedId) {
-  var remoteFeed = feeds[remoteFeedId];
-
-  if (remoteFeed) {
-    feeds[remoteFeedId] = null;
-    console.log("Removing stream", remoteFeed.rfid);
-    remoteFeed.detach();
-    var existingElement = document.getElementById(remoteFeedId);
-    if (existingElement) {
-      existingElement.remove();
+function toggleAudioMuteDisplay(id, is_muted) {
+  var wrapper = document.getElementById('wrapcanvas_' + id);
+  if (wrapper) {
+    var ph = wrapper.querySelector('.videoMuted');
+    if (is_muted) {
+      ph.style.display = "block";
+    } else {
+      ph.style.display = "none";
     }
   }
-  
 }
 
-function initDevices(devices) {
-  var audioInput = document.getElementById('audioInput');
-  audioInput.options.length = 0;
-  var videoInput = document.getElementById('videoInput');
-  videoInput.options.length = 0;
-  var audioOutput = document.getElementById('audioOutput');
-  audioOutput.options.length = 0;
+async function listDevices() {
+  var devices = await SignalWire.WebRTC.getDevicesWithPermissions();
+  devices.forEach((device) => {
+    var opt = document.createElement('option');
+    opt.value = device.deviceId;
+    opt.innerHTML = device.label;
+    document.getElementById(device.kind).appendChild(opt);
+  });
+}
 
-	devices.forEach(function(device) {
-		var label = device.label;
-		if (!label || label === "") {
-			label = device.deviceId;
-    }
-		if (device.kind === 'audioinput') {
-      addOptionToSelect(audioInput, label, device.deviceId)
-		} else if (device.kind === 'videoinput') {
-      addOptionToSelect(videoInput, label, device.deviceId)
-		} else if (device.kind === 'audiooutput') {
-      addOptionToSelect(audioOutput, label, device.deviceId)
-    }
+function setInput() {
+  var audioInput = document.getElementById('audioinput').value;
+  _currentRoom.updateMicrophone({ deviceId: audioInput });
+  var videoInput = document.getElementById('videoinput').value;
+  _currentRoom.updateCamera({ deviceId: videoInput });
+}
+
+function setOutput() {
+  var audioOutput = document.getElementById('audiooutput').value;
+  _currentRoom.updateSpeaker({ deviceId: audioOutput });
+}
+
+window.ready(function () {
+  connect();
+  listDevices();
+  _currentWidth = document.getElementById('chromeOnly').offsetWidth;
+
+  document.getElementById('myVideoBtn').addEventListener('click', function(e){
+    toggleVideo(e);
   });
 
-  audioDeviceId = audioInput.value;
-  videoDeviceId = videoInput.value;
-}
+  document.getElementById('myAudioBtn').addEventListener('click', function(e){
+    toggleAudio(e);
+  });
 
-function addOptionToSelect(select, label, value) {
-  var option = document.createElement('option');
-  option.innerText = label;
-  option.value = value;
+  document.getElementById('changeInput').addEventListener('click', function(e){
+    setInput();
+  });
 
-  select.appendChild(option)
-}
-
-function restartCapture() {
-	// Negotiate WebRTC
-	var body = { audio: true, video: true };
-
-	sfutest.send({ message: body });
-
-	var replaceAudio = document.getElementById('audioInput').value !== audioDeviceId;
-	audioDeviceId = document.getElementById('audioInput').value;
-	var replaceVideo = document.getElementById('videoInput').value !== videoDeviceId;
-	videoDeviceId = document.getElementById('videoInput').value;
-	sfutest.createOffer(
-		{
-			// We provide a specific device ID for both audio and video
-			media: {
-				audio: {
-					deviceId: {
-						exact: audioDeviceId
-					}
-				},
-				replaceAudio: replaceAudio,	// This is only needed in case of a renegotiation
-				video: {
-					deviceId: {
-						exact: videoDeviceId
-					}
-				},
-				replaceVideo: replaceVideo,	// This is only needed in case of a renegotiation
-				data: true	// Let's negotiate data channels as well
-			},
-
-			success: function(jsep) {
-
-				// sfutest.send({ message: body, jsep: jsep });
-			},
-			error: function(error) {
-				console.log(error);
-			}
-		});
-}
-
-ready(async function() {
-  document.getElementById('changeInput').onclick = function () {
-    restartCapture();
-  }
-
-  document.getElementById('myVideo').addEventListener('click', function(e){
-    toggleVideo(e);
+  document.getElementById('changeOutput').addEventListener('click', function(e){
+    setOutput();
   });
 
   document.getElementById('displayControls').addEventListener('click', function(e){
@@ -528,179 +477,6 @@ ready(async function() {
       document.getElementById('videoControls').style.display = "none";
     }
   });
+})
 
-  document.getElementById('myAudio').addEventListener('click', function(e){
-    toggleAudio(e);
-  });
-
-  document.getElementById('changeOutput').onclick = function () {
-    var deviceId = document.getElementById("audioOutput").value;
-
-    for (var key in feeds) {
-      console.log(feeds[key])
-      var elm = document.getElementById(feeds[key].rfid);
-      if (elm) {
-        var vid = elm.querySelector('video');
-        if (vid && vid.setSinkId) {
-          vid.setSinkId(deviceId).then(function() {
-							console.log('Audio output device attached:', deviceId);
-          });
-        }
-      }
-    }
-  }
-
-  Janus.init({debug: false, callback: function() {
-    if(!Janus.isWebrtcSupported()) {
-      console.log("No WebRTC support... ");
-      return;
-    }
-
-    janus = new Janus(
-      {
-        server: server,
-        token: userToken,
-        success: function() {
-          // Attach to VideoRoom plugin
-          janus.attach(
-            {
-              plugin: "janus.plugin.videoroom",
-              opaqueId: opaqueId,
-              success: function(pluginHandle) {
-                sfutest = pluginHandle;
-                //Janus.log("Plugin attached! (" + sfutest.getPlugin() + ", id=" + sfutest.getId() + ")");
-                // set up devices
-                Janus.listDevices(initDevices);
-                joinRoom();
-              },
-              error: function(error) {
-                Janus.error("  -- Error attaching plugin...", error);
-                console.log("Error attaching plugin... " + error);
-              },
-              consentDialog: function(on) {
-                
-              },
-              iceState: function(state) {
-                //Janus.log("ICE state changed to " + state);
-              },
-              mediaState: function(medium, on) {
-                //Janus.log("Janus " + (on ? "started" : "stopped") + " receiving our " + medium);
-              },
-              webrtcState: function(on) {
-                //Janus.log("Janus says our WebRTC PeerConnection is " + (on ? "up" : "down") + " now");
-              },
-              onmessage: function(msg, jsep) {
-                //Janus.log(" ::: Got a message (publisher) :::", msg);
-                var event = msg["videoroom"];
-                //Janus.log("Event: " + event);
-                if(event) {
-                  if(event === "joined") {
-                    // Publisher/manager created, negotiate WebRTC and attach to existing , if any
-                    myid = msg["id"];
-                    mypvtid = msg["private_id"];
-                    //Janus.log("Successfully joined room " + msg["room"] + " with ID " + myid);
-                    publishOwnFeed();
-                    // Any new feed to attach to?
-                    if(msg["publishers"]) {
-                      var list = msg["publishers"];
-                      console.log("Got a list of available publishers/fds:", list);
-                      for(var f in list) {
-                        var id = list[f]["id"];
-                        var display = list[f]["display"];
-                        var audio = list[f]["audio_codec"];
-                        var video = list[f]["video_codec"];
-                        var audio_moderated = list[f]["audio_moderated"];
-                        var video_moderated = list[f]["video_moderated"];
-                        //Janus.log("  >> [" + id + "] " + display + " (audio: " + audio + ", video: " + video + ")");
-                        newRemoteFeed(id, display, audio, video, audio_moderated, video_moderated);
-                      }
-                    }
-                  } else if(event === "destroyed") {
-                    // The room has been destroyed
-                    Janus.warn("The room has been destroyed!");
-                      window.location.reload();
-                  } else if(event === "event") {
-                    // Any new feed to attach to?
-                    if(msg["publishers"]) {
-                      var list = msg["publishers"];
-                      console.log("Got a list of available publishers/feeds:", list);
-                      for(var f in list) {
-                        var id = list[f]["id"];
-                        var display = list[f]["display"];
-                        var audio = list[f]["audio_codec"];
-                        var video = list[f]["video_codec"];
-                        var audio_moderated = list[f]["audio_moderated"];
-                        var video_moderated = list[f]["video_moderated"];
-                        //Janus.log("  >> [" + id + "] " + display + " (audio: " + audio + ", video: " + video + ")");
-                        newRemoteFeed(id, display, audio, video, audio_moderated, video_moderated);
-                      }
-                    } else if(msg["leaving"]) {
-                      // One of the publishers has gone away?
-                      destroyRemoteFeed(msg["leaving"])
-                    } else if(msg["unpublished"]) {
-                      destroyRemoteFeed(msg["unpublished"])
-                    } else if(msg["error"]) {
-                      if(msg["error_code"] === 426) {
-                        // This is a "no such room" error: give a more meaningful description
-                        console.log("room " + myroom + " does not exist...");
-                      } else {
-                        console.log(msg["error"]);
-                      }
-                    }
-                  }
-                }
-                if(jsep) {
-                  //Janus.log("Handling SDP as well...", jsep);
-                  sfutest.handleRemoteJsep({ jsep: jsep });
-                  // Check if any of the media we wanted to publish has
-                  // been rejected (e.g., wrong or unsupported codec)
-                  var audio = msg["audio_codec"];
-                  if(mystream && mystream.getAudioTracks() && mystream.getAudioTracks().length > 0 && !audio) {
-                    // Audio has been rejected
-                    console.log("Our audio stream has been rejected, viewers won't hear us");
-                  }
-                  var video = msg["video_codec"];
-                  if(mystream && mystream.getVideoTracks() && mystream.getVideoTracks().length > 0 && !video) {
-                    // Video has been rejected
-                    console.log("Our video stream has been rejected, viewers won't see us");
-                  }
-                }
-              },
-              onlocalstream: function(stream) {
-                //Janus.log(" ::: Got a local stream :::", stream);
-                mystream = stream;
-                Janus.attachMediaStream(document.getElementById('localVideo'), stream);
-                document.getElementById("localVideo").muted = "muted";
-                if(sfutest.webrtcStuff.pc.iceConnectionState !== "completed" &&
-                    sfutest.webrtcStuff.pc.iceConnectionState !== "connected") {
-                  console.log("Publishing started");
-                }
-                var videoTracks = stream.getVideoTracks();
-                if(!videoTracks || videoTracks.length === 0) {
-                  // No webcam
-                  console.log("no webcam")
-                } else {
-                  console.log("we have a webcam")
-                }
-              },
-              onremotestream: function(stream) {
-                // The publisher stream is sendonly, we don't expect anything here
-              },
-              oncleanup: function() {
-                //Janus.log(" ::: Got a cleanup notification: we are unpublished now :::");
-                mystream = null;
-              }
-            });
-        },
-        error: function(error) {
-          Janus.error(error);
-          console.log('FATAL ERROR', error)
-          // window.location.reload();
-        },
-        destroyed: function() {
-          window.location.reload();
-        }
-      });
-  }});
-});
 </script>
