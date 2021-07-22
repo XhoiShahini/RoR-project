@@ -33,10 +33,6 @@ class Meetings::RoomController < ApplicationController
     end
   end
 
-  def video_only
-    @token = SignalwireService.request_token(@meeting.signed_room_id, @meeting_member.signed_member_id)
-  end
-
   # POST perform_action
   def perform_action
     # for now we do not have "real" controls
