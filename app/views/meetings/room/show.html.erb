@@ -75,12 +75,12 @@
             <button type="button" id="displayControls" class="btn btn-small btn-primary mt-2"><%= t('video.show_options') %></button>
             <div class="card" style="display: none;" id="videoControls">
               <p><%= t('video.audio_input') %></p>
-              <select id="audioInput"></select>
+              <select id="audioinput"></select>
               <p><%= t('video.video_input') %></p>
-              <select id="videoInput"></select>
+              <select id="videoinput"></select>
               <button type="button" id="changeInput" class="btn btn-small btn-primary mt-2 mr-2"><%= t('video.change_input') %></button>
               <p><%= t('video.audio_output') %></p>
-              <select id="audioOutput"></select>
+              <select id="audiooutput"></select>
               <button type="button" id="changeOutput" class="btn btn-small btn-primary mt-2 mr-2"><%= t('video.change_output') %></button>
             </div>
           </div>
@@ -209,6 +209,8 @@ window.connect = () => {
 
     videoFrame.appendChild(canvasEl)
     sfuWrapper.appendChild(videoFrame);
+
+    toggleAudioMuteDisplay(memberInfo.id, memberInfo.audio_muted);
   }
 
   SignalWire.Video.createRoomObject({
@@ -275,7 +277,7 @@ window.connect = () => {
 
       const validmember_ids = []
       layout.layers.forEach(({ member_id, x, y, width, height }) => {
-        if (member_id) {
+        if (member_id && member_id != myMemberId) {
           validmember_ids.push(member_id)
           if (!canvasMap.has(member_id)) {
             // build canvas and context2d
@@ -390,6 +392,7 @@ function toggleVideo(e) {
 }
 
 function toggleAudio(e) {
+  console.log('mute unmute', audioActive)
   var btn = document.getElementById('myAudioBtn');
   var icon = btn.querySelector('i');
 
@@ -422,9 +425,31 @@ function toggleAudioMuteDisplay(id, is_muted) {
   }
 }
 
+async function listDevices() {
+  var devices = await SignalWire.WebRTC.getDevicesWithPermissions();
+  devices.forEach((device) => {
+    var opt = document.createElement('option');
+    opt.value = device.deviceId;
+    opt.innerHTML = device.label;
+    document.getElementById(device.kind).appendChild(opt);
+  });
+}
+
+function setInput() {
+  var audioInput = document.getElementById('audioinput').value;
+  _currentRoom.updateMicrophone({ deviceId: audioInput });
+  var videoInput = document.getElementById('videoinput').value;
+  _currentRoom.updateCamera({ deviceId: videoInput });
+}
+
+function setOutput() {
+  var audioOutput = document.getElementById('audiooutput').value;
+  _currentRoom.updateSpeaker({ deviceId: audioOutput });
+}
 
 window.ready(function () {
   connect();
+  listDevices();
   _currentWidth = document.getElementById('chromeOnly').offsetWidth;
 
   document.getElementById('myVideoBtn').addEventListener('click', function(e){
@@ -433,6 +458,24 @@ window.ready(function () {
 
   document.getElementById('myAudioBtn').addEventListener('click', function(e){
     toggleAudio(e);
+  });
+
+  document.getElementById('changeInput').addEventListener('click', function(e){
+    setInput();
+  });
+
+  document.getElementById('changeOutput').addEventListener('click', function(e){
+    setOutput();
+  });
+
+  document.getElementById('displayControls').addEventListener('click', function(e){
+    if (document.getElementById('videoControls').style.display == "none") {
+      e.target.innerText = "<%= t('video.hide_options') %>";
+      document.getElementById('videoControls').style.display = "block";
+    } else {
+      e.target.innerText = "<%= t('video.show_options') %>";
+      document.getElementById('videoControls').style.display = "none";
+    }
   });
 })
 
