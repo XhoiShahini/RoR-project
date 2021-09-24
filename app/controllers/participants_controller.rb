@@ -49,6 +49,7 @@ class ParticipantsController < ApplicationController
 
   # DELETE /meetings/:meeting_id/participants/:id
   def destroy
+    @participant.send_removed_email
     @participant.destroy
     redirect_to @meeting, notice: t("participants.notice.destroy")
   end

@@ -55,7 +55,7 @@ class Participant < ApplicationRecord
   has_many :sms_verifications, as: :sms_verifiable
 
   # after_create { send_invite }
-  before_destroy { send_removed_email }
+  # before_destroy { send_removed_email }
   after_update_commit { MeetingMembersChannel.broadcast_to meeting, type: "update" }
   validate :send_invite, on: :update, if: -> { email_changed? }
 
