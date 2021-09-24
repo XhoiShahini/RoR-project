@@ -22,6 +22,7 @@ class ParticipantsController < ApplicationController
     @participant = @meeting.account.participants.new(participant_params)
 
     if @participant.save
+      @participant.send_invite
       redirect_to new_meeting_participant_path(@meeting), notice: t("participants.notice.create")
     else
       render :new, status: :unprocessable_entity
