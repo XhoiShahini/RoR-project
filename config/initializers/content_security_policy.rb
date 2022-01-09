@@ -20,7 +20,7 @@ Rails.application.config.content_security_policy do |policy|
     policy.connect_src :self, :https, *srcs
   else
     # For subdomains, add your domain:
-    policy.connect_src :self, :https, "wss://*.signalwire.com"
+    policy.connect_src :self, :https, "wss://*.signalwire.com", "wss://beta.agree.live/cable"
   end
 
   #   # Specify URI for violation reports
