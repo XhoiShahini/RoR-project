@@ -49,8 +49,12 @@ Rails.application.routes.draw do
     member do
       get :allow_signatures
     end
+
+    collection do
+      get :pdf_testing
+    end
   end
-    
+
   # Jumpstart views
   if Rails.env.development? || Rails.env.test?
     mount Jumpstart::Engine, at: "/jumpstart"
