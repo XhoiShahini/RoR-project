@@ -58,10 +58,11 @@ class DocumentsController < ApplicationController
 
   # PATCH/PUT /meetings/:meeting_id/documents/:id
   def update
-    if @document.update(document_params)
-      redirect_to @meeting, notice: t("documents.notice.update")
-    else
-      render :edit, status: :unprocessable_entity
+    result = @document.update(document_params)
+
+    respond_to do |format|
+      format.html { redirect_to @meeting, notice: t("documents.notice.update") }
+      format.json { render json: @document, status: :ok }
     end
   end
 
@@ -157,7 +158,7 @@ class DocumentsController < ApplicationController
   end
 
   def document_params
-    params.require(:document).permit(:title, :file, :read_only, :require_read)
+    params.require(:document).permit(:title, :file, :read_only, :require_read, :signature_fields => [:version, :fields => {}])
   end
 
   def cannot_modify_signed!
