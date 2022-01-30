@@ -23,7 +23,7 @@ export default class extends Controller {
       .then(response => response.text())
       .then(data => {
         let parser = new DOMParser()
-        return parser.parseFromString(data, "text/html")  
+        return parser.parseFromString(data, "text/html")
       })
       .then(response => {
         this.element.innerHTML = response.querySelector("#documents").innerHTML
@@ -32,8 +32,9 @@ export default class extends Controller {
 
   _initViewer(promise) {
     promise.then(() => {
-      const pdfController = this.application.getControllerForElementAndIdentifier(document.querySelector("#pdf-controller"), "documents--pdf")
-      pdfController._initTabs()
+      // FIXME: ?
+      // const pdfController = this.application.getControllerForElementAndIdentifier(document.querySelector("#pdf-controller"), "documents--pdf")
+      // pdfController._initTabs()
     })
   }
 
