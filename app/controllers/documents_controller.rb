@@ -122,6 +122,10 @@ class DocumentsController < ApplicationController
     redirect_to meeting_documents_path(@meeting), notice: t("documents.notice.destroy")
   end
 
+  # GET /meetings/:meeting_id/documents/:id/signatures
+  def signatures
+  end
+
   private
 
   def stream_document_file(disposition:)

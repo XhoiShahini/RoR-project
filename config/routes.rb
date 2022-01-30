@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         get :otp_verified
         get :otp_failed
         get :mark_as_read
+        get :signatures
         post :verify_otp
       end
     end
