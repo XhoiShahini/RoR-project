@@ -1,8 +1,13 @@
 {
   "name": "jumpstart-app",
   "private": true,
+  "scripts": {
+    "move-pdftron": "cp -a ./node_modules/@pdftron/pdfjs-express/public/. ./public/pdftron",
+    "postinstall": "npm run move-pdftron"
+  },
   "dependencies": {
     "@hotwired/turbo-rails": "^7.0.0-beta.5",
+    "@pdftron/pdfjs-express": "^8.2.0",
     "@rails/actioncable": "^6.1.3",
     "@rails/actiontext": "^6.1.3",
     "@rails/activestorage": "^6.1.3",
@@ -23,7 +28,7 @@
     "jstz": "^2.1.1",
     "local-time": "^2.1.0",
     "mini-css-extract-plugin": "^1.3.9",
-    "pdfjs-dist": "^2.7.570",
+    "pdfjs-dist": "~2.7.570",
     "postcss": "^8.2.8",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^14.0.0",
