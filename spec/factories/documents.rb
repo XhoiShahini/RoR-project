@@ -2,15 +2,16 @@
 #
 # Table name: documents
 #
-#  id            :uuid             not null, primary key
-#  read_only     :boolean
-#  require_read  :boolean
-#  state         :string
-#  title         :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  created_by_id :uuid             not null
-#  meeting_id    :uuid             not null
+#  id               :uuid             not null, primary key
+#  read_only        :boolean
+#  require_read     :boolean
+#  signature_fields :jsonb
+#  state            :string
+#  title            :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  created_by_id    :uuid             not null
+#  meeting_id       :uuid             not null
 #
 # Indexes
 #
