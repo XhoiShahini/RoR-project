@@ -1,6 +1,6 @@
 class MeetingsController < ApplicationController
   include MeetingsHelper
-  before_action :set_meeting, except: [:index, :new, :create, :pdf_testing]
+  before_action :set_meeting, except: [:index, :new, :create]
   before_action :cannot_modify_completed!, only: [:edit, :update, :destroy]
   before_action :require_current_account_admin, except: [:index, :show]
 
@@ -71,10 +71,6 @@ class MeetingsController < ApplicationController
   def destroy
     @meeting.destroy
     redirect_to meetings_url, notice: t("meetings.notice.destroy")
-  end
-
-  def pdf_testing
-
   end
 
   private
