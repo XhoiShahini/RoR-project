@@ -85,6 +85,22 @@
             }
           ) %>
         </div>
+        <% if @meeting.completed? && @meeting.host == current_user %>
+        <div class="my-2 ml-2">
+          <h3><%= t(".recordings") %></h3>
+          <% if @recordings.any? %>
+            <% @recordings.each do |rec| %>
+            <p>
+              <a href="<%= rec[:uri] %>" target="_blank">
+                <%= l rec[:started_at], format: :long %> (<%= rec[:duration] %>)
+              </a>
+            </p>
+            <% end %>
+          <% else %>
+            <p><%= t(".no_recordings") %></p>
+          <% end %>
+        </div>
+        <% end %>
       </div>
       <div class="flex justify-center">
         <%= link_to t('.join_meeting'), pre_meeting_meeting_room_path(@meeting), class: "btn btn-secondary" %>

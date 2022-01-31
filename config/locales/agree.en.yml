@@ -85,7 +85,9 @@ en:
       account: Account
       details: Details
       documents: Documents
-      members: Members
+      members: 
+      recordings: Recordings
+      no_recordings: No recordings present.
       join_meeting: Join Meeting
     index:
       title: "Title"
