@@ -87,6 +87,9 @@
           <div id="<%= @meeting_member.signed_member_id %>">
             <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myAudioBtn"><i class="fas fa-microphone"></i></button>
             <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myVideoBtn"><i class="fas fa-video"></i></button>
+            <% if @meeting_member.is_moderator? %>
+              <button type="button" class="btn btn-small btn-danger mt-1 mr-1" id="recordBtn" onclick="toggleRecording();"><i class="fas fa-dot-circle"></i></button>
+            <% end %>
           </div>
 
           <div id="sfuWrapper" style="margin-top: 10px;">
@@ -98,7 +101,7 @@
 </div>
 
 <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-<script src="https://unpkg.com/@signalwire/js@beta"></script>
+<script src="https://unpkg.com/@signalwire/js"></script>
 <script>
 
 var _swToken = "<%= @token %>";
@@ -129,6 +132,7 @@ const memberList = new Map();
 var audioActive = true;
 var videoActive = true;
 var _currentWidth = null;
+var _currentRecording = null;
 
 /**
  * Connect with Relay creating a client and attaching all the event handler.
@@ -445,6 +449,21 @@ function setInput() {
 function setOutput() {
   var audioOutput = document.getElementById('audiooutput').value;
   _currentRoom.updateSpeaker({ deviceId: audioOutput });
+}
+
+async function toggleRecording() {
+  var btn = document.getElementById('recordBtn');
+  var icon = btn.querySelector('i');
+  if (_currentRecording) {
+    _currentRecording.stop();
+    _currentRecording = null;
+    icon.classList.remove('fa-stop-circle');
+    icon.classList.add('fa-dot-circle');
+  } else {
+    _currentRecording = await _currentRoom.startRecording();
+    icon.classList.remove('fa-dot-circle');
+    icon.classList.add('fa-stop-circle');
+  }
 }
 
 window.ready(function () {

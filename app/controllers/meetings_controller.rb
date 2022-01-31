@@ -40,6 +40,21 @@ class MeetingsController < ApplicationController
   # GET /meetings/:id
   def show
     require_meeting_member!
+
+    @recordings = []
+
+    if @meeting.host == current_user
+      @recordings = SignalwireService.get_recordings_for_room(@meeting.signed_room_id).map do |rec|
+        {
+          id: rec['id'],
+          started_at: DateTime.parse(rec['started_at']),
+          uri: rec['uri'],
+          duration: Time.at(rec['duration']).utc.strftime('%H h %M m %S s')
+        }
+      end
+      puts 'afafafafa'
+      puts @recordings
+    end
   end
 
   # GET /meetings/:id/edit

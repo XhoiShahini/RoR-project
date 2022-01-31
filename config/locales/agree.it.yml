@@ -87,6 +87,7 @@ it:
       details: "Dettagli"
       documents: "Documenti"
       members: "Partecipanti"
+      recordings: "Registrazioni"
       join_meeting: "Entra nella riunione"
     index:
       title: "Titolo"
