@@ -45,7 +45,31 @@ export default class extends Controller {
   connect() {
     console.log('Connect', this.fieldsValue, this.updateUrlValue)
 
-    PDFJSExpress({ path: '/pdftron', initialDoc: this.urlValue }, document.getElementById('viewer')).then(instance => {
+    PDFJSExpress({
+      path: '/pdftron',
+      initialDoc: this.urlValue,
+      disabledElements: [
+        'leftPanelButton',
+        'leftPanel',
+        'viewControlsButton',
+        'selectToolButton',
+        'panToolButton',
+        'toolbarGroup-View',
+        'toolbarGroup-Annotate',
+        'toolbarGroup-Shapes',
+        'toolbarGroup-Insert',
+        'toolbarGroup-FillAndSign',
+        'ribbonsDropdown',
+        'searchButton',
+        'searchPanel',
+        'searchPanelResizeBar',
+        'toggleNotesButton',
+        'notesPanel',
+        'notesPanelResizeBar',
+        'menuButton',
+        'toolsHeader',
+      ]
+    }, document.getElementById('viewer')).then(instance => {
       this._pdfInstanceRef = instance
       console.log('Connect THIS', this)
 
@@ -83,26 +107,26 @@ export default class extends Controller {
 
         this._applyInitialPlaceholderBoxes()
 
-        this.createSignHereBox({
-          name: 'box-1',
-          pageNumber: 1,
-          x: 100,
-          y: 100,
-          width: 50,
-          height: 20
-        })
+        // this.createSignHereBox({
+        //   name: 'box-1',
+        //   pageNumber: 1,
+        //   x: 100,
+        //   y: 100,
+        //   width: 50,
+        //   height: 20
+        // })
 
-        setTimeout(() => {
+        // setTimeout(() => {
 
-          this.createSignHereBox({
-            name: 'box-3',
-            pageNumber: 1,
-            x: 100,
-            y: 300,
-            width: 50,
-            height: 20
-          })
-        }, 5000)
+        //   this.createSignHereBox({
+        //     name: 'box-3',
+        //     pageNumber: 1,
+        //     x: 100,
+        //     y: 300,
+        //     width: 50,
+        //     height: 20
+        //   })
+        // }, 5000)
       })
     })
   }

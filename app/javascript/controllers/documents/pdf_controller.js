@@ -65,7 +65,33 @@ export default class extends Controller {
 
     const url = "/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/pdf"
     console.debug('Load', url)
-    PDFJSExpress({ path: '/pdftron', initialDoc: url }, document.getElementById('viewer')).then(instance => {
+    PDFJSExpress({
+      path: '/pdftron',
+      initialDoc: url,
+      disabledElements: [
+        'leftPanelButton',
+        'leftPanel',
+        'viewControlsButton',
+        'selectToolButton',
+        'panToolButton',
+        'toolbarGroup-View',
+        'toolbarGroup-Annotate',
+        'toolbarGroup-Shapes',
+        'toolbarGroup-Insert',
+        'toolbarGroup-FillAndSign',
+        'ribbonsDropdown',
+        'searchButton',
+        'searchPanel',
+        'searchPanelResizeBar',
+        'toggleNotesButton',
+        'notesPanel',
+        'notesPanelResizeBar',
+        'menuButton',
+        'toolsHeader',
+        'annotationStyleEditButton',
+        'linkButton'
+      ]
+    }, document.getElementById('viewer')).then(instance => {
       const {
         docViewer,
         annotManager: annotationManager,
