@@ -76,6 +76,8 @@ export default class extends Controller {
         'notesPanelResizeBar',
         'menuButton',
         'toolsHeader',
+        'annotationStyleEditButton',
+        'linkButton'
       ]
     }, document.getElementById('viewer')).then(instance => {
       this._pdfInstanceRef = instance
