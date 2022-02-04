@@ -32,9 +32,8 @@ export default class extends Controller {
 
   _initViewer(promise) {
     promise.then(() => {
-      // FIXME: ?
-      // const pdfController = this.application.getControllerForElementAndIdentifier(document.querySelector("#pdf-controller"), "documents--pdf")
-      // pdfController._initTabs()
+      const pdfController = this.application.getControllerForElementAndIdentifier(document.querySelector("#pdf-controller"), "documents--pdf")
+      pdfController._initTabs()
     })
   }
 
