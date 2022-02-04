@@ -4,7 +4,14 @@ import PDFJSExpress from '@pdftron/pdfjs-express'
 const CURRENT_VERSION = '1'
 
 export default class extends Controller {
-  static values = { id: String, url: String, meetingId: String, updateUrl: String, fields: Object }
+  static values = {
+    id: String,
+    url: String,
+    meetingId: String,
+    meetingUrl: String,
+    updateUrl: String,
+    fields: Object,
+  }
   _pdfInstanceRef = null
 
   save() {
@@ -38,7 +45,8 @@ export default class extends Controller {
     })
       .then(response => response.json())
       .then(data => {
-        console.debug('Saved!', data)
+        console.debug('Saved!', data, this.meetingUrlValue)
+        window.location.href = this.meetingUrlValue
       })
   }
 
