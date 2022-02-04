@@ -68,6 +68,10 @@ it:
     placeholder: Seleziona un documento da sinistra o creane uno nuovo
     document:
       add_document_signatures: Aggiungi Firme
+    signatures:
+      details: Dettagli
+      save: Salva
+      help: Doppio click sul documento per aggiungere un campo firma.
 
   meetings:
     errors:

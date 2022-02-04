@@ -67,6 +67,10 @@ en:
     placeholder: Select a document from the left or create a new one
     document:
       add_document_signatures: Add Signatures
+    signatures:
+      details: Details
+      save: Save
+      help: Double click on the document to add the signature fields.
 
   meetings:
     errors:
