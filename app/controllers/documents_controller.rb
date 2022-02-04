@@ -39,7 +39,12 @@ class DocumentsController < ApplicationController
 
   # GET /meetings/:meeting_id/documents/:id
   def show
-    @host = current_account_admin?
+    respond_to do |format|
+      format.html {
+        @host = current_account_admin?
+      }
+      format.json { render json: @document, status: :ok }
+    end
   end
 
   # GET /meetings/:meeting_id/documents/:id/pdf
