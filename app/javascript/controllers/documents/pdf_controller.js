@@ -3,7 +3,7 @@ import consumer from "channels/consumer"
 import PDFJSExpress from '@pdftron/pdfjs-express'
 
 export default class extends Controller {
-  // static targets = ["canvas", "pageNum", "pageCount", "progress", "bar", "placeholder", "controls"]
+  static targets = ['progress', 'viewer']
   static values = { id: String, meetingId: String }
 
   connect() {
@@ -45,26 +45,50 @@ export default class extends Controller {
     }
   }
 
-  // _initTabs() {
-  //   this.tabs = []
-  //   const frames = document.querySelectorAll("div[data-controller='documents--tab']")
-  //   if (!!frames[0]) {
-  //     frames.forEach(frame => {
-  //       const ctrl = this.application.getControllerForElementAndIdentifier(frame, "documents--tab")
-  //       this.tabs.push(ctrl)
-  //     })
-  //   }
-  //   if (!!this.tabs[0]) {
-  //     this.tabs[0].switch()
-  //   }
-  // }
+  _initTabs() {
+    this.tabs = []
+    const frames = document.querySelectorAll("div[data-controller='documents--tab']")
+    if (!!frames[0]) {
+      frames.forEach(frame => {
+        const ctrl = this.application.getControllerForElementAndIdentifier(frame, "documents--tab")
+        this.tabs.push(ctrl)
+      })
+    }
+    if (!!this.tabs[0]) {
+      this.tabs[0].switch()
+    }
+  }
 
-  _initPdf() {
-    // FIXME:
-    this.element.innerHTML = '<div id="viewer" class="h-full"></div>'
+  _createNewViewerEl() {
+    const newViewer = document.createElement('div')
+    newViewer.id = 'viewer'
+    newViewer.classList.add('h-full', 'hidden')
+
+    this.viewerTarget.innerHTML = ''
+    this.viewerTarget.appendChild(newViewer)
+  }
+
+  async _loadSignatureFields() {
+    try {
+      return await fetch("/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + '.json')
+        .then(r => r.json())
+        .then(r => r.signature_fields || {})
+    } catch (error) {
+      console.error('_loadSignatureFields', error)
+      return {}
+    }
+  }
+
+  async _initPdf() {
+    this._createNewViewerEl()
+    this.progressTarget.classList.remove('hidden')
 
     const url = "/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/pdf"
     console.debug('Load', url)
+
+    const sigFields = await this._loadSignatureFields()
+    console.debug('sigFields', sigFields)
+
     PDFJSExpress({
       path: '/pdftron',
       initialDoc: url,
@@ -92,6 +116,10 @@ export default class extends Controller {
         'linkButton'
       ]
     }, document.getElementById('viewer')).then(instance => {
+
+      this.progressTarget.classList.add('hidden')
+      document.getElementById('viewer').classList.remove('hidden')
+
       const {
         docViewer,
         annotManager: annotationManager,
@@ -101,6 +129,7 @@ export default class extends Controller {
       } = instance
 
       const createSignHereBox = ({ pageNumber, x, y, width, height, name }) => {
+        console.log('createSignHereBox', pageNumber, x, y, width, height, name)
         // create a form field
         const field = new Annotations.Forms.Field(name, { type: 'Sig' })
 
@@ -122,11 +151,13 @@ export default class extends Controller {
         })
 
         // set position and size
-        widgetAnnot.PageNumber = pageNumber;
-        widgetAnnot.X = x;
-        widgetAnnot.Y = y;
-        widgetAnnot.Width = width;
-        widgetAnnot.Height = height;
+        widgetAnnot.PageNumber = pageNumber
+        widgetAnnot.X = x
+        widgetAnnot.Y = y
+        widgetAnnot.Width = width
+        widgetAnnot.Height = height
+        widgetAnnot.NoResize = true
+        widgetAnnot.NoRotate = true
 
         // add the form field and widget annotation
         annotationManager.getFieldManager().addField(field)
@@ -134,102 +165,31 @@ export default class extends Controller {
         annotationManager.drawAnnotationsFromList([widgetAnnot])
       }
 
-      docViewer.addEventListener('documentLoaded', () => {
-        createSignHereBox({
-          name: 'box-1',
-          pageNumber: 1,
-          x: 100,
-          y: 100,
-          width: 50,
-          height: 20
-        })
+      // docViewer.addEventListener('pageComplete', (pageNumber, canvas) => {
+      //   console.warn('pageComplete??', pageNumber)
+      // })
 
-        setTimeout(() => {
-          createSignHereBox({
-            name: 'box-3',
-            pageNumber: 1,
-            x: 100,
-            y: 300,
-            width: 50,
-            height: 20
-          })
-        }, 5000)
+      docViewer.addEventListener('documentLoaded', () => {
+
+        const { version, fields } = sigFields
+        console.log('LOADED', version, fields)
+        switch (version) {
+          case '1': {
+            Object.keys(fields).forEach(fieldId => {
+              const field = fields[fieldId]
+              createSignHereBox({
+                name: fieldId,
+                pageNumber: field.pageNumber,
+                x: Math.floor(field.x),
+                y: Math.floor(field.y),
+                width: 80,
+                height: 30
+              })
+            })
+            break
+          }
+        }
       })
     })
-
-    // if (this.idValue === undefined) { return }
-    // this.progressTarget.classList.remove("hidden")
-    // this.placeholderTarget.classList.add("hidden")
-    // this.canvasTarget.classList.add("hidden")
-    // this.controlsTarget.classList.add("hidden")
-    // var _self = this
-    // const url = "/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/pdf"
-    // var loadingTask = this.pdfjsLib.getDocument(url)
-    // loadingTask.onProgress = (progressData) => {
-    //   var percentLoaded = progressData.loaded * 100 / progressData.total
-    //   this.barTarget.style.width = percentLoaded + "%"
-    // }
-    // loadingTask.onFailure = () => {
-    //   this.placeholderTarget.classList.remove("hidden")
-    //   this.progressTarget.classList.add("hidden")
-    //   this.canvasTarget.classList.add("hidden")
-    //   this._initTabs()
-    // }
-    // loadingTask.promise.then(pdfDoc => {
-    //   this.progressTarget.classList.add("hidden")
-    //   this.canvasTarget.classList.remove("hidden")
-    //   this.controlsTarget.classList.remove("hidden")
-    //   this.barTarget.style.width = "0%"
-    //   _self.pdf = pdfDoc
-    //   if (_self.hasPageCountTarget) {
-    //     _self.pageCountTarget.textContent = _self.pdf.numPages
-    //   }
-    //   _self._queueRenderPage(_self.currentPage)
-    // }).catch(error => {
-    //   this._initTabs()
-    // })
   }
-
-  // _renderPage(num) {
-  //   var _self = this
-
-  //   this.rendering = true
-  //   this.pdf.getPage(num).then(page => {
-  //     var viewport = page.getViewport({ scale: _self.scale })
-  //     _self.canvasTarget.height = viewport.height
-  //     _self.canvasTarget.width  = viewport.width
-
-  //     var renderContext = {
-  //       canvasContext: _self.ctx,
-  //       viewport: viewport
-  //     }
-  //     var renderTask = page.render(renderContext)
-
-  //     renderTask.promise.then(() => {
-  //       _self.rendering = false
-  //       if (_self.pendingPage !== null) {
-  //         _self._renderPage(_self.pendingPage)
-  //         _self.pendingPage = null
-  //       } else if (_self.currentPage == _self.pdf.numPages && !_self.documentRead) {
-  //         _self.documentRead = true
-  //         fetch("/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/mark_as_read")
-  //           .then(() => {
-  //             const signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector("#signature-controller"), "signature")
-  //             signatureController.documentIdValueChanged()
-  //           })
-  //       }
-  //     })
-  //   })
-  //   if (this.hasPageNumTarget) {
-  //     this.pageNumTarget.value = num
-  //   }
-  // }
-
-  // _queueRenderPage(num) {
-  //   if (this.rendering) {
-  //     this.pendingPage = num
-  //   } else {
-  //     this._renderPage(num)
-  //   }
-  // }
 }
