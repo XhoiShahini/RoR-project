@@ -2,6 +2,30 @@ import { Controller } from "stimulus"
 import consumer from "channels/consumer"
 import PDFJSExpress from '@pdftron/pdfjs-express'
 
+const disabledElements = [
+  'leftPanelButton',
+  'leftPanel',
+  'viewControlsButton',
+  'selectToolButton',
+  'panToolButton',
+  'toolbarGroup-View',
+  'toolbarGroup-Annotate',
+  'toolbarGroup-Shapes',
+  'toolbarGroup-Insert',
+  'toolbarGroup-FillAndSign',
+  'ribbonsDropdown',
+  'searchButton',
+  'searchPanel',
+  'searchPanelResizeBar',
+  'toggleNotesButton',
+  'notesPanel',
+  'notesPanelResizeBar',
+  'menuButton',
+  'toolsHeader',
+  'annotationStyleEditButton',
+  'linkButton'
+]
+
 export default class extends Controller {
   static targets = ['progress', 'viewer']
   static values = { id: String, meetingId: String }
@@ -92,29 +116,7 @@ export default class extends Controller {
     PDFJSExpress({
       path: '/pdftron',
       initialDoc: url,
-      disabledElements: [
-        'leftPanelButton',
-        'leftPanel',
-        'viewControlsButton',
-        'selectToolButton',
-        'panToolButton',
-        'toolbarGroup-View',
-        'toolbarGroup-Annotate',
-        'toolbarGroup-Shapes',
-        'toolbarGroup-Insert',
-        'toolbarGroup-FillAndSign',
-        'ribbonsDropdown',
-        'searchButton',
-        'searchPanel',
-        'searchPanelResizeBar',
-        'toggleNotesButton',
-        'notesPanel',
-        'notesPanelResizeBar',
-        'menuButton',
-        'toolsHeader',
-        'annotationStyleEditButton',
-        'linkButton'
-      ]
+      disabledElements
     }, document.getElementById('viewer')).then(instance => {
 
       this.progressTarget.classList.add('hidden')

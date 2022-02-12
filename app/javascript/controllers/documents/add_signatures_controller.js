@@ -2,6 +2,29 @@ import { Controller } from "stimulus"
 import PDFJSExpress from '@pdftron/pdfjs-express'
 
 const CURRENT_VERSION = '1'
+const disabledElements = [
+  'leftPanelButton',
+  'leftPanel',
+  'viewControlsButton',
+  'selectToolButton',
+  'panToolButton',
+  'toolbarGroup-View',
+  'toolbarGroup-Annotate',
+  'toolbarGroup-Shapes',
+  'toolbarGroup-Insert',
+  'toolbarGroup-FillAndSign',
+  'ribbonsDropdown',
+  'searchButton',
+  'searchPanel',
+  'searchPanelResizeBar',
+  'toggleNotesButton',
+  'notesPanel',
+  'notesPanelResizeBar',
+  'menuButton',
+  'toolsHeader',
+  'annotationStyleEditButton',
+  'linkButton'
+]
 
 export default class extends Controller {
   static values = {
@@ -56,29 +79,7 @@ export default class extends Controller {
     PDFJSExpress({
       path: '/pdftron',
       initialDoc: this.urlValue,
-      disabledElements: [
-        'leftPanelButton',
-        'leftPanel',
-        'viewControlsButton',
-        'selectToolButton',
-        'panToolButton',
-        'toolbarGroup-View',
-        'toolbarGroup-Annotate',
-        'toolbarGroup-Shapes',
-        'toolbarGroup-Insert',
-        'toolbarGroup-FillAndSign',
-        'ribbonsDropdown',
-        'searchButton',
-        'searchPanel',
-        'searchPanelResizeBar',
-        'toggleNotesButton',
-        'notesPanel',
-        'notesPanelResizeBar',
-        'menuButton',
-        'toolsHeader',
-        'annotationStyleEditButton',
-        'linkButton'
-      ]
+      disabledElements
     }, document.getElementById('viewer')).then(instance => {
       this._pdfInstanceRef = instance
       console.log('Connect THIS', this)
