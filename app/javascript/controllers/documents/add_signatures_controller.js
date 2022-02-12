@@ -114,29 +114,7 @@ export default class extends Controller {
 
 
       docViewer.addEventListener('documentLoaded', () => {
-
         this._applyInitialPlaceholderBoxes()
-
-        // this.createSignHereBox({
-        //   name: 'box-1',
-        //   pageNumber: 1,
-        //   x: 100,
-        //   y: 100,
-        //   width: 50,
-        //   height: 20
-        // })
-
-        // setTimeout(() => {
-
-        //   this.createSignHereBox({
-        //     name: 'box-3',
-        //     pageNumber: 1,
-        //     x: 100,
-        //     y: 300,
-        //     width: 50,
-        //     height: 20
-        //   })
-        // }, 5000)
       })
     })
   }
@@ -168,51 +146,6 @@ export default class extends Controller {
     annotationManager.addAnnotation(annot)
     // need to draw the annotation otherwise it won't show up until the page is refreshed
     annotationManager.redrawAnnotation(annot)
-  }
-
-  createSignHereBox({ pageNumber, x, y, width, height, name }){
-    const {
-      annotManager: annotationManager,
-      Core: {
-        Annotations
-      }
-    } = this._pdfInstanceRef
-
-    // create a form field
-    const field = new Annotations.Forms.Field(name, { type: 'Sig' })
-
-    // create a widget annotation
-    const widgetAnnot = new Annotations.SignatureWidgetAnnotation(field, {
-      appearance: '_DEFAULT',
-      appearances: {
-        _DEFAULT: {
-          Normal: {
-            data:
-              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuMWMqnEsAAAANSURBVBhXY/j//z8DAAj8Av6IXwbgAAAAAElFTkSuQmCC',
-            offset: {
-              x: x,
-              y: y,
-            },
-          },
-        },
-      },
-    })
-
-    // set position and size
-    widgetAnnot.PageNumber = pageNumber;
-    widgetAnnot.X = x;
-    widgetAnnot.Y = y;
-    widgetAnnot.Width = width;
-    widgetAnnot.Height = height;
-
-    // add the form field and widget annotation
-    annotationManager.getFieldManager().addField(field)
-    annotationManager.addAnnotation(widgetAnnot)
-    annotationManager.drawAnnotationsFromList([widgetAnnot])
-
-    // annotationManager.redrawAnnotation(widgetAnnot)
-    // instance.docViewer.refreshAll()
-    // instance.docViewer.refreshPage(pageNumber)
   }
 
   _applyInitialPlaceholderBoxes() {
