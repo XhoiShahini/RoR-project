@@ -142,6 +142,7 @@ it:
         members: "Partecipanti"
         complete_meeting: Chiudi la riunione
         complete_meeting_warning: "Attenzione: Con la chiusura della riunione non potranno essere più svolte altre attività all'interno della video-room. Confermi la chiusura definitiva?"
+        generate_pdf: Firma il Documento
 
   participants:
     submit: "Invita Partecipante"

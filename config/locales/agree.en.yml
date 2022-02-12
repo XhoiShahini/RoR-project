@@ -141,6 +141,7 @@ en:
         meetings: "Meetings"
         complete_meeting: Complete Meeting
         complete_meeting_warning: This will close the meeting, disabling signatures and video functionality. Proceed?
+        generate_pdf: Sign the Document
 
 
   participants:
