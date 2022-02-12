@@ -27,7 +27,7 @@ const disabledElements = [
 ]
 
 export default class extends Controller {
-  static targets = ['progress', 'viewer']
+  static targets = ['progress', 'viewer', 'title', 'generatePdf']
   static values = { id: String, meetingId: String }
 
   connect() {
@@ -88,17 +88,19 @@ export default class extends Controller {
     newViewer.id = 'viewer'
     newViewer.classList.add('h-full', 'hidden')
 
+    this.titleTarget.innerText = ''
+    this.generatePdfTarget.classList.add('hidden')
+
     this.viewerTarget.innerHTML = ''
     this.viewerTarget.appendChild(newViewer)
   }
 
-  async _loadSignatureFields() {
+  async _loadDocument() {
     try {
       return await fetch("/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + '.json')
         .then(r => r.json())
-        .then(r => r.signature_fields || {})
     } catch (error) {
-      console.error('_loadSignatureFields', error)
+      console.error('_loadDocument', error)
       return {}
     }
   }
@@ -110,8 +112,8 @@ export default class extends Controller {
     const url = "/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/pdf"
     console.debug('Load', url)
 
-    const sigFields = await this._loadSignatureFields()
-    console.debug('sigFields', sigFields)
+    const documentData = await this._loadDocument()
+    console.debug('documentData', documentData)
 
     PDFJSExpress({
       path: '/pdftron',
@@ -120,6 +122,7 @@ export default class extends Controller {
     }, document.getElementById('viewer')).then(instance => {
 
       this.progressTarget.classList.add('hidden')
+      this.titleTarget.innerText = documentData.title || ''
       document.getElementById('viewer').classList.remove('hidden')
 
       const {
@@ -130,12 +133,59 @@ export default class extends Controller {
         }
       } = instance
 
+      annotationManager.addEventListener('annotationChanged', (annotations, action, info) => {
+        // console.log('annotationChanged', annotations, annotations[0].id, action, info)
+        const allSignatureWidgetAnnots = annotationManager.getAnnotationsList()
+          .filter(annot => annot instanceof Annotations.SignatureWidgetAnnotation)
+
+        // See https://www.pdftron.com/documentation/web/guides/interacting-with-signature-field/#annotation-associated-with-signature-widget
+        const check = allSignatureWidgetAnnots.every(sigAnnot => Boolean(sigAnnot.annot))
+        if (check) {
+          this.generatePdfTarget.classList.remove('hidden')
+          this.generatePdfTarget.onclick = () => {
+            console.log('Clicked!!')
+            onSave()
+          }
+        } else {
+          const firstNotSigned = allSignatureWidgetAnnots.find(sigAnnot => !Boolean(sigAnnot.annot))
+          if (firstNotSigned) {
+            annotationManager.jumpToAnnotation(firstNotSigned)
+          }
+
+          this.generatePdfTarget.classList.add('hidden')
+        }
+      })
+
+      const onSave = async () => {
+        const xfdf = await annotationManager.exportAnnotations({ links: false, widgets: false })
+        const fileData = await docViewer.getDocument().getFileData({})
+        const blob = new Blob([ fileData ], { type: 'application/pdf' })
+
+        const data = new FormData()
+        data.append('xfdf', xfdf)
+        data.append('file', blob)
+
+        // Send Annotations
+        try {
+          const url = "/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/xfdf"
+
+          // TODO:
+          console.log('Send Data to', url, data)
+
+          // const response = await fetch(url, {
+          //   method: 'POST',
+          //   body: data
+          // }).then(r => r.json())
+          // console.error('PDF Saved!', response)
+        } catch (error) {
+          console.error('Upload Annotations error:', error)
+        }
+      }
+
       const createSignHereBox = ({ pageNumber, x, y, width, height, name }) => {
         console.log('createSignHereBox', pageNumber, x, y, width, height, name)
-        // create a form field
-        const field = new Annotations.Forms.Field(name, { type: 'Sig' })
 
-        // create a widget annotation
+        const field = new Annotations.Forms.Field(name, { type: 'Sig' })
         const widgetAnnot = new Annotations.SignatureWidgetAnnotation(field, {
           appearance: '_DEFAULT',
           appearances: {
@@ -167,17 +217,23 @@ export default class extends Controller {
         annotationManager.drawAnnotationsFromList([widgetAnnot])
       }
 
-      // docViewer.addEventListener('pageComplete', (pageNumber, canvas) => {
-      //   console.warn('pageComplete??', pageNumber)
-      // })
-
       docViewer.addEventListener('documentLoaded', () => {
 
-        const { version, fields } = sigFields
+        const { version, fields } = documentData.signature_fields || {}
         console.log('LOADED', version, fields)
         switch (version) {
           case '1': {
-            Object.keys(fields).forEach(fieldId => {
+            Object.keys(fields).sort((a, b) => {
+              const fieldA = fields[a]
+              const fieldB = fields[b]
+              if (fieldA.pageNumber < fieldB.pageNumber) {
+                return -1
+              }
+              if (fieldA.pageNumber > fieldB.pageNumber) {
+                return 1
+              }
+              return 0
+            }).forEach(fieldId => {
               const field = fields[fieldId]
               createSignHereBox({
                 name: fieldId,
