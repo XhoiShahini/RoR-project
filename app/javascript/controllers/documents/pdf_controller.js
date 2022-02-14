@@ -158,25 +158,19 @@ export default class extends Controller {
 
       const onSave = async () => {
         const xfdf = await annotationManager.exportAnnotations({ links: false, widgets: false })
-        const fileData = await docViewer.getDocument().getFileData({})
-        const blob = new Blob([ fileData ], { type: 'application/pdf' })
-
-        const data = new FormData()
-        data.append('pdf[xfdf]', xfdf)
-        data.append('pdf[file]', blob)
-
         // Send Annotations
         try {
           const url = "/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/xfdf"
 
-          console.log('Send Data to', url, data)
+          console.log('Send Data to', url)
           const csrfToken = document.querySelector("[name='csrf-token']").content
           const response = await fetch(url, {
             method: 'POST',
             headers: {
+              'Content-Type': 'application/json',
               'X-CSRF-Token': csrfToken,
             },
-            body: data
+            body: JSON.stringify({ xfdf })
           }).then(r => r.json())
 
           console.error('PDF Saved!', response)

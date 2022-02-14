@@ -62,11 +62,12 @@ class DocumentsController < ApplicationController
       f.adapter :net_http
     end
 
+    puts xfdf_params
     body = xfdf_params
     body[:license] = ENV['PDFJS_EXPRESS_LICENSE']
 
-    # FIXME:
-    body[:file] = xfdf_params[:file].tempfile.read
+    # FIXME: read file from fs
+    body[:file] = nil
 
     puts body
 
@@ -193,7 +194,7 @@ class DocumentsController < ApplicationController
   end
 
   def xfdf_params
-    params.require(:pdf).permit(:xfdf, :file)
+    params.permit(:meeting_id, :id, :xfdf)
   end
 
   def cannot_modify_signed!
