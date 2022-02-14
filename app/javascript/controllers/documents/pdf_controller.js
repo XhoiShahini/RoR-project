@@ -162,21 +162,24 @@ export default class extends Controller {
         const blob = new Blob([ fileData ], { type: 'application/pdf' })
 
         const data = new FormData()
-        data.append('xfdf', xfdf)
-        data.append('file', blob)
+        data.append('pdf[xfdf]', xfdf)
+        data.append('pdf[file]', blob)
 
         // Send Annotations
         try {
           const url = "/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/xfdf"
 
-          // TODO:
           console.log('Send Data to', url, data)
+          const csrfToken = document.querySelector("[name='csrf-token']").content
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'X-CSRF-Token': csrfToken,
+            },
+            body: data
+          }).then(r => r.json())
 
-          // const response = await fetch(url, {
-          //   method: 'POST',
-          //   body: data
-          // }).then(r => r.json())
-          // console.error('PDF Saved!', response)
+          console.error('PDF Saved!', response)
         } catch (error) {
           console.error('Upload Annotations error:', error)
         }
