@@ -1,3 +1,5 @@
+require 'faraday'
+
 class DocumentsController < ApplicationController
   include MeetingsHelper
   before_action :set_meeting
@@ -50,6 +52,30 @@ class DocumentsController < ApplicationController
   # GET /meetings/:meeting_id/documents/:id/pdf
   def pdf
     stream_document_file disposition: "inline"
+  end
+
+  # POST /meetings/:meeting_id/documents/:id/xfdf
+  def xfdf
+    conn = Faraday.new(url: ENV['PDFJS_EXPRESS_URL']) do |f|
+      f.request :multipart
+      f.request :url_encoded
+      f.adapter :net_http
+    end
+
+    body = xfdf_params
+    body[:license] = ENV['PDFJS_EXPRESS_LICENSE']
+
+    # FIXME:
+    body[:file] = xfdf_params[:file].tempfile.read
+
+    puts body
+
+    response = conn.post() do |req|
+      req.body = body.to_json
+    end
+
+    puts JSON.parse(response.body)
+    render json: response.body, status: :ok
   end
 
   # GET /meetings/:meeting_id/documents/:id/download
@@ -164,6 +190,10 @@ class DocumentsController < ApplicationController
 
   def document_params
     params.require(:document).permit(:title, :file, :read_only, :require_read, :signature_fields => [:version, :fields => {}])
+  end
+
+  def xfdf_params
+    params.require(:pdf).permit(:xfdf, :file)
   end
 
   def cannot_modify_signed!

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
         get :mark_as_read
         get :signatures
         post :verify_otp
+        post :xfdf
       end
     end
 
