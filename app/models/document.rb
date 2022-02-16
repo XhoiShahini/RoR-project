@@ -8,6 +8,8 @@
 #  signature_fields :jsonb
 #  state            :string
 #  title            :string
+#  xfdf             :text
+#  xfdf_merged      :boolean          default(FALSE)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  created_by_id    :uuid             not null
@@ -46,6 +48,7 @@ class Document < ApplicationRecord
 
   aasm(column: :state, logger: Rails.logger) do
     state :created, initial: true
+    state :pdf_signing
     state :incomplete
     state :finalized
 

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       member do
         get :pdf
         get :download
+        get :merge
         get :new_signature
         get :sign
         get :cannot_sign

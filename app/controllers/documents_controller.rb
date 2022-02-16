@@ -5,7 +5,7 @@ class DocumentsController < ApplicationController
   before_action :set_meeting
   before_action :set_document, except: [:index, :tabs, :new, :create]
   before_action :set_signature, only: [:new_signature, :sign, :otp, :verify_otp, :otp_verified, :otp_failed, :mark_as_read]
-  before_action :require_meeting_member!
+  before_action :require_meeting_member!, except: [:merge]
   before_action :cannot_modify_signed!, only: [:edit, :update, :destroy]
   before_action :require_current_account_admin, only: [:new, :create, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token, only: [:update]
@@ -56,31 +56,19 @@ class DocumentsController < ApplicationController
 
   # POST /meetings/:meeting_id/documents/:id/xfdf
   def xfdf
-    conn = Faraday.new(url: ENV['PDFJS_EXPRESS_URL']) do |f|
-      f.request :multipart
-      f.request :url_encoded
-      f.adapter :net_http
-    end
-
-    puts xfdf_params
-    body = xfdf_params
-    body[:license] = ENV['PDFJS_EXPRESS_LICENSE']
-
-    # FIXME: read file from fs
-    body[:file] = nil
-
-    puts body
-
-    response = conn.post() do |req|
-      req.body = body.to_json
-    end
-
-    puts JSON.parse(response.body)
+    @document.update_column(:xfdf, xfdf_params[:xfdf]) # this does not trigger AR hooks
+    PdfjsService.merge_xfdf(@document)
     render json: response.body, status: :ok
   end
 
   # GET /meetings/:meeting_id/documents/:id/download
   def download
+    stream_document_file disposition: "attachment"
+  end
+
+  # GET /meetings/:meeting_id/documents/:id/merge
+  def merge
+    # TODO: wrap this in logic so it is not always available
     stream_document_file disposition: "attachment"
   end
 
