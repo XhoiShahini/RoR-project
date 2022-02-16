@@ -222,7 +222,13 @@ export default class extends Controller {
           try {
             await fetch(`/meetings/${this.meetingIdValue}/documents/${this.idValue}/mark_as_read`)
             const signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector("#signature-controller"), "signature")
-            signatureController.documentIdValueChanged()
+            if (signatureController) {
+              signatureController.documentIdValueChanged()
+            }
+
+            // Remove listener since we are done with it
+            docViewer.removeEventListener('pageNumberUpdated')
+
           } catch (error) {
             console.error('Mark As Read Error', error)
           }
