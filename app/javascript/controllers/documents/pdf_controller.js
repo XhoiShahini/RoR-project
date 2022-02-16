@@ -216,6 +216,9 @@ export default class extends Controller {
 
       docViewer.addEventListener('documentLoaded', () => {
 
+        if (Boolean(documentData?.xfdf_merged)) {
+          return console.debug('PDF already merged!')
+        }
         const { version, fields } = documentData.signature_fields || {}
         console.log('LOADED', version, fields)
         switch (version) {
