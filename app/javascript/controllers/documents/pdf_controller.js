@@ -214,6 +214,21 @@ export default class extends Controller {
         annotationManager.drawAnnotationsFromList([widgetAnnot])
       }
 
+      docViewer.addEventListener('pageNumberUpdated', async (pageNumber) => {
+        const pageCount = docViewer.getPageCount()
+        console.log('pageNumber', pageNumber, pageCount)
+
+        if (pageNumber === pageCount) {
+          try {
+            await fetch(`/meetings/${this.meetingIdValue}/documents/${this.idValue}/mark_as_read`)
+            const signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector("#signature-controller"), "signature")
+            signatureController.documentIdValueChanged()
+          } catch (error) {
+            console.error('Mark As Read Error', error)
+          }
+        }
+      })
+
       docViewer.addEventListener('documentLoaded', () => {
 
         if (Boolean(documentData?.xfdf_merged)) {
