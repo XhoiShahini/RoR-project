@@ -324,16 +324,14 @@ window.connect = () => {
       _stopDrawingCanvas()
     })
 
-    // FIXME:
-
-    // _currentRoom
-    //  .join()
-    //  .then((result) => {
-    //    console.log('>> Room Joined', result)
-    //  })
-    //  .catch((error) => {
-    //    console.error('Join error?', error)
-    //  })
+    _currentRoom
+     .join()
+     .then((result) => {
+       console.log('>> Room Joined', result)
+     })
+     .catch((error) => {
+       console.error('Join error?', error)
+     })
   })
 }
 
