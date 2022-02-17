@@ -78,6 +78,7 @@ export default class extends Controller {
 
     PDFJSExpress({
       path: '/pdftron',
+      licenseKey: 'GoWk97mVlr2I3EfL1kVU',
       initialDoc: this.urlValue,
       disabledElements
     }, document.getElementById('viewer')).then(instance => {

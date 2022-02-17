@@ -117,6 +117,7 @@ export default class extends Controller {
     console.debug('documentData', documentData)
 
     PDFJSExpress({
+      licenseKey: 'GoWk97mVlr2I3EfL1kVU',
       path: '/pdftron',
       initialDoc: url,
       disabledElements
