@@ -176,6 +176,7 @@ export default class extends Controller {
           }).then(r => r.json())
 
           console.error('PDF Saved!', response)
+          this.generatePdfTarget.classList.add('hidden');
         } catch (error) {
           console.error('Upload Annotations error:', error)
         }
@@ -244,6 +245,7 @@ export default class extends Controller {
           docViewer.removeEventListener('annotationChanged')
         }
 
+        console.log('AAAAAAAAAA', this.isParticipantValue, this.meetingIdValue)
         if (!this.isParticipantValue) {
           disableSign()
           return console.debug('Not a participant')

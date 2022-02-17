@@ -2,6 +2,7 @@ require 'net/http/post/multipart'
 
 class PdfjsService
   def self.merge_xfdf(document)
+    return if document.xfdf_merged
     # conn = Faraday.new(url: ENV['PDFJS_EXPRESS_URL']) do |f|
     #   f.request :multipart
     #   f.adapter :net_http
@@ -44,8 +45,8 @@ class PdfjsService
     request = Net::HTTP::Get.new(url)
     request["Authorization"] =  key
     response = https.request(request)
-    document.file.attach(io: StringIO.new(response.body) , filename: "#{document.id}.pdf")
     document.update_column(:xfdf_merged, true)
+    document.file.attach(io: StringIO.new(response.body) , filename: "#{document.id}.pdf")
     # open(temp_url, "wb") do |file|
     #   file.write(response.body)
     # end

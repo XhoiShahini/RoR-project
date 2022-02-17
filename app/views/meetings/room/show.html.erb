@@ -43,7 +43,8 @@
         class="col-span-7 bg-white rounded shadow-md"
         data-controller="documents--pdf"
         data-meeting-id="<%= @meeting.id %>"
-        data-is-participant="<%= @meeting.host != current_user %>"
+        data-is-participant="<%= @host %>"
+        data-documents--pdf-is-participant-value="<%= @host %>"
       >
         <div data-documents--pdf-target="progress" class="mx-auto p-10 text-center" style="height: 550px">
           <svg class="animate-spin mx-auto mt-10 h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

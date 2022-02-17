@@ -58,7 +58,7 @@ class DocumentsController < ApplicationController
   def xfdf
     @document.update_column(:xfdf, xfdf_params[:xfdf]) # this does not trigger AR hooks
     PdfjsService.merge_xfdf(@document)
-    render json: response.body, status: :ok
+    render json: {}
   end
 
   # GET /meetings/:meeting_id/documents/:id/download
