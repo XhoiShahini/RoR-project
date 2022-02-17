@@ -27,8 +27,8 @@ const disabledElements = [
 ]
 
 export default class extends Controller {
-  static targets = ['progress', 'viewer', 'title', 'generatePdf']
-  static values = { id: String, meetingId: String }
+  static targets = ['progress', 'viewer', 'title', 'generatePdf', 'controls']
+  static values = { id: String, meetingId: String, isParticipant: Boolean }
 
   connect() {
     this.meetingIdValue = this.element.dataset['meetingId']
@@ -108,6 +108,7 @@ export default class extends Controller {
   async _initPdf() {
     this._createNewViewerEl()
     this.progressTarget.classList.remove('hidden')
+    this.controlsTarget.classList.add('hidden')
 
     const url = "/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/pdf"
     console.debug('Load', url)
@@ -123,6 +124,7 @@ export default class extends Controller {
 
       this.progressTarget.classList.add('hidden')
       this.titleTarget.innerText = documentData.title || ''
+      this.controlsTarget.classList.remove('hidden')
       document.getElementById('viewer').classList.remove('hidden')
 
       const {
@@ -237,7 +239,17 @@ export default class extends Controller {
 
       docViewer.addEventListener('documentLoaded', () => {
 
+        const disableSign = () => {
+          docViewer.removeEventListener('pageNumberUpdated')
+          docViewer.removeEventListener('annotationChanged')
+        }
+
+        if (!this.isParticipantValue) {
+          disableSign()
+          return console.debug('Not a participant')
+        }
         if (Boolean(documentData?.xfdf_merged)) {
+          disableSign()
           return console.debug('PDF already merged!')
         }
         const { version, fields } = documentData.signature_fields || {}
