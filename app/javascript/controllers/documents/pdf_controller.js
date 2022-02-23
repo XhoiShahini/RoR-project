@@ -246,11 +246,11 @@ export default class extends Controller {
           docViewer.removeEventListener('annotationChanged')
         }
 
-        console.log('AAAAAAAAAA', this.isParticipantValue, this.meetingIdValue)
-        if (!this.isParticipantValue) {
-          disableSign()
-          return console.debug('Not a participant')
-        }
+        // console.log('AAAAAAAAAA', this.isParticipantValue, this.meetingIdValue)
+        // if (!this.isParticipantValue) {
+        //   disableSign()
+        //   return console.debug('Not a participant')
+        // }
         if (Boolean(documentData?.xfdf_merged)) {
           disableSign()
           return console.debug('PDF already merged!')
