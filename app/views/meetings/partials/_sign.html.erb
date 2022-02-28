@@ -1,11 +1,11 @@
 <% if @meeting_member.must_sign %>
-  <div data-controller="signature" 
-      data-signature-document-id-value="" 
+  <div data-controller="signature"
+      data-signature-document-id-value=""
       data-signature-signed-value="false"
       data-signature-readonly-value="false"
       id="signature-controller"
       data-signature-meeting-id-value="<%= @meeting.id %>">
-    
+
     <% if @meeting_member.memberable == @meeting.host && !@meeting.signing? %>
       <% if !@meeting.all_participants_verified? %>
         <span data-controller="tooltip" data-signature-target="tooltip" data-tippy-content="<%= t(".must_verify_participants") %>">
@@ -24,7 +24,6 @@
     <% end %>
 
     <div data-controller="modal" id="signature_modal">
-
       <button data-action="click->modal#open" data-signature-target="modalButton" class="btn btn-secondary">
         <%= fa_icon "file-signature", weight: "fas", class: "mr-2" %>
         <%= t(".sign") %>

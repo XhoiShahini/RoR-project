@@ -1,9 +1,11 @@
+require 'faraday'
+
 class DocumentsController < ApplicationController
   include MeetingsHelper
   before_action :set_meeting
   before_action :set_document, except: [:index, :tabs, :new, :create]
   before_action :set_signature, only: [:new_signature, :sign, :otp, :verify_otp, :otp_verified, :otp_failed, :mark_as_read]
-  before_action :require_meeting_member!
+  before_action :require_meeting_member!, except: [:merge]
   before_action :cannot_modify_signed!, only: [:edit, :update, :destroy]
   before_action :require_current_account_admin, only: [:new, :create, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token, only: [:update]
@@ -39,7 +41,12 @@ class DocumentsController < ApplicationController
 
   # GET /meetings/:meeting_id/documents/:id
   def show
-    @host = current_account_admin?
+    respond_to do |format|
+      format.html {
+        @host = current_account_admin?
+      }
+      format.json { render json: @document, status: :ok }
+    end
   end
 
   # GET /meetings/:meeting_id/documents/:id/pdf
@@ -47,8 +54,21 @@ class DocumentsController < ApplicationController
     stream_document_file disposition: "inline"
   end
 
+  # POST /meetings/:meeting_id/documents/:id/xfdf
+  def xfdf
+    @document.update_column(:xfdf, xfdf_params[:xfdf]) # this does not trigger AR hooks
+    PdfjsService.merge_xfdf(@document)
+    render json: {}
+  end
+
   # GET /meetings/:meeting_id/documents/:id/download
   def download
+    stream_document_file disposition: "attachment"
+  end
+
+  # GET /meetings/:meeting_id/documents/:id/merge
+  def merge
+    # TODO: wrap this in logic so it is not always available
     stream_document_file disposition: "attachment"
   end
 
@@ -58,10 +78,11 @@ class DocumentsController < ApplicationController
 
   # PATCH/PUT /meetings/:meeting_id/documents/:id
   def update
-    if @document.update(document_params)
-      redirect_to @meeting, notice: t("documents.notice.update")
-    else
-      render :edit, status: :unprocessable_entity
+    result = @document.update(document_params)
+
+    respond_to do |format|
+      format.html { redirect_to @meeting, notice: t("documents.notice.update") }
+      format.json { render json: @document, status: :ok }
     end
   end
 
@@ -122,6 +143,10 @@ class DocumentsController < ApplicationController
     redirect_to meeting_documents_path(@meeting), notice: t("documents.notice.destroy")
   end
 
+  # GET /meetings/:meeting_id/documents/:id/signatures
+  def signatures
+  end
+
   private
 
   def stream_document_file(disposition:)
@@ -153,7 +178,11 @@ class DocumentsController < ApplicationController
   end
 
   def document_params
-    params.require(:document).permit(:title, :file, :read_only, :require_read)
+    params.require(:document).permit(:title, :file, :read_only, :require_read, :signature_fields => [:version, :fields => {}])
+  end
+
+  def xfdf_params
+    params.permit(:meeting_id, :id, :xfdf)
   end
 
   def cannot_modify_signed!

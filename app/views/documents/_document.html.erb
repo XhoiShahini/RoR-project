@@ -9,17 +9,24 @@
         <p class="card-paragraph">
           <%= document.aasm.human_state %>
         </p>
-        <div class="flex mt-1">
+        <div class="flex flex-wrap mt-1">
           <div>
-            <%= link_to download_meeting_document_path(document.meeting, document), class: "btn btn-small btn-primary", data: { turbo_frame: "_top" }, target: "_blank" do %>
+            <%= link_to download_meeting_document_path(document.meeting, document), class: "btn btn-small btn-primary mr-2 mb-2", data: { turbo_frame: "_top" }, target: "_blank" do %>
               <%= t("download") %>
             <% end %>
           </div>
           <% if @host && document.created? && !document.meeting.completed? %>
             <div>
-              <button class="btn btn-small btn-primary ml-2" data-action="click->documents--document#edit">
+              <button class="btn btn-small btn-primary mr-2 mb-2" data-action="click->documents--document#edit">
                 <%= t("edit") %>
               </button>
+            </div>
+          <% end %>
+          <% if @host && document.created? && !document.meeting.completed? %>
+            <div>
+              <%= link_to signatures_meeting_document_path(document.meeting, document), class: "btn btn-small btn-primary", data: { turbo_frame: "_top" } do %>
+                <%= t(".add_document_signatures") %>
+              <% end %>
             </div>
           <% end %>
         </div>

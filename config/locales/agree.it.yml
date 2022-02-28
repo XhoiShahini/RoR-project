@@ -1,13 +1,13 @@
 ---
 it:
   welcome: "Benvenuto, %{user}."
-  
+
 
   agreements:
     terms: Termini e condizioni di utilizzo
     privacy: Informativa privacy e Liberatoria utilizzo immagini e informativa
     signature: Nota informativa ed accettazione del servizio e delle modalità di erogazione della Firma Elettronica Avanzata
-    marketing: Presto il consenso al trattamento dei dati per finalità informative e promozionali 
+    marketing: Presto il consenso al trattamento dei dati per finalità informative e promozionali
     agree_html: "Ho letto e accetto %{link}"
     affirmative: "Sì"
     negative: "No"
@@ -66,7 +66,13 @@ it:
     tabs:
       new_document: "Nuovo Documento"
     placeholder: Seleziona un documento da sinistra o creane uno nuovo
-    
+    document:
+      add_document_signatures: Aggiungi Firme
+    signatures:
+      details: Dettagli
+      save: Salva
+      help: Doppio click sul documento per aggiungere un campo firma.
+
   meetings:
     errors:
       maximum_members: "ha un numero massimo di %{maximum} partecipanti"
@@ -119,7 +125,7 @@ it:
         sign: "Firma elettronica"
         allow_signatures: Abilita la firma
     room:
-      pre_meeting: 
+      pre_meeting:
         title: "%{meeting} è pronto per iniziare!"
         info_title: "Pronto ad iniziare?"
         info_body: "Si prega di rivedere e completare le informazioni indicate sotto."
@@ -137,6 +143,7 @@ it:
         members: "Partecipanti"
         complete_meeting: Chiudi la riunione
         complete_meeting_warning: "Attenzione: Con la chiusura della riunione non potranno essere più svolte altre attività all'interno della video-room. Confermi la chiusura definitiva?"
+        generate_pdf: Firma il Documento
 
   participants:
     submit: "Invita Partecipante"
@@ -232,7 +239,7 @@ it:
       header_html: "<strong>%{meeting}</strong> è stata completata!"
       description_html: "Puoi usare il link sottostante per accedere alla riunione ed ai documenti."
       view_meeting: "Vedi Riunione"
-  
+
   signatures:
     otp:
       title: "Verifica e Firma"
@@ -243,4 +250,3 @@ it:
   errors:
     messages:
       content_type_invalid: "Il tipo di file: %{content_type} non è valido. I formati accettati sono: %{authorized_types}"
-  

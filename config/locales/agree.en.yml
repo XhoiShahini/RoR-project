@@ -65,7 +65,13 @@ en:
     tabs:
       new_document: New Document
     placeholder: Select a document from the left or create a new one
-    
+    document:
+      add_document_signatures: Add Signatures
+    signatures:
+      details: Details
+      save: Save
+      help: Double click on the document to add the signature fields.
+
   meetings:
     errors:
       maximum_members: "can only have %{maximum} members"
@@ -119,7 +125,7 @@ en:
         allow_signatures: Allow Signatures
         must_verify_participants: You must verify all participants first
     room:
-      pre_meeting: 
+      pre_meeting:
         title: "%{meeting} is ready to join!"
         info_title: "Ready to join?"
         info_body: "Please review the meeting information and provide any additional information required below."
@@ -137,6 +143,7 @@ en:
         meetings: "Meetings"
         complete_meeting: Complete Meeting
         complete_meeting_warning: This will close the meeting, disabling signatures and video functionality. Proceed?
+        generate_pdf: Sign the Document
 
 
   participants:
@@ -231,7 +238,7 @@ en:
       header_html: "<strong>%{meeting}</strong> is now complete!"
       description_html: "You can use the link below to access the details of your meeting at any time."
       view_meeting: "View Meeting"
-  
+
   signatures:
     otp:
       title: "Verify and Sign"
@@ -242,4 +249,3 @@ en:
   errors:
     messages:
       content_type_invalid: "has an invalid content type: %{content_type}. Valid types are: %{authorized_types}"
-  

@@ -1,22 +1,18 @@
 <% content_for :body_attributes do %>
   data-turbo="false"
 <% end %>
-<div class="w-100 mx-auto my-2 px-4">
-  <div>
-    <h1 class="h3">
-      <div class="flex justfy-start gap-4 items-center">
-        <div>
-          <%= link_to t('.meetings'), meetings_path %> > <%= link_to @meeting.title, @meeting %>
-        </div>
+<div class="h-full w-100 mx-auto my-2 px-4">
+  <div class="flex flex-col w-full h-full">
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="h3">
+        <%= link_to t('.meetings'), meetings_path %> > <%= link_to @meeting.title, @meeting %>
         <% if @meeting_member.is_moderator? %>
-          <div>
-            <%= link_to t('.complete_meeting'), post_meeting_meeting_room_path(@meeting), class: "btn btn-small btn-danger rounded-full", data: { confirm: t(".complete_meeting_warning") } %>
-          </div>
+          <%= link_to t('.complete_meeting'), post_meeting_meeting_room_path(@meeting), class: "btn btn-small btn-danger rounded-full", data: { confirm: t(".complete_meeting_warning") } %>
         <% end %>
-    </h1>
-    <div class="hidden" data-controller="meetings--events" data-meetings--events-id-value="<%= @meeting.id %>">
+      </h1>
     </div>
-    <div class="grid grid-cols-12 gap-2">
+    <div class="hidden" data-controller="meetings--events" data-meetings--events-id-value="<%= @meeting.id %>"></div>
+    <div class="flex-1 grid grid-cols-12 gap-2">
       <div class="col-span-2 bg-white rounded shadow-md p-4">
         <h1 class="h3">
           <%= t('.documents') %>
@@ -42,23 +38,34 @@
           }
         ) %>
       </div>
-      <div class="col-span-7 bg-white rounded shadow-md">
-        <div data-controller="documents--pdf" data-scale="1.25" id="pdf-controller" data-meeting-id="<%= @meeting.id %>">
-          <div id="pdf-container" class="max-h-128 overflow-y-scroll overflow-auto">
-            <div data-documents--pdf-target="progress" class="mx-auto p-10 hidden" style="height: 550px">
-              <p class="text-lg">
-                <%= t("loading") %>...
-              </p>
-              <div class="h-3 relative max-w-xl rounded-full overflow-hidden">
-                  <div class="w-full h-full bg-gray-200 absolute"></div>
-                  <div data-documents--pdf-target="bar" class="h-full bg-primary-500 relative w-0"></div>
-              </div>
-            </div>
-            <p data-documents--pdf-target="placeholder" class="mx-auto p-10 text-gray-700">
-              <%= t("documents.placeholder") %>
-            </p>
-            <canvas data-documents--pdf-target="canvas" class="hidden"></canvas>
+      <div
+        id="pdf-controller"
+        class="col-span-7 bg-white rounded shadow-md"
+        data-controller="documents--pdf"
+        data-meeting-id="<%= @meeting.id %>"
+        data-is-participant="<%= @host %>"
+        data-documents--pdf-is-participant-value="<%= @host %>"
+      >
+        <div data-documents--pdf-target="progress" class="mx-auto p-10 text-center" style="height: 550px">
+          <svg class="animate-spin mx-auto mt-10 h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <p class="text-lg">
+            <%= t("loading") %>...
+          </p>
+        </div>
+
+        <div class="h-full flex-1 flex flex-col">
+          <div class="flex justify-between h-12 p-2">
+            <h3 data-documents--pdf-target="title"></h3>
+            <button type="button" data-documents--pdf-target="generatePdf" class="btn btn-small btn btn-secondary hidden"><%= t('.generate_pdf') %></button>
           </div>
+
+          <div class="flex-grow">
+            <div data-documents--pdf-target="viewer" class="h-full"></div>
+          </div>
+
           <%= render "meetings/partials/document_controls" %>
         </div>
       </div>
@@ -224,7 +231,7 @@ window.connect = () => {
     video: true,
   }).then((roomObject) => {
     _currentRoom = roomObject
-    
+
     console.log('Video SDK _currentRoom', _currentRoom)
 
     _currentRoom.on('room.started', (params) =>
@@ -315,7 +322,7 @@ window.connect = () => {
           _deleteCanvas(member_id)
         }
       })
-      
+
     })
     _currentRoom.on('track', (event) => console.log('>> DEMO track', event))
     _currentRoom.on('destroy', () => {
@@ -323,13 +330,13 @@ window.connect = () => {
     })
 
     _currentRoom
-      .join()
-      .then((result) => {
-        console.log('>> Room Joined', result)
-      })
-      .catch((error) => {
-        console.error('Join error?', error)
-      })
+     .join()
+     .then((result) => {
+       console.log('>> Room Joined', result)
+     })
+     .catch((error) => {
+       console.error('Join error?', error)
+     })
   })
 }
 

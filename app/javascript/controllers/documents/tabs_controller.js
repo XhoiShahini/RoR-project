@@ -23,7 +23,7 @@ export default class extends Controller {
       .then(response => response.text())
       .then(data => {
         let parser = new DOMParser()
-        return parser.parseFromString(data, "text/html")  
+        return parser.parseFromString(data, "text/html")
       })
       .then(response => {
         this.element.innerHTML = response.querySelector("#documents").innerHTML

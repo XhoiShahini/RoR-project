@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       member do
         get :pdf
         get :download
+        get :merge
         get :new_signature
         get :sign
         get :cannot_sign
@@ -30,7 +31,9 @@ Rails.application.routes.draw do
         get :otp_verified
         get :otp_failed
         get :mark_as_read
+        get :signatures
         post :verify_otp
+        post :xfdf
       end
     end
 
@@ -50,7 +53,7 @@ Rails.application.routes.draw do
       get :allow_signatures
     end
   end
-    
+
   # Jumpstart views
   if Rails.env.development? || Rails.env.test?
     mount Jumpstart::Engine, at: "/jumpstart"

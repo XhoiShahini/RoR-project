@@ -12,9 +12,11 @@ export default class extends Controller {
       const pdfController = this.application.getControllerForElementAndIdentifier(document.querySelector("#pdf-controller"), "documents--pdf")
       pdfController.idValue = this.idValue
       const signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector("#signature-controller"), "signature")
-      signatureController.signedValue = this.signedValue
-      signatureController.readonlyValue = this.readonlyValue
-      signatureController.documentIdValue = this.idValue
+      if (signatureController) {
+        signatureController.signedValue = this.signedValue
+        signatureController.readonlyValue = this.readonlyValue
+        signatureController.documentIdValue = this.idValue
+      }
     })
   }
 }

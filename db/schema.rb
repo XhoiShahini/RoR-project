@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_17_094308) do
+ActiveRecord::Schema.define(version: 2022_02_16_225702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -154,6 +154,9 @@ ActiveRecord::Schema.define(version: 2021_07_17_094308) do
     t.boolean "read_only"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "signature_fields", default: {}
+    t.text "xfdf"
+    t.boolean "xfdf_merged", default: false
     t.index ["created_by_id"], name: "index_documents_on_created_by_id"
     t.index ["meeting_id"], name: "index_documents_on_meeting_id"
   end

@@ -1,0 +1,36 @@
+<div class="container h-full mx-auto my-2 px-4">
+  <div class="flex flex-col w-full h-full max-w-6xl mx-auto">
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex">
+        <h1 class="h3">
+          <%= link_to 'Meetings', meetings_path %> > <%= @meeting.title %> > <%= @document.title %> > <%= t(".add_document_signatures") %>
+        </h1>
+      </div>
+    </div>
+
+    <div
+      class="flex-1 flex flex-col bg-white rounded shadow p-8"
+      data-controller="documents--add-signatures"
+      data-documents--add-signatures-id-value="<%= url_for(@document.id) %>"
+      data-documents--add-signatures-url-value="<%= url_for(@document.file) %>"
+      data-documents--add-signatures-meeting-id-value="<%= @document.meeting.id %>"
+      data-documents--add-signatures-fields-value="<%= @document.signature_fields.to_json %>"
+      data-documents--add-signatures-update-url-value="<%= meeting_document_path(@meeting, @document, format: :json) %>"
+      data-documents--add-signatures-meeting-url-value="<%= url_for(@meeting) %>"
+    >
+      <div class="flex justify-between">
+        <h3><%= t('.details') %></h3>
+        <button class="btn btn-small btn-primary mr-2 mb-2" data-action="click->documents--add-signatures#save">
+          <%= t(".save") %>
+        </button>
+      </div>
+      <div class="flex justify-between pb-2">
+        <p><%= t(".help") %></p>
+      </div>
+
+      <div class="flex-grow">
+        <div id="viewer" class="h-full"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,15 +2,18 @@
 #
 # Table name: documents
 #
-#  id            :uuid             not null, primary key
-#  read_only     :boolean
-#  require_read  :boolean
-#  state         :string
-#  title         :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  created_by_id :uuid             not null
-#  meeting_id    :uuid             not null
+#  id               :uuid             not null, primary key
+#  read_only        :boolean
+#  require_read     :boolean
+#  signature_fields :jsonb
+#  state            :string
+#  title            :string
+#  xfdf             :text
+#  xfdf_merged      :boolean          default(FALSE)
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  created_by_id    :uuid             not null
+#  meeting_id       :uuid             not null
 #
 # Indexes
 #
@@ -45,6 +48,7 @@ class Document < ApplicationRecord
 
   aasm(column: :state, logger: Rails.logger) do
     state :created, initial: true
+    state :pdf_signing
     state :incomplete
     state :finalized
 
