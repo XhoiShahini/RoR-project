@@ -8,6 +8,10 @@
       </div>
     </div>
 
+    <script> 
+      const colors = <%== Signature.colors.to_json %>
+    </script>
+
     <div
       class="flex-1 flex flex-col bg-white rounded shadow p-8"
       data-controller="documents--add-signatures"
@@ -26,6 +30,15 @@
       </div>
       <div class="flex justify-between pb-2">
         <p><%= t(".help") %></p>
+      </div>
+      <div class="flex justify-between pb-2">
+        <ul class="list-none">
+          <% @document.meeting.meeting_members.each_with_index do |mm, i| %>
+            <li style="border: 2px solid <%= Signature.colors[i] %>" class="mb-1 p-1">
+              <input name="mm-select" data-color="<%= Signature.colors[i] %>" type="radio" value="<%= mm.id %>" <%= 'checked' if i == 0 %>> <%= mm.full_name %>
+            </li>
+          <% end %>
+        </ul>
       </div>
 
       <div class="flex-grow">

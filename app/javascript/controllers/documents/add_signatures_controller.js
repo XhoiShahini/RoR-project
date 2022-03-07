@@ -103,6 +103,8 @@ export default class extends Controller {
       // })
 
       docViewer.addEventListener('dblClick', (event) => {
+        var selected = document.querySelector('input[name="mm-select"]:checked')
+        console.log(selected.value, selected.dataset.color)
         const windowCoordinates = getMouseLocation(event)
         const pageNumber = docViewer.getCurrentPage()
         const displayMode = docViewer.getDisplayModeManager().getDisplayMode()
@@ -111,6 +113,8 @@ export default class extends Controller {
           pageNumber,
           x: coords.x,
           y: coords.y,
+          memberId: selected.value,
+          color: selected.dataset.color,
         })
       })
 
@@ -127,6 +131,7 @@ export default class extends Controller {
       return console.warn('Invalid args for placeholderBox', options)
     }
 
+    console.log(options.color, options.memberId)
     const {
       annotManager: annotationManager,
       Core: {
@@ -142,8 +147,9 @@ export default class extends Controller {
     annot.Height = height
     annot.NoResize = true
     annot.NoRotate = true
-    annot.Color = '#000'
+    annot.Color = options.color
     annot.__agreeId = '_' + Date.now().toString()
+    annot.__memberId = options.memberId
 
     annotationManager.addAnnotation(annot)
     // need to draw the annotation otherwise it won't show up until the page is refreshed
