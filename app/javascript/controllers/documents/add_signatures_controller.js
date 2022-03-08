@@ -133,7 +133,6 @@ export default class extends Controller {
       return console.warn('Invalid args for placeholderBox', options)
     }
 
-    console.log(options.color, options.memberId)
     const {
       annotManager: annotationManager,
       Core: {
@@ -149,8 +148,30 @@ export default class extends Controller {
     annot.Height = height
     annot.NoResize = true
     annot.NoRotate = true
-    annot.Color = options.color
-    annot.FillColor = options.color
+
+    const strokeAlpha = 1;
+    const fillAlpha = 0.3;
+
+    console.log("COLOR IS", options.color);
+    switch(options.color) {
+      case '#f00':
+        console.log('is red')
+        annot.Color = new Annotations.Color(255, 0, 0, strokeAlpha);
+        annot.FillColor = new Annotations.Color(255, 0, 0, fillAlpha);
+        break;
+      case '#0f0':
+        annot.Color = new Annotations.Color(0, 255, 0, strokeAlpha);
+        annot.FillColor = new Annotations.Color(0, 255, 0, fillAlpha);
+        break;
+      case '#00f':
+        annot.Color = new Annotations.Color(0, 0, 255, strokeAlpha);
+        annot.FillColor = new Annotations.Color(0, 0, 255, fillAlpha);
+        break;
+      default:
+        annot.Color = new Annotations.Color(0, 0, 0, strokeAlpha); 
+        annot.FillColor = new Annotations.Color(0, 0, 0, fillAlpha); 
+        break;
+    }
     annot.__agreeId = '_' + Date.now().toString()
     annot.__memberId = options.memberId
     annot.__color = options.color
