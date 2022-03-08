@@ -28,10 +28,11 @@ const disabledElements = [
 
 export default class extends Controller {
   static targets = ['progress', 'viewer', 'title', 'generatePdf', 'controls']
-  static values = { id: String, meetingId: String, isParticipant: Boolean }
+  static values = { id: String, meetingId: String, isParticipant: Boolean, meetingMemberId: String }
 
   connect() {
     this.meetingIdValue = this.element.dataset['meetingId']
+    this.meetingMemberIdValue = this.element.dataset['meetingMemberId']
     this.subscription = consumer.subscriptions.create({ channel: "DocumentsChannel", meeting_id: this.meetingIdValue }, {
       connected: this._connected.bind(this),
       disconnected: this._disconnected.bind(this),
@@ -244,6 +245,7 @@ export default class extends Controller {
         const disableSign = () => {
           docViewer.removeEventListener('pageNumberUpdated')
           docViewer.removeEventListener('annotationChanged')
+          this.generatePdfTarget.classList.add('hidden');
         }
 
         // console.log('AAAAAAAAAA', this.isParticipantValue, this.meetingIdValue)
@@ -271,14 +273,18 @@ export default class extends Controller {
               return 0
             }).forEach(fieldId => {
               const field = fields[fieldId]
-              createSignHereBox({
-                name: fieldId,
-                pageNumber: field.pageNumber,
-                x: Math.floor(field.x),
-                y: Math.floor(field.y),
-                width: 80,
-                height: 30
-              })
+              console.log('field', field)
+              console.log(this.meetingMemberIdValue)
+              if (field.memberId == this.meetingMemberIdValue) {
+                createSignHereBox({
+                  name: fieldId,
+                  pageNumber: field.pageNumber,
+                  x: Math.floor(field.x),
+                  y: Math.floor(field.y),
+                  width: 80,
+                  height: 30
+                })
+              }
             })
             break
           }

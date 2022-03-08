@@ -45,6 +45,8 @@ export default class extends Controller {
           x: annot.X,
           y: annot.Y,
           pageNumber: annot.PageNumber,
+          memberId: annot.__memberId,
+          color: annot.__color
         }
       }
     })
@@ -148,8 +150,12 @@ export default class extends Controller {
     annot.NoResize = true
     annot.NoRotate = true
     annot.Color = options.color
+    annot.FillColor = options.color
     annot.__agreeId = '_' + Date.now().toString()
     annot.__memberId = options.memberId
+    annot.__color = options.color
+
+    console.log('annotation', annot)
 
     annotationManager.addAnnotation(annot)
     // need to draw the annotation otherwise it won't show up until the page is refreshed
