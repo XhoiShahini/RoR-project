@@ -152,7 +152,6 @@ export default class extends Controller {
     const strokeAlpha = 1;
     const fillAlpha = 0.3;
 
-    console.log("COLOR IS", options.color);
     switch(options.color) {
       case '#f00':
         console.log('is red')
