@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "move-pdftron": "cp -a ./node_modules/@pdftron/pdfjs-express/public/. ./public/pdftron",
-    "postinstall": "npm run move-pdftron"
+    "postinstall": "cp -a ./node_modules/@pdftron/pdfjs-express/public/. ./public/pdftron"
   },
   "dependencies": {
     "@hotwired/turbo-rails": "^7.0.0-beta.5",
