@@ -75,4 +75,8 @@ class Signature < ApplicationRecord
   def require_read?
     document.require_read && !document_read
   end
+
+  def self.colors
+    ['#000', '#f00', '#0f0', '#00f']
+  end
 end

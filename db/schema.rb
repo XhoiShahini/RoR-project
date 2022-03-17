@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_16_225702) do
+ActiveRecord::Schema.define(version: 2022_03_07_175631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 2022_02_16_225702) do
     t.jsonb "signature_fields", default: {}
     t.text "xfdf"
     t.boolean "xfdf_merged", default: false
+    t.string "next_merge"
     t.index ["created_by_id"], name: "index_documents_on_created_by_id"
     t.index ["meeting_id"], name: "index_documents_on_meeting_id"
   end
@@ -180,6 +181,8 @@ ActiveRecord::Schema.define(version: 2022_02_16_225702) do
     t.boolean "audio", default: true
     t.boolean "video", default: true
     t.string "signed_member_id"
+    t.text "xfdf"
+    t.boolean "xfdf_merged", default: false
     t.index ["company_id"], name: "index_meeting_members_on_company_id"
     t.index ["meeting_id"], name: "index_meeting_members_on_meeting_id"
     t.index ["memberable_type", "memberable_id"], name: "index_meeting_members_on_memberable"

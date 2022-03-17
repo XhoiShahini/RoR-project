@@ -7,6 +7,8 @@
 #  memberable_type  :string           not null
 #  must_sign        :boolean
 #  video            :boolean          default(TRUE)
+#  xfdf             :text
+#  xfdf_merged      :boolean          default(FALSE)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  company_id       :uuid

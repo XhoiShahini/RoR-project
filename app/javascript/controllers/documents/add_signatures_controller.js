@@ -45,6 +45,8 @@ export default class extends Controller {
           x: annot.X,
           y: annot.Y,
           pageNumber: annot.PageNumber,
+          memberId: annot.__memberId,
+          color: annot.__color
         }
       }
     })
@@ -103,6 +105,8 @@ export default class extends Controller {
       // })
 
       docViewer.addEventListener('dblClick', (event) => {
+        var selected = document.querySelector('input[name="mm-select"]:checked')
+        console.log(selected.value, selected.dataset.color)
         const windowCoordinates = getMouseLocation(event)
         const pageNumber = docViewer.getCurrentPage()
         const displayMode = docViewer.getDisplayModeManager().getDisplayMode()
@@ -111,6 +115,8 @@ export default class extends Controller {
           pageNumber,
           x: coords.x,
           y: coords.y,
+          memberId: selected.value,
+          color: selected.dataset.color,
         })
       })
 
@@ -142,8 +148,34 @@ export default class extends Controller {
     annot.Height = height
     annot.NoResize = true
     annot.NoRotate = true
-    annot.Color = '#000'
+
+    const strokeAlpha = 1;
+    const fillAlpha = 0.3;
+
+    switch(options.color) {
+      case '#f00':
+        console.log('is red')
+        annot.Color = new Annotations.Color(255, 0, 0, strokeAlpha);
+        annot.FillColor = new Annotations.Color(255, 0, 0, fillAlpha);
+        break;
+      case '#0f0':
+        annot.Color = new Annotations.Color(0, 255, 0, strokeAlpha);
+        annot.FillColor = new Annotations.Color(0, 255, 0, fillAlpha);
+        break;
+      case '#00f':
+        annot.Color = new Annotations.Color(0, 0, 255, strokeAlpha);
+        annot.FillColor = new Annotations.Color(0, 0, 255, fillAlpha);
+        break;
+      default:
+        annot.Color = new Annotations.Color(0, 0, 0, strokeAlpha); 
+        annot.FillColor = new Annotations.Color(0, 0, 0, fillAlpha); 
+        break;
+    }
     annot.__agreeId = '_' + Date.now().toString()
+    annot.__memberId = options.memberId
+    annot.__color = options.color
+
+    console.log('annotation', annot)
 
     annotationManager.addAnnotation(annot)
     // need to draw the annotation otherwise it won't show up until the page is refreshed

@@ -45,7 +45,10 @@ class DocumentsController < ApplicationController
       format.html {
         @host = current_account_admin?
       }
-      format.json { render json: @document, status: :ok }
+      format.json do
+        @document.xfdf_merged = true if @meeting_member.xfdf_merged
+        render json: @document, status: :ok 
+      end
     end
   end
 
@@ -56,8 +59,9 @@ class DocumentsController < ApplicationController
 
   # POST /meetings/:meeting_id/documents/:id/xfdf
   def xfdf
-    @document.update_column(:xfdf, xfdf_params[:xfdf]) # this does not trigger AR hooks
-    PdfjsService.merge_xfdf(@document)
+    @meeting_member.update_column(:xfdf, xfdf_params[:xfdf]) # this does not trigger AR hooks
+    @document.update_column(:next_merge, @meeting_member.id)
+    PdfjsService.merge_xfdf(@document, @meeting_member)
     render json: {}
   end
 

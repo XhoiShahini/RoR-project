@@ -3,6 +3,7 @@
 # Table name: documents
 #
 #  id               :uuid             not null, primary key
+#  next_merge       :string
 #  read_only        :boolean
 #  require_read     :boolean
 #  signature_fields :jsonb
