@@ -449,3 +449,5 @@ en:
     audio_input: "Audio input"
     audio_output: "Audio output"
     video_input: "Video input"
+    start_recording: "Start recording"
+    stop_recording: "Stop recording"

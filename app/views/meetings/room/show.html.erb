@@ -96,7 +96,7 @@
             <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myAudioBtn"><i class="fas fa-microphone"></i></button>
             <button type="button" class="btn btn-small btn-primary mt-1 mr-1" id="myVideoBtn"><i class="fas fa-video"></i></button>
             <% if @meeting_member.is_moderator? %>
-              <button type="button" class="btn btn-small btn-danger mt-1 mr-1" id="recordBtn" onclick="toggleRecording();"><i class="fas fa-dot-circle"></i></button>
+              <button type="button" class="btn btn-small btn-danger mt-1 mr-1" id="recordBtn" onclick="toggleRecording();"><i class="fas fa-dot-circle mr-1"></i> <span><%= t('video.start_recording') %></span></button>
             <% end %>
           </div>
 
@@ -111,6 +111,9 @@
 <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 <script src="https://unpkg.com/@signalwire/js"></script>
 <script>
+
+var startRecordingText = "<%= t('video.start_recording') %>";
+var stopRecordingText = "<%= t('video.stop_recording') %>";
 
 var _swToken = "<%= @token %>";
 
@@ -462,15 +465,18 @@ function setOutput() {
 async function toggleRecording() {
   var btn = document.getElementById('recordBtn');
   var icon = btn.querySelector('i');
+  var text = btn.querySelector('span');
   if (_currentRecording) {
     _currentRecording.stop();
     _currentRecording = null;
     icon.classList.remove('fa-stop-circle');
     icon.classList.add('fa-dot-circle');
+    text.innerText = startRecordingText;
   } else {
     _currentRecording = await _currentRoom.startRecording();
     icon.classList.remove('fa-dot-circle');
     icon.classList.add('fa-stop-circle');
+    text.innerText = stopRecordingText;
   }
 }
 

@@ -477,3 +477,5 @@ it:
     audio_input: "Input Audio"
     audio_output: "Output Audio"
     video_input: "Input Video"
+    start_recording: "Avvio registrazione"
+    stop_recording: "Stop registrazione"
