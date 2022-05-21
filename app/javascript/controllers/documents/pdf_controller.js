@@ -27,7 +27,7 @@ const disabledElements = [
 ]
 
 export default class extends Controller {
-  static targets = ['progress', 'viewer', 'title', 'generatePdf', 'controls']
+  static targets = ['progress', 'viewer', 'title', 'controls']
   static values = { id: String, meetingId: String, isParticipant: Boolean, meetingMemberId: String }
 
   connect() {
@@ -90,7 +90,7 @@ export default class extends Controller {
     newViewer.classList.add('h-full', 'hidden')
 
     this.titleTarget.innerText = ''
-    this.generatePdfTarget.classList.add('hidden')
+    // this.generatePdfTarget.classList.add('hidden')
 
     this.viewerTarget.innerHTML = ''
     this.viewerTarget.appendChild(newViewer)
@@ -134,6 +134,9 @@ export default class extends Controller {
       this.controlsTarget.classList.remove('hidden')
       document.getElementById('viewer').classList.remove('hidden')
 
+      const signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector("#signature-controller"), "signature")
+      signatureController.signedValue = true
+
       const {
         docViewer,
         annotManager: annotationManager,
@@ -150,18 +153,21 @@ export default class extends Controller {
         // See https://www.pdftron.com/documentation/web/guides/interacting-with-signature-field/#annotation-associated-with-signature-widget
         const check = allSignatureWidgetAnnots.every(sigAnnot => Boolean(sigAnnot.annot))
         if (check && signing) {
-          this.generatePdfTarget.classList.remove('hidden')
-          this.generatePdfTarget.onclick = () => {
-            console.log('Clicked!!')
-            onSave()
-          }
+
+          signatureController.setPDFSaveCallback(onSave)
+
+          // this.generatePdfTarget.classList.remove('hidden')
+          // this.generatePdfTarget.onclick = () => {
+          //   console.log('Clicked!!')
+          //   onSave()
+          // }
         } else {
           const firstNotSigned = allSignatureWidgetAnnots.find(sigAnnot => !Boolean(sigAnnot.annot))
           if (firstNotSigned) {
             annotationManager.jumpToAnnotation(firstNotSigned)
           }
 
-          this.generatePdfTarget.classList.add('hidden')
+          // this.generatePdfTarget.classList.add('hidden')
         }
       })
 
@@ -183,7 +189,8 @@ export default class extends Controller {
           }).then(r => r.json())
 
           console.error('PDF Saved!', response)
-          this.generatePdfTarget.classList.add('hidden');
+          // this.generatePdfTarget.classList.add('hidden');
+          return response
         } catch (error) {
           console.error('Upload Annotations error:', error)
         }
@@ -249,7 +256,8 @@ export default class extends Controller {
         const disableSign = () => {
           docViewer.removeEventListener('pageNumberUpdated')
           docViewer.removeEventListener('annotationChanged')
-          this.generatePdfTarget.classList.add('hidden');
+          // this.generatePdfTarget.classList.add('hidden');
+          signatureController.readonlyValue = true
         }
 
         // console.log('AAAAAAAAAA', this.isParticipantValue, this.meetingIdValue)

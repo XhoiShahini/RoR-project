@@ -4,6 +4,8 @@ export default class extends Controller {
   static values = { documentId: String, meetingId: String, signed: Boolean, readonly: Boolean }
   static targets = ["modal", "modalButton", "commit", "startSigning", "tooltip"]
 
+  __pdfOnsave = null
+
   connect() {
     if(this.hasStartSigningTarget) {
       this.modalButtonTarget.classList.add("hidden")
@@ -19,14 +21,30 @@ export default class extends Controller {
   }
 
   signedValueChanged() {
+    console.debug('signedValueChanged', this.signedValue)
     this.modalButtonTarget.disabled = this.signedValue
   }
 
   readonlyValueChanged() {
+    console.debug('readonlyValueChanged', this.readonlyValue)
     this.modalButtonTarget.classList.toggle("hidden", this.readonlyValue)
   }
 
-  sendOTP() {
+  setPDFSaveCallback(onSave) {
+    this.__pdfOnsave = onSave
+
+    this.signedValue = false
+  }
+
+  async sendOTP() {
+
+    // merge PDF
+    if (typeof this.__pdfOnsave === 'function') {
+      await this.__pdfOnsave()
+    } else {
+      throw new Error('Missing __pdfOnsave!')
+    }
+
     let otpUrl = "/meetings/" + this.meetingIdValue + "/documents/" + this.documentIdValue + "/otp"
     this._fetchAndReplace(otpUrl)
   }
