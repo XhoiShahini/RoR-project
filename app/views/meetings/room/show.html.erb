@@ -335,14 +335,14 @@ window.connect = () => {
       _stopDrawingCanvas()
     })
 
-    // _currentRoom
-    //  .join()
-    //  .then((result) => {
-    //    console.log('>> Room Joined', result)
-    //  })
-    //  .catch((error) => {
-    //    console.error('Join error?', error)
-    //  })
+    _currentRoom
+      .join()
+      .then((result) => {
+        console.log('>> Room Joined', result)
+      })
+      .catch((error) => {
+       console.error('Join error?', error)
+      })
   })
 }
 
