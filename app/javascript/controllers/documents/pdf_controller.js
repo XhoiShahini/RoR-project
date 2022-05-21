@@ -99,7 +99,12 @@ export default class extends Controller {
   async _loadDocument() {
     try {
       return await fetch("/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + '.json')
-        .then(r => r.json())
+        .then(r => {
+          if (r.status !== 200) {
+            throw new Error('No Doc')
+          }
+          return r.json()
+        })
     } catch (error) {
       console.error('_loadDocument', error)
       return {}
@@ -114,7 +119,7 @@ export default class extends Controller {
     const url = "/meetings/" + this.meetingIdValue + "/documents/" + this.idValue + "/pdf"
     console.debug('Load', url)
 
-    const documentData = await this._loadDocument()
+    const { document: documentData, signing } = await this._loadDocument()
     console.debug('documentData', documentData)
 
     PDFJSExpress({
@@ -144,7 +149,7 @@ export default class extends Controller {
 
         // See https://www.pdftron.com/documentation/web/guides/interacting-with-signature-field/#annotation-associated-with-signature-widget
         const check = allSignatureWidgetAnnots.every(sigAnnot => Boolean(sigAnnot.annot))
-        if (check) {
+        if (check && signing) {
           this.generatePdfTarget.classList.remove('hidden')
           this.generatePdfTarget.onclick = () => {
             console.log('Clicked!!')
@@ -221,7 +226,6 @@ export default class extends Controller {
 
       docViewer.addEventListener('pageNumberUpdated', async (pageNumber) => {
         const pageCount = docViewer.getPageCount()
-        console.log('pageNumber', pageNumber, pageCount)
 
         if (pageNumber === pageCount) {
           try {
@@ -256,6 +260,9 @@ export default class extends Controller {
         if (Boolean(documentData?.xfdf_merged)) {
           disableSign()
           return console.debug('PDF already merged!')
+        }
+        if (!Boolean(signing)) {
+          return console.debug('Cannot sign yet!')
         }
         const { version, fields } = documentData.signature_fields || {}
         console.log('LOADED', version, fields)

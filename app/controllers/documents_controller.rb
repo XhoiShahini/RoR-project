@@ -47,7 +47,9 @@ class DocumentsController < ApplicationController
       }
       format.json do
         @document.xfdf_merged = true if @meeting_member.xfdf_merged
-        render json: @document, status: :ok 
+        @document.signature_fields = {} unless @meeting.signing?
+
+        render json: { document: @document, signing: @meeting.signing? }, status: :ok
       end
     end
   end
