@@ -15,6 +15,7 @@ class PdfjsService
     req = Net::HTTP::Post::Multipart.new(url.path, body)
     res = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
       result = JSON.parse(http.request(req).body)
+      Rails.logger.info(result)
       download_merged_pdf(result['url'], result['key'], document, meeting_member)
     end
   end
