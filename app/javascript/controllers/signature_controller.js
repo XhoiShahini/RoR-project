@@ -3,7 +3,7 @@ import { Controller } from "stimulus"
 export default class extends Controller {
   static values = { documentId: String, meetingId: String, signed: Boolean, readonly: Boolean }
   static targets = ["modal", "modalButton", "commit", "startSigning", "tooltip"]
-  
+
   connect() {
     if(this.hasStartSigningTarget) {
       this.modalButtonTarget.classList.add("hidden")
@@ -37,7 +37,7 @@ export default class extends Controller {
   }
 
   signaturesReady() {
-    if(this.hasStartSigningTarget) {
+    if (this.hasStartSigningTarget) {
       this.startSigningTarget.classList.add("hidden")
       this.modalButtonTarget.classList.remove("hidden")
     }
@@ -45,8 +45,10 @@ export default class extends Controller {
   }
 
   allParticipantsVerified() {
-    this.startSigningTarget.disabled = false
-    this.tooltipTarget.replaceWith(this.startSigningTarget)
+    if (this.hasStartSigningTarget) {
+      this.startSigningTarget.disabled = false
+      this.tooltipTarget.replaceWith(this.startSigningTarget)
+    }
   }
 
   reset() {
@@ -66,7 +68,7 @@ export default class extends Controller {
       .then(response => response.text())
       .then(data => {
         let parser = new DOMParser()
-        return parser.parseFromString(data, "text/html")  
+        return parser.parseFromString(data, "text/html")
       })
       .then(response => {
         this.modalTarget.innerHTML = response.querySelector("#new_signature").innerHTML
@@ -88,7 +90,7 @@ export default class extends Controller {
       .then(response => response.text())
       .then(data => {
         let parser = new DOMParser()
-        return parser.parseFromString(data, "text/html")  
+        return parser.parseFromString(data, "text/html")
       })
       .then(response => {
         this.modalTarget.innerHTML = response.querySelector("#new_signature").innerHTML
