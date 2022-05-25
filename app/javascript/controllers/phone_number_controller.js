@@ -38,7 +38,7 @@ export default class extends Controller {
     if (this.inputTarget.value.trim() && this.iti.isValidNumber()) {
       return true
     } else {
-      event.detail.formSubmission.stop()
+      // event.detail.formSubmission.stop()
       event.preventDefault()
       this.inputTarget.classList.add("error")
       this.errorTarget.classList.remove("hidden")
