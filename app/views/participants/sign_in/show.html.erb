@@ -1,5 +1,5 @@
 <div class="max-w-4xl mx-auto">
-  <%= turbo_frame_tag "sms_verification" do %>
+
     <%= render partial: "shared/flash" %>
     <%= form_with(url: send_otp_meeting_participant_sign_in_path(@meeting, @participant)) do |f| %>
       <div class="card">
@@ -47,5 +47,5 @@
         </div>
       </div>
     <% end %>
-  <% end %>
+
 </div>

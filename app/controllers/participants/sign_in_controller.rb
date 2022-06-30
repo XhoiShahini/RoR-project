@@ -26,7 +26,9 @@ class Participants::SignInController < ApplicationController
 
   def send_otp
     if params[:privacy_policy] == "1" && !params[:marketing_agreement].nil? && params[:signature_agreement] == "1"
-      redirect_to otp_meeting_participant_sign_in_path(@meeting, @participant)
+      session[:participant_id] = @participant.id
+      @participant.accept! if @participant.invited?
+      redirect_to meeting_path(@meeting), notice: I18n.t("participants.sign_in.success")
     else
       redirect_to meeting_participant_sign_in_path(@meeting, @participant), alert: t("participants.sign_in.must_accept_terms")
     end
