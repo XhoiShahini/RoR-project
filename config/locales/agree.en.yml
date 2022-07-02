@@ -95,6 +95,7 @@ en:
       recordings: Recordings
       no_recordings: No recordings present.
       join_meeting: Join Meeting
+      join_sign: Sign Documents
     index:
       title: "Title"
       account: "Account"
@@ -139,6 +140,7 @@ en:
           description: "Upload an image or PDF of your government-issued ID"
           require_same_participant: "You can only upload your own ID"
         join_meeting: "Join Meeting"
+        join_sign: Sign Documents
       show:
         meetings: "Meetings"
         complete_meeting: Complete Meeting
@@ -172,6 +174,7 @@ en:
         signature_processing: "Signature Processing Information"
         paragraph3: "Once You’ve read and approved the previous disclaimer, click the SEND CODE button to receive the OTP code via SMS on your mobile phone"
         send_code: "Send Code"
+        send_code_async: "Sign Documents"
       otp:
         instructions: "Please enter the code sent to you via SMS."
     edit:
@@ -227,6 +230,8 @@ en:
       subject: "Agree.Live: Invitation to %{meeting}"
       header_html: "You have been invited to <strong>%{meeting}</strong> on Agree.Live!"
       description_html: "<strong>%{host}</strong> has invited you to <strong>%{meeting}</strong> with <strong>%{account}</strong>. This meeting is scheduled to start %{time}. Sign In below to view details."
+      header_html_async: "You have been invited to <strong>%{meeting}</strong> on Agree.Live!"
+      description_html_async: "<strong>%{host}</strong> has invited you to <strong>%{meeting}</strong> with <strong>%{account}</strong>. Sign In below to view details."
       sign_in: "Sign In"
     removed:
       subject: "Agree.Live: Removed from %{meeting}"

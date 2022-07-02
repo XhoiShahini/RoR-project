@@ -33,7 +33,7 @@
           <% else %>
             <div class="mb-2">
               <h4><%= t(".starts_at") %></h4>
-              <%= @meeting.starts_at %>
+              <%= @meeting.is_async ? "-" : @meeting.starts_at %>
             </div>
           <% end %>
         </div>
@@ -87,7 +87,7 @@
           <% end %>
         </div>
         
-        <% if @meeting.completed? && @meeting.host == current_user %>
+        <% if @meeting.completed? && @meeting.host == current_user && !@meeting.is_async %>
         <div class="my-2 ml-2">
           <h3><%= t(".recordings") %></h3>
           <% if @recordings.any? %>
@@ -105,7 +105,11 @@
         <% end %>
       </div>
       <div class="flex justify-center">
-        <%= link_to t('.join_meeting'), pre_meeting_meeting_room_path(@meeting), class: "btn btn-secondary" %>
+        <% if @meeting.is_async && @meeting_member.must_sign %>
+          <%= link_to t('.join_sign'), pre_meeting_meeting_room_path(@meeting), class: "btn btn-secondary" %>
+        <% else %>
+          <%= link_to t('.join_meeting'), pre_meeting_meeting_room_path(@meeting), class: "btn btn-secondary" %>
+        <% end %>
       </div>
     </div>
   </div>

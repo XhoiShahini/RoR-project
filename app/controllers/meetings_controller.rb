@@ -26,7 +26,6 @@ class MeetingsController < ApplicationController
   # POST /meetings
   def create
     meeting_member_params = { company_id: params[:company_id], must_sign: params[:must_sign] } rescue {}
-    logger.info meeting_member_params
     @meeting = Meeting.new(meeting_params)
 
     if @meeting.save && @meeting.meeting_members.create(meeting_member_params.merge({ memberable: current_user }))
@@ -95,6 +94,6 @@ class MeetingsController < ApplicationController
   end
 
   def meeting_params
-    params.require(:meeting).permit(:title, :starts_at, :host_id, :account_id)
+    params.require(:meeting).permit(:title, :starts_at, :host_id, :account_id, :is_async)
   end
 end

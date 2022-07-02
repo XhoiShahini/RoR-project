@@ -1,3 +1,4 @@
+<div data-controller="meetingform">
 <%= form_with(model: meeting, data: { turbo_frame: "_top" }) do |form| %>
   <%= render "shared/error_messages", resource: form.object %>
 
@@ -9,7 +10,7 @@
     <%= form.text_field :title, class: "form-control" %>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" data-meetingform-target="datePicker">
     <%= form.label :starts_at %>
     <%= form.text_field :starts_at, class: "form-control", data: { controller: :flatpickr, flatpickr_enable_time: true, flatpickr_alt_input: true, flatpickr_alt_format: t("time.formats.long") } %>
   </div>
@@ -26,6 +27,11 @@
       <%= t(".company_instructions") %>
     </p>
   </div>
+  
+  <div class="form-group">
+    <%= form.check_box :is_async, class: "form-checkbox mr-2", data: { action: "click->meetingform#toggleDate", "meetingform-target": "isAsync" } %>
+    <%= label_tag :is_async, t('.is_async'), class: "inline-block" %>
+  </div>
 
   <div class="form-group">
     <%= check_box_tag :must_sign, "1", (@host_member&.present? ? @host_member.must_sign : true), class: "form-checkbox mr-2" %>
@@ -40,3 +46,4 @@
     <% end %>
   </div>
 <% end %>
+</div>

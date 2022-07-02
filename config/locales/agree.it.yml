@@ -95,6 +95,7 @@ it:
       members: "Partecipanti"
       recordings: "Registrazioni"
       join_meeting: "Entra nella riunione"
+      join_sign: Entra per firmare
     index:
       title: "Titolo"
       account: "Account"
@@ -110,6 +111,7 @@ it:
       title: "Modifica Riunione"
     form:
       host_must_sign: "L'amministratore fa parte dei firmatari?"
+      is_async: 'Firma senza video'
       company_instructions: "Le Aziende sono qui per aiutarti a organizzare le tue riunioni. Creane una facendo clic su Aziende nella barra di navigazione, quindi puoi aggiungerla a questa riunione. Potrai quindi cercare la tua riunione per Azienda"
     partials:
       member_heads:
@@ -137,6 +139,7 @@ it:
           description: "Carica un'immagine o un PDF del tuo documento identificativo"
           require_same_participant: "Puoi solo caricare un documento per te stesso."
         join_meeting: "Entra nella riunione"
+        join_sign: Entra per firmare
       show:
         meetings: "Riunioni"
         documents: "Documenti"
@@ -171,6 +174,7 @@ it:
         signature_processing: "Informazioni sulla gestione della firma"
         paragraph3: "Una volta lette ed approvate le precedenti condizioni, clicca su Invia Codice per ricevere la OTP necessaria per l'accesso sul numero di cellulare inserito per te dal gestore del meeting"
         send_code: "Invia Codice"
+        send_code_async: "Firma"
       otp:
         instructions: "Si prega di inserire il codice ricevuto via SMS."
     edit:
@@ -228,6 +232,8 @@ it:
       subject: "Agree.Live: Invito per %{meeting}"
       header_html: "Sei stato invitato/a alla riunione <strong>%{meeting}</strong> su Agree.Live!"
       description_html: "<strong>%{host}</strong> ti ha invitato alla riunione <strong>%{meeting}</strong> con <strong>%{account}</strong>. La riunione inizierà alle %{time}. Esegui l'accesso sotto per vedere i dettagli."
+      header_html_async: "Sei stato invitato/a alla firma <strong>%{meeting}</strong> su Agree.Live!"
+      description_html_async: "<strong>%{host}</strong> ti ha invitato alla firma <strong>%{meeting}</strong> con <strong>%{account}</strong>. Esegui l'accesso sotto per vedere i dettagli."
       sign_in: "Accedi"
     removed:
       subject: "Agree.Live: Rimosso da %{meeting}"
