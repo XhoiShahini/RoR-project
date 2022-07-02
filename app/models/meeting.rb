@@ -61,6 +61,12 @@ class Meeting < ApplicationRecord
     end
   end
 
+  before_create do
+    if self.is_async
+      self.starts_at = Time.now
+    end
+  end
+
   def signed_room_id
     Digest::SHA1.hexdigest "#{self.id}#{ENV.fetch('SIGNATURE_SALT', 'salt is bad for you')}"
   end

@@ -23,6 +23,15 @@ class Meetings::RoomController < ApplicationController
 
   # GET /meetings/:meeting_id/room/pre_meeting
   def pre_meeting
+    if @meeting_member.is_moderator? && @meeting.is_async
+      @meeting.participants.each do |v|
+        v.send_invite
+        v.verify! verifier: current_user
+      end
+      @meeting.allow_signatures!
+      MeetingEventsChannel.broadcast_to @meeting, type: "start_signing"
+    end
+    
     @id_attached = @meeting_member.memberable.identification.attached?
   end
 

@@ -22,10 +22,10 @@ class ParticipantsController < ApplicationController
     @participant = @meeting.account.participants.new(participant_params)
 
     if @participant.save
-      @participant.send_invite
-      if @meeting.is_async
-        @participant.verify! verifier: current_user
-      end
+      @participant.send_invite if !@meeting.is_async
+      # if @meeting.is_async
+      #   @participant.verify! verifier: current_user
+      # end
       redirect_to new_meeting_participant_path(@meeting), notice: t("participants.notice.create")
     else
       render :new, status: :unprocessable_entity

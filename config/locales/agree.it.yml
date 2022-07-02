@@ -95,7 +95,7 @@ it:
       members: "Partecipanti"
       recordings: "Registrazioni"
       join_meeting: "Entra nella riunione"
-      join_sign: Entra per firmare
+      join_sign: Avvia processo di firma
     index:
       title: "Titolo"
       account: "Account"
@@ -139,7 +139,6 @@ it:
           description: "Carica un'immagine o un PDF del tuo documento identificativo"
           require_same_participant: "Puoi solo caricare un documento per te stesso."
         join_meeting: "Entra nella riunione"
-        join_sign: Entra per firmare
       show:
         meetings: "Riunioni"
         documents: "Documenti"

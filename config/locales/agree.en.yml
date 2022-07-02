@@ -95,7 +95,7 @@ en:
       recordings: Recordings
       no_recordings: No recordings present.
       join_meeting: Join Meeting
-      join_sign: Sign Documents
+      join_sign: Start Signing
     index:
       title: "Title"
       account: "Account"
@@ -104,7 +104,6 @@ en:
       members: "Members"
       starts_or_completed_at: "Starts/Completed At"
       actions: "Actions"
-      state: "Status"
       meetings: Meetings
     new:
       title: "New Meeting"
@@ -140,7 +139,6 @@ en:
           description: "Upload an image or PDF of your government-issued ID"
           require_same_participant: "You can only upload your own ID"
         join_meeting: "Join Meeting"
-        join_sign: Sign Documents
       show:
         meetings: "Meetings"
         complete_meeting: Complete Meeting

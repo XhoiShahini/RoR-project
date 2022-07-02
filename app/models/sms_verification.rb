@@ -57,31 +57,40 @@ class SmsVerification < ApplicationRecord
   end
 
   def send_sms
-    client = MessageBird::Client.new(ENV.fetch("MESSAGEBIRD_KEY", ""))
-    messagebird = client.verify_create(
-      phone_number.to_i,
-      template: I18n.t("sms_verifications.template"), 
-      timeout: ENV.fetch("MESSAGEBIRD_TIMEOUT", "300").to_i
-    )
+    if !Rails.env.development?
+      client = MessageBird::Client.new(ENV.fetch("MESSAGEBIRD_KEY", ""))
+      messagebird = client.verify_create(
+        phone_number.to_i,
+        template: I18n.t("sms_verifications.template"), 
+        timeout: ENV.fetch("MESSAGEBIRD_TIMEOUT", "300").to_i
+      )
+    else 
+      update(sent_at: Time.now, messagebird_id: self.id)
+    end
     update(sent_at: Time.now, messagebird_id: messagebird.id)
   end
 
   def verify_code!(attempt = "")
     self.code = attempt
-    client = MessageBird::Client.new(ENV.fetch("MESSAGEBIRD_KEY", ""))
-    
-    begin
-      messagebird = client.verify_token(messagebird_id, code)
-    rescue => e
-      self.error = e.errors.map { |err| err.description }.join(". ")
-    end
+    if !Rails.env.development?
+      client = MessageBird::Client.new(ENV.fetch("MESSAGEBIRD_KEY", ""))
+      
+      begin
+        messagebird = client.verify_token(messagebird_id, code)
+      rescue => e
+        self.error = e.errors.map { |err| err.description }.join(". ")
+      end
 
-    if messagebird&.status == "verified"
+      if messagebird&.status == "verified"
+        self.verified_at = Time.now
+        verify!
+      else
+        self.error ||= I18n.t("sms_verifications.invalid_code")
+        reject_code!
+      end
+    else
       self.verified_at = Time.now
       verify!
-    else
-      self.error ||= I18n.t("sms_verifications.invalid_code")
-      reject_code!
     end
   end
 
