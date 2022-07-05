@@ -24,8 +24,8 @@ class Meetings::RoomController < ApplicationController
   # GET /meetings/:meeting_id/room/pre_meeting
   def pre_meeting
     
-    if @meeting_member.is_moderator? && @meeting.is_async && !@meeting.signing?
-      @meeting.start! if @meeting.created?
+    if @meeting_member.is_moderator? && @meeting.is_async && && @meeting.created?
+      @meeting.start!
       @meeting.participants.each do |v|
         v.send_invite
         v.accept!
