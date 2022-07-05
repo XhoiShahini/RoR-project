@@ -28,6 +28,7 @@ class Meetings::RoomController < ApplicationController
       @meeting.start!
       @meeting.participants.each do |v|
         v.send_invite
+        v.accept!
         v.verify! verifier: current_user
       end
       @meeting.allow_signatures!
