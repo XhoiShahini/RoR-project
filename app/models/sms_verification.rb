@@ -64,10 +64,10 @@ class SmsVerification < ApplicationRecord
         template: I18n.t("sms_verifications.template"), 
         timeout: ENV.fetch("MESSAGEBIRD_TIMEOUT", "300").to_i
       )
+      update(sent_at: Time.now, messagebird_id: messagebird.id)
     else 
       update(sent_at: Time.now, messagebird_id: self.id)
     end
-    update(sent_at: Time.now, messagebird_id: messagebird.id)
   end
 
   def verify_code!(attempt = "")

@@ -62,7 +62,7 @@
           <%= turbo_frame_tag "id_upload", src: new_meeting_participant_id_upload_path(@meeting, @meeting_member.memberable) %>
         <% end %>
         <div class="<%= "hidden" unless @id_attached %> flex justify-center mt-4" data-pre-meeting-target="join">
-          <%= button_to t('.join_meeting'), meeting_room_path(@meeting), method: :put, class: "btn btn-secondary", data: { turbo: "false" } %>
+          <%= button_to @meeting.is_async ? t('.join_sign') : t('.join_meeting'), meeting_room_path(@meeting), method: :put, class: "btn btn-secondary", data: { turbo: "false" } %>
         </div>
       <% end %>
     </div>

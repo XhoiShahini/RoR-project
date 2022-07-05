@@ -54,7 +54,7 @@ class Document < ApplicationRecord
     state :finalized
 
     event :sign, after: :broadcast_update do
-      transitions from: [:created, :incomplete], to: :finalized, if: :signing_complete?, after: :add_signature_page
+      transitions from: [:created, :incomplete], to: :finalized, if: :signing_complete?, after: :complete_signing
       transitions from: [:created, :incomplete], to: :incomplete, unless: :signing_complete?
     end
   end
@@ -109,6 +109,11 @@ class Document < ApplicationRecord
     end
     pdf.table(cells, cell_style: { borders: [], height: 130 })
     pdf.render
+  end
+
+  def complete_signing
+    add_signature_page
+    meeting.complete_if_all_signed
   end
 
   def add_signature_page

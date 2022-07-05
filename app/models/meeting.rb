@@ -87,6 +87,10 @@ class Meeting < ApplicationRecord
     account.meeting_usable?
   end
 
+  def complete_if_all_signed
+    complete! if all_signed?
+  end
+
   private
 
   def meeting_modifiable
@@ -113,5 +117,12 @@ class Meeting < ApplicationRecord
     meeting_members.each do |member|
       PostMeetingMailer.with(meeting_member: member).post_meeting.deliver_later
     end
+  end
+
+  def all_signed?
+    documents.where(read_only: false).each do |doc|
+      return false if !doc.finalized?
+    end
+    return true
   end
 end

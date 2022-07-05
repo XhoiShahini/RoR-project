@@ -139,6 +139,7 @@ en:
           description: "Upload an image or PDF of your government-issued ID"
           require_same_participant: "You can only upload your own ID"
         join_meeting: "Join Meeting"
+        join_sign: "Sign documents"
       show:
         meetings: "Meetings"
         complete_meeting: Complete Meeting

@@ -192,7 +192,7 @@ class DocumentsController < ApplicationController
   end
 
   def cannot_modify_signed!
-    if @document.incomplete? || @document.finalized?
+    if (@document.incomplete? || @document.finalized?) && !@meeting.is_async
       redirect_to @meeting, alert: t("documents.notice.cannot_be_modified")
     end
   end
