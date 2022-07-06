@@ -113,7 +113,6 @@ class Document < ApplicationRecord
 
   def complete_signing
     add_signature_page
-    meeting.complete_if_all_signed
   end
 
   def add_signature_page

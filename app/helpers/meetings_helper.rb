@@ -11,7 +11,7 @@ module MeetingsHelper
   end
 
   def cannot_modify_completed!
-    unless @meeting.created? || @meeting.incomplete?
+    unless @meeting.created? || @meeting.incomplete? || @meeting.is_async?
       redirect_to @meeting, alert: t("meetings.notice.cannot_be_modified")
     end
   end

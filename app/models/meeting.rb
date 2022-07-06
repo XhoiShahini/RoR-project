@@ -88,13 +88,14 @@ class Meeting < ApplicationRecord
   end
 
   def complete_if_all_signed
+    puts "CHECKING IF ALL SIGNED FROM MODEL"
     complete! if all_signed?
   end
 
   private
 
   def meeting_modifiable
-    errors.add(:meeting, I18n.t("meetings.notice.cannot_be_modified")) unless created? || incomplete? || state_changed?
+    errors.add(:meeting, I18n.t("meetings.notice.cannot_be_modified")) unless created? || incomplete? || state_changed? || is_async
   end
 
   def broadcast_start
@@ -121,6 +122,7 @@ class Meeting < ApplicationRecord
 
   def all_signed?
     documents.where(read_only: false).each do |doc|
+      puts "Document FINALIZED is #{doc.finalized?}"
       return false if !doc.finalized?
     end
     return true
