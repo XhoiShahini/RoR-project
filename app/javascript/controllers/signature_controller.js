@@ -31,6 +31,7 @@ export default class extends Controller {
   }
 
   setPDFSaveCallback(onSave) {
+    console.log('setting setPDFSaveCallback to ', onSave);
     this.__pdfOnsave = onSave
 
     this.signedValue = false
