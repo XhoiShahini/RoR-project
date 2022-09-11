@@ -233,120 +233,109 @@ window.connect = () => {
     toggleAudioMuteDisplay(memberInfo.id, memberInfo.audio_muted);
   }
 
-  SignalWire.Video.createRoomObject({
+  const _currentRoom = new SignalWire.Video.RoomSession({
     token: _swToken,
-    rootElementId: 'videoRoot',
+    rootElement: document.getElementById("videoRoot"),
     audio: true,
     video: true,
-  }).then((roomObject) => {
-    _currentRoom = roomObject
+  });
 
-    console.log('Video SDK _currentRoom', _currentRoom)
+  _currentRoom.on('room.started', (params) =>
+    console.log('>> DEMO room.started', params)
+  )
 
-    _currentRoom.on('room.started', (params) =>
-      console.log('>> DEMO room.started', params)
-    )
+  _currentRoom.on('room.joined', async (params) => {
+    console.log('>> DEMO room.joined', params)
+    myMemberId = params.member_id;
+    _startDrawingCanvas();
 
-    _currentRoom.on('room.joined', async (params) => {
-      console.log('>> DEMO room.joined', params)
-      myMemberId = params.member_id;
-      _startDrawingCanvas();
+    const video = document.getElementById('localVideo')
+    video.srcObject = _currentRoom.localStream
 
-      const video = document.getElementById('localVideo')
-      video.srcObject = _currentRoom.localStream
-
-      params.room.members.forEach((member) => {
-        memberList.set(member.id, member);
-        toggleAudioMuteDisplay(member.id, member.audio_muted);
-      });
-    })
-
-    _currentRoom.on('room.updated', (params) =>
-      console.log('>> DEMO room.updated', params)
-    )
-    _currentRoom.on('room.ended', (params) => {
-      console.log('>> DEMO room.ended', params)
-      hangup()
-    })
-    _currentRoom.on('member.joined', (params) => {
-      console.log('>> DEMO member.joined', params);
-      memberList.set(params.member.id, params.member);
-      toggleAudioMuteDisplay(params.member.id, params.member.audio_muted);
-    })
-    _currentRoom.on('member.updated', (params) =>
-      console.log('>> DEMO global member.updated', params)
-    )
-
-    _currentRoom.on('member.updated.audio_muted', (params) => {
-      console.log('>> DEMO member.updated.audio_muted', params);
-      toggleAudioMuteDisplay(params.member.id, params.member.audio_muted);
-    })
-
-    _currentRoom.on('member.updated.video_muted', (params) =>
-      console.log('>> DEMO member.updated.video_muted', params)
-    )
-
-    _currentRoom.on('member.left', (params) => {
-      memberList.delete(params.member.id);
-      console.log('>> DEMO member.left', params);
-    })
-    _currentRoom.on('layout.changed', (params) => {
-      console.log('>> DEMO layout.changed', params)
-
-      const { layout } = params
-
-      const validmember_ids = []
-      layout.layers.forEach(({ member_id, x, y, width, height }) => {
-        if (member_id && member_id != myMemberId) {
-          validmember_ids.push(member_id)
-          if (!canvasMap.has(member_id)) {
-            // build canvas and context2d
-            const canvasEl = document.createElement('canvas')
-            canvasEl.id = 'canvas_' + member_id
-            _createCanvasWrapper(member_id, canvasEl);
-            const canvasCtx = canvasEl.getContext('2d', { alpha: false })
-            canvasMap.set(member_id, {
-              member_id,
-              canvasEl,
-              canvasCtx,
-              x,
-              y,
-              width,
-              height,
-            })
-          } else {
-            canvasMap.set(member_id, {
-              ...canvasMap.get(member_id),
-              x,
-              y,
-              width,
-              height,
-            })
-          }
-        }
-      })
-
-      Array.from(canvasMap.keys()).forEach((member_id) => {
-        if (!validmember_ids.includes(member_id)) {
-          _deleteCanvas(member_id)
-        }
-      })
-
-    })
-    _currentRoom.on('track', (event) => console.log('>> DEMO track', event))
-    _currentRoom.on('destroy', () => {
-      _stopDrawingCanvas()
-    })
-
-    _currentRoom
-      .join()
-      .then((result) => {
-        console.log('>> Room Joined', result)
-      })
-      .catch((error) => {
-       console.error('Join error?', error)
-      })
+    params.room.members.forEach((member) => {
+      memberList.set(member.id, member);
+      toggleAudioMuteDisplay(member.id, member.audio_muted);
+    });
   })
+
+  _currentRoom.on('room.updated', (params) =>
+    console.log('>> DEMO room.updated', params)
+  )
+  _currentRoom.on('room.ended', (params) => {
+    console.log('>> DEMO room.ended', params)
+    hangup()
+  })
+  _currentRoom.on('member.joined', (params) => {
+    console.log('>> DEMO member.joined', params);
+    memberList.set(params.member.id, params.member);
+    toggleAudioMuteDisplay(params.member.id, params.member.audio_muted);
+  })
+  _currentRoom.on('member.updated', (params) =>
+    console.log('>> DEMO global member.updated', params)
+  )
+
+  _currentRoom.on('member.updated.audio_muted', (params) => {
+    console.log('>> DEMO member.updated.audio_muted', params);
+    toggleAudioMuteDisplay(params.member.id, params.member.audio_muted);
+  })
+
+  _currentRoom.on('member.updated.video_muted', (params) =>
+    console.log('>> DEMO member.updated.video_muted', params)
+  )
+
+  _currentRoom.on('member.left', (params) => {
+    memberList.delete(params.member.id);
+    console.log('>> DEMO member.left', params);
+  })
+  _currentRoom.on('layout.changed', (params) => {
+    console.log('>> DEMO layout.changed', params)
+
+    const { layout } = params
+
+    const validmember_ids = []
+    layout.layers.forEach(({ member_id, x, y, width, height }) => {
+      if (member_id && member_id != myMemberId) {
+        validmember_ids.push(member_id)
+        if (!canvasMap.has(member_id)) {
+          // build canvas and context2d
+          const canvasEl = document.createElement('canvas')
+          canvasEl.id = 'canvas_' + member_id
+          _createCanvasWrapper(member_id, canvasEl);
+          const canvasCtx = canvasEl.getContext('2d', { alpha: false })
+          canvasMap.set(member_id, {
+            member_id,
+            canvasEl,
+            canvasCtx,
+            x,
+            y,
+            width,
+            height,
+          })
+        } else {
+          canvasMap.set(member_id, {
+            ...canvasMap.get(member_id),
+            x,
+            y,
+            width,
+            height,
+          })
+        }
+      }
+    })
+
+    Array.from(canvasMap.keys()).forEach((member_id) => {
+      if (!validmember_ids.includes(member_id)) {
+        _deleteCanvas(member_id)
+      }
+    })
+
+  })
+  _currentRoom.on('track', (event) => console.log('>> DEMO track', event))
+  _currentRoom.on('destroy', () => {
+    _stopDrawingCanvas()
+  })
+
+  _currentRoom.join();
 }
 
 /**
