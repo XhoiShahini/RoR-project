@@ -20,13 +20,14 @@ class MeetingsController < ApplicationController
   # GET /meetings/new
   def new
     @companies = current_account.companies
-    @meeting = Meeting.new
+    @meeting = Meeting.new(use_video: false)
   end
 
   # POST /meetings
   def create
     meeting_member_params = { company_id: params[:company_id], must_sign: params[:must_sign] } rescue {}
     @meeting = Meeting.new(meeting_params)
+    @meeting.is_async = @meeting.use_video == "0"
 
     if @meeting.save && @meeting.meeting_members.create(meeting_member_params.merge({ memberable: current_user }))
       redirect_to @meeting, notice: t("meetings.notice.create")
@@ -94,6 +95,6 @@ class MeetingsController < ApplicationController
   end
 
   def meeting_params
-    params.require(:meeting).permit(:title, :starts_at, :host_id, :account_id, :is_async)
+    params.require(:meeting).permit(:title, :starts_at, :host_id, :account_id, :is_async, :use_video)
   end
 end

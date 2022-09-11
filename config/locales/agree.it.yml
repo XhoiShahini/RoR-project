@@ -111,7 +111,7 @@ it:
       title: "Modifica Riunione"
     form:
       host_must_sign: "L'amministratore fa parte dei firmatari?"
-      is_async: 'Firma senza video'
+      is_async: 'Attiva video call?'
       company_instructions: "Le Aziende sono qui per aiutarti a organizzare le tue riunioni. Creane una facendo clic su Aziende nella barra di navigazione, quindi puoi aggiungerla a questa riunione. Potrai quindi cercare la tua riunione per Azienda"
     partials:
       member_heads:

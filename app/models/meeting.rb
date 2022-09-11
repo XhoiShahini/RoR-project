@@ -42,6 +42,8 @@ class Meeting < ApplicationRecord
   has_many :signatures, through: :documents
   validate :meeting_modifiable, on: [:update]
 
+  attr_accessor :use_video
+
   aasm(column: :state, logger: Rails.logger, timestamps: true) do
     state :created, initial: true
     state :incomplete

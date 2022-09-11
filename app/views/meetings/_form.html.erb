@@ -29,8 +29,8 @@
   </div>
   
   <div class="form-group">
-    <%= form.check_box :is_async, class: "form-checkbox mr-2", data: { action: "click->meetingform#toggleDate", "meetingform-target": "isAsync" } %>
-    <%= label_tag :is_async, t('.is_async'), class: "inline-block" %>
+    <%= form.check_box :use_video, class: "form-checkbox mr-2", data: { action: "click->meetingform#toggleDate", "meetingform-target": "useVideo" } %>
+    <%= label_tag :use_video, t('.is_async'), class: "inline-block" %>
   </div>
 
   <div class="form-group">
