@@ -4,7 +4,9 @@
 #
 #  id           :uuid             not null, primary key
 #  completed_at :datetime
+#  is_api       :boolean          default(FALSE)
 #  is_async     :boolean          default(TRUE)
+#  return_url   :string
 #  starts_at    :datetime
 #  state        :string
 #  title        :string

@@ -81,8 +81,8 @@ class Participant < ApplicationRecord
     end
   end
 
-  def send_invite
-    ParticipantsMailer.with(participant: self).invite.deliver_later
+  def send_invite(actually_send = true)
+    ParticipantsMailer.with(participant: self).invite.deliver_later if actually_send
   end
 
   def send_removed_email

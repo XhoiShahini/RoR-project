@@ -23,7 +23,7 @@ class PdfjsService
   def self.download_merged_pdf(file_url, key, document, meeting_member)
     url = URI(file_url)
     https = Net::HTTP.new(url.host, url.port)
-    https.use_ssl = true
+    https.use_ssl = true if url.scheme == 'https'
 
     request = Net::HTTP::Get.new(url)
     request["Authorization"] =  key

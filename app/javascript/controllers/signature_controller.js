@@ -56,6 +56,7 @@ export default class extends Controller {
   }
 
   signaturesReady() {
+    console.log('signaturesReady')
     if (this.hasStartSigningTarget) {
       this.startSigningTarget.classList.add("hidden")
       this.modalButtonTarget.classList.remove("hidden")

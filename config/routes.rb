@@ -92,6 +92,7 @@ Rails.application.routes.draw do
       resource :me, controller: :me
       resources :accounts
       resources :users
+      resources :meetings
     end
   end
 
