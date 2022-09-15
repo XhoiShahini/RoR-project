@@ -7,6 +7,6 @@ class Api::V1::MeetingsController < Api::BaseController
   def create
     participant = RemoteService.create_from_json(current_user, params)
     url = meeting_participant_sign_in_url(participant.meeting, participant)
-    render json: {sign_url: url}
+    render json: {sign_url: url, custom_id: participant.meeting.custom_id}
   end
 end

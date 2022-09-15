@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_14_094516) do
+ActiveRecord::Schema.define(version: 2022_09_15_072505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(version: 2022_09_14_094516) do
     t.boolean "is_async", default: true
     t.boolean "is_api", default: false
     t.string "return_url"
+    t.string "custom_id"
     t.index ["account_id"], name: "index_meetings_on_account_id"
     t.index ["host_id"], name: "index_meetings_on_host_id"
     t.index ["server_id"], name: "index_meetings_on_server_id"

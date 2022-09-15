@@ -6,7 +6,9 @@ class RemoteService
       is_async: true,
       host: current_user,
       title: 'Firma Documenti',
-      account: current_user.accounts.first
+      account: current_user.accounts.first,
+      return_url: json['return_url'],
+      custom_id: json['custom_id']
     )
     
     meeting.save
