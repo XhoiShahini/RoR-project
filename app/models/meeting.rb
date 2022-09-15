@@ -92,8 +92,7 @@ class Meeting < ApplicationRecord
   end
 
   def complete_if_all_signed
-    puts "CHECKING IF ALL SIGNED FROM MODEL"
-    complete! if all_signed?
+    complete! if all_signed? && is_async?
   end
 
   private
