@@ -33,6 +33,12 @@ class RemoteService
     participant = meeting.account.participants.new(participant_params)
     participant.save
 
+    #do the dance
+    meeting.start!
+    participant.accept!
+    participant.verify! verifier: current_user
+    meeting.allow_signatures!
+
     return participant
   end
 
