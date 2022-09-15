@@ -39,6 +39,9 @@ class Meetings::RoomController < ApplicationController
   end
 
   def post_meeting
+    if @meeting.return_url && @meeting.is_api?
+      redirect_to @meeting.return_url
+    end
     if @meeting_member.is_moderator? && !@meeting.completed?
       @meeting.complete!
     elsif !@meeting.completed?
