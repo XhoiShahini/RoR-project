@@ -233,13 +233,14 @@ window.connect = () => {
     toggleAudioMuteDisplay(memberInfo.id, memberInfo.audio_muted);
   }
 
-  const _currentRoom = new SignalWire.Video.RoomSession({
+  console.log('current room', _currentRoom)
+  _currentRoom = new SignalWire.Video.RoomSession({
     token: _swToken,
     rootElement: document.getElementById("videoRoot"),
     audio: true,
     video: true,
   });
-
+  console.log('current room', _currentRoom)
   _currentRoom.on('room.started', (params) =>
     console.log('>> DEMO room.started', params)
   )
