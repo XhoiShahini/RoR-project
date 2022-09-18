@@ -173,7 +173,7 @@ it:
         signature_html: "Dichiaro di aver consultato le %{link} riguardo la fornitura del servizio di Firma Elettronica Avanzata"
         signature_processing: "Informazioni sulla gestione della firma"
         paragraph3: "Una volta lette ed approvate le precedenti condizioni, clicca su Invia Codice per ricevere la OTP necessaria per l'accesso sul numero di cellulare inserito per te dal gestore del meeting"
-        send_code: "Invia Codice"
+        send_code: "Prosegui"
         send_code_async: "Firma"
       otp:
         instructions: "Si prega di inserire il codice ricevuto via SMS."
@@ -191,7 +191,7 @@ it:
     template: "Agree.Live: Il tuo codice è %token"
     verify: "Verifica"
     invalid_code: "Il codice inserito non è valido, si prega di riprovare."
-    sms_disclaimer: "Questa azione invierà un codice di verifica via SMS al numero: %{phone_number}."
+    sms_disclaimer: 'Cliccare "Prosegui" per avviare il procedimento di firma.'
     try_again: Riprova
     state:
       created: "Creato"

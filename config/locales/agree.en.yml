@@ -173,7 +173,7 @@ en:
         signature_html: "I hereby declare that I have read the %{link} regarding the provision of the advanced electronic signature"
         signature_processing: "Signature Processing Information"
         paragraph3: "Once You’ve read and approved the previous disclaimer, click the SEND CODE button to receive the OTP code via SMS on your mobile phone"
-        send_code: "Send Code"
+        send_code: "Next"
         send_code_async: "Sign Documents"
       otp:
         instructions: "Please enter the code sent to you via SMS."
@@ -192,7 +192,7 @@ en:
     verify: "Verify"
     invalid_code: "The code you have provided is invalid, please try again."
     try_again: Try again
-    sms_disclaimer: "This will send an SMS to the phone number: %{phone_number}. Messaging and Data rates may apply."
+    sms_disclaimer: 'Click "Next" to log in.'
     state:
       created: "Created"
       sent: "Sent"
