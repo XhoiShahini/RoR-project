@@ -10,11 +10,6 @@
     <%= form.text_field :title, class: "form-control" %>
   </div>
 
-  <div class="form-group" data-meetingform-target="datePicker">
-    <%= form.label :starts_at %>
-    <%= form.text_field :starts_at, class: "form-control", data: { controller: :flatpickr, flatpickr_enable_time: true, flatpickr_alt_input: true, flatpickr_alt_format: t("time.formats.long") } %>
-  </div>
-
   <div class="form-group">
     <%= label_tag :company_id, t("activerecord.models.company") %>
     <%= select_tag(
@@ -26,6 +21,11 @@
     <p class="card-paragraph mt-2">
       <%= t(".company_instructions") %>
     </p>
+  </div>
+
+  <div class="form-group" data-meetingform-target="datePicker">
+    <%= form.label :starts_at %>
+    <%= form.text_field :starts_at, class: "form-control", data: { controller: :flatpickr, flatpickr_enable_time: true, flatpickr_alt_input: true, flatpickr_alt_format: t("time.formats.long") } %>
   </div>
   
   <div class="form-group">
