@@ -135,10 +135,7 @@ export default class extends Controller {
       document.getElementById('viewer').classList.remove('hidden')
 
       const signatureController = this.application.getControllerForElementAndIdentifier(document.querySelector("#signature-controller"), "signature")
-
-      if (signatureController) {
-        signatureController.signedValue = true
-      }
+      signatureController.signedValue = true
 
       const {
         docViewer,
@@ -148,21 +145,6 @@ export default class extends Controller {
         }
       } = instance
 
-      const allSignatureWidgetAnnots = annotationManager.getAnnotationsList()
-          .filter(annot => annot instanceof Annotations.SignatureWidgetAnnotation)
-          
-      console.log('sigfields', allSignatureWidgetAnnots, allSignatureWidgetAnnots.length)
-
-      const onSaveNoSignatures = async () => {
-        console.log('no point and click so nothing to do here');
-      }
-
-      if (!allSignatureWidgetAnnots.length) {
-        signatureController.signedValue = false;
-        console.log('no sigs so no callback')
-        signatureController.setPDFSaveCallback(onSaveNoSignatures)
-      }
-
       annotationManager.addEventListener('annotationChanged', (annotations, action, info) => {
         // console.log('annotationChanged', annotations, annotations[0].id, action, info)
         const allSignatureWidgetAnnots = annotationManager.getAnnotationsList()
@@ -170,8 +152,6 @@ export default class extends Controller {
 
         // See https://www.pdftron.com/documentation/web/guides/interacting-with-signature-field/#annotation-associated-with-signature-widget
         const check = allSignatureWidgetAnnots.every(sigAnnot => Boolean(sigAnnot.annot))
-
-        //const check = !allSignatureWidgetAnnots.length || allSignatureWidgetAnnots.every(sigAnnot => Boolean(sigAnnot.annot))
         if (check && signing) {
 
           signatureController.setPDFSaveCallback(onSave)
