@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 import consumer from "channels/consumer"
 import PDFJSExpress from '@pdftron/pdfjs-express'
-
+console.log('force compile')
 const disabledElements = [
   'leftPanelButton',
   'leftPanel',
@@ -196,6 +196,10 @@ export default class extends Controller {
         }
       }
 
+      const onSaveNoSignatures = async () => {
+        console.log('no point and click so nothing to do here');
+      }
+
       const createSignHereBox = ({ pageNumber, x, y, width, height, name }) => {
         console.log('createSignHereBox', pageNumber, x, y, width, height, name)
 
@@ -274,6 +278,7 @@ export default class extends Controller {
         }
         const { version, fields } = documentData.signature_fields || {}
         console.log('LOADED', version, fields)
+        var fieldCount = 0;
         switch (version) {
           case '1': {
             Object.keys(fields).sort((a, b) => {
@@ -299,10 +304,18 @@ export default class extends Controller {
                   width: 80,
                   height: 30
                 })
+                fieldCount += 1;
               }
             })
+            console.log('signatures to sign', fieldCount);
+
+           
             break
           }
+        }
+        if (fieldCount == 0){
+          console.log('no sigs so no callback')
+          signatureController.setPDFSaveCallback(onSaveNoSignatures);
         }
       })
     })
