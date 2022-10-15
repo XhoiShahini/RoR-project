@@ -243,6 +243,7 @@ it:
     right_nav:
       pricing: "Fatturazione"
       announcements: "Cosa c'è di nuovo"
+      tutorial: "Tutorial"
     left_nav:
       meetings: "Riunioni"
       companies: "Aziende"
@@ -479,3 +480,11 @@ it:
     video_input: "Input Video"
     start_recording: "Avvio registrazione"
     stop_recording: "Stop registrazione"
+  tutorials:
+    tutorial_1: Accesso all'area riservata
+    tutorial_2: Organizzazione del meeting
+    tutorial_3: Caricamento dati
+    tutorial_4: Upload del documento
+    tutorial_5: Apposizione campi firma
+    tutorial_6: Accesso ospite
+    tutorial_7: Utilizzo video room

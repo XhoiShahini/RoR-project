@@ -33,4 +33,7 @@ class StaticController < ApplicationController
 
   def marketing
   end
+
+  def tutorials
+  end
 end

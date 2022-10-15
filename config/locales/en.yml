@@ -215,6 +215,7 @@ en:
     right_nav:
       pricing: "Pricing"
       announcements: "What's New"
+      tutorial: "Tutorials"
     left_nav:
       meetings: Meetings
       companies: Companies
@@ -451,3 +452,12 @@ en:
     video_input: "Video input"
     start_recording: "Start recording"
     stop_recording: "Stop recording"
+
+  tutorials:
+    tutorial_1: Accessing the dashboard
+    tutorial_2: Setting up a meeting
+    tutorial_3: Loading data
+    tutorial_4: Uploading documents
+    tutorial_5: Adding signature fields
+    tutorial_6: Guest access
+    tutorial_7: Video room usage

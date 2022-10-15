@@ -22,15 +22,15 @@
       <%= t(".company_instructions") %>
     </p>
   </div>
-
-  <div class="form-group" data-meetingform-target="datePicker">
-    <%= form.label :starts_at %>
-    <%= form.text_field :starts_at, class: "form-control", data: { controller: :flatpickr, flatpickr_enable_time: true, flatpickr_alt_input: true, flatpickr_alt_format: t("time.formats.long") } %>
-  </div>
   
   <div class="form-group">
     <%= form.check_box :use_video, class: "form-checkbox mr-2", data: { action: "click->meetingform#toggleDate", "meetingform-target": "useVideo" } %>
     <%= label_tag :use_video, t('.is_async'), class: "inline-block" %>
+  </div>
+
+  <div class="form-group" data-meetingform-target="datePicker">
+    <%= form.label :starts_at %>
+    <%= form.text_field :starts_at, class: "form-control", data: { controller: :flatpickr, flatpickr_enable_time: true, flatpickr_alt_input: true, flatpickr_alt_format: t("time.formats.long") } %>
   </div>
 
   <div class="form-group">

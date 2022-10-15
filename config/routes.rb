@@ -156,6 +156,7 @@ Rails.application.routes.draw do
     get :signature_permission
     get :signature_info
     get :marketing
+    get :tutorials
   end
 
   post :sudo, to: "users/sudo#create"
