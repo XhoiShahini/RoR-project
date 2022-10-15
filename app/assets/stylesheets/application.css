@@ -62,3 +62,11 @@
   color: #fff;
   padding: 10px;
 }
+
+.needHelp {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 150px;
+  height: 100px;
+}
