@@ -23,7 +23,7 @@
           <tr class="group border-t border-gray-400 hover:bg-gray-100">
             <td class="p-3"><%= company.name %></td>
             <td class="p-3"><%= company.members.size %></td>
-            <td class="p-3"><%= company.meetings.size %></td>
+            <td class="p-3"><a href="http://localhost:3000/meetings?q%5Bmeeting_members_company_id_eq%5D=<%= company.id %>"><%= "#{company.meetings.size} (#{t('companies.show_meetings')})" %></a></td>
           </tr>
         <% end %>
         </tbody>

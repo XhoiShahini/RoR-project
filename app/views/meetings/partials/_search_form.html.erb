@@ -22,8 +22,8 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :meeting_members_company_name_cont, t(".company") %>
-        <%= f.search_field :meeting_members_company_name_cont, class: "rounded" %>
+        <%= f.label :meeting_members_company_id_eq, t(".company") %>
+        <%= f.select(:meeting_members_company_id_eq, current_account.companies.all.collect {|category| [category.name, category.id]}, { include_blank: true })%>
       </div>
 
       <div class="form-group">
