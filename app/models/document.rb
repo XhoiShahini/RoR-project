@@ -142,7 +142,7 @@ class Document < ApplicationRecord
     when /pro/i
       5
     else
-      2
+      5
     end
     if meeting.documents.count >= max_documents
       errors.add(:meeting, I18n.t("meetings.errors.maximum_documents", maximum: max_documents))
