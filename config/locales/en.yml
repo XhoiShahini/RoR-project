@@ -464,3 +464,5 @@ en:
     need_help: Need help?
   companies:
     show_meetings: Show meetings
+  signatures:
+    sign_here: Sign Here

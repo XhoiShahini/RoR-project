@@ -491,3 +491,5 @@ it:
     need_help: Serve aiuto?
   companies:
     show_meetings: Visualizza Riunioni
+  signatures:
+    sign_here: Firma qui

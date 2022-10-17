@@ -46,6 +46,8 @@
         data-meeting-id="<%= @meeting.id %>"
         data-is-participant="<%= @host %>"
         data-meeting-member-id="<%= @meeting_member.id %>"
+        data-meeting-member-name="<%= @meeting_member.full_name %>"
+        data-sign-label="<%= t('signatures.sign_here') %>"
         data-documents--pdf-is-participant-value="<%= @host %>"
       >
         <div data-documents--pdf-target="progress" class="mx-auto p-10 text-center" style="height: 550px">

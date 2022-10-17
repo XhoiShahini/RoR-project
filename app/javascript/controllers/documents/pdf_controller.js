@@ -28,11 +28,13 @@ const disabledElements = [
 
 export default class extends Controller {
   static targets = ['progress', 'viewer', 'title', 'controls']
-  static values = { id: String, meetingId: String, isParticipant: Boolean, meetingMemberId: String }
+  static values = { id: String, meetingId: String, isParticipant: Boolean, meetingMemberId: String, meetingMemberName: String, signLabel: String }
 
   connect() {
     this.meetingIdValue = this.element.dataset['meetingId']
     this.meetingMemberIdValue = this.element.dataset['meetingMemberId']
+    this.meetingMemberNameValue = this.element.dataset['meetingMemberName']
+    this.signLabelValue = this.element.dataset['signLabel']
     this.subscription = consumer.subscriptions.create({ channel: "DocumentsChannel", meeting_id: this.meetingIdValue }, {
       connected: this._connected.bind(this),
       disconnected: this._disconnected.bind(this),
@@ -145,6 +147,23 @@ export default class extends Controller {
         }
       } = instance
 
+      annotationManager.setCurrentUser(this.meetingMemberNameValue);
+
+      Annotations.SignatureWidgetAnnotation.prototype.createSignHereElement = () => {
+        const div = document.createElement("div");
+        div.style.position = "absolute";
+        div.style.maxWidth = "100%";
+        div.style.maxHeight = "100%";
+        div.style.cursor = "pointer";
+        div.style.background = 'darkblue';
+        div.style.color = "white";
+        div.style.padding = "3px";
+    
+        div.innerHTML = this.signLabelValue;
+      
+        return div;
+      };
+
       annotationManager.addEventListener('annotationChanged', (annotations, action, info) => {
         // console.log('annotationChanged', annotations, annotations[0].id, action, info)
         const allSignatureWidgetAnnots = annotationManager.getAnnotationsList()
@@ -219,7 +238,7 @@ export default class extends Controller {
             },
           },
         })
-
+        console.log('widgetAnnot', widgetAnnot)
         // set position and size
         widgetAnnot.PageNumber = pageNumber
         widgetAnnot.X = x
